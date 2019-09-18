@@ -1,0 +1,6 @@
+@font-face {
+    font-family: 'kapra';
+    src:  url('../fonts/kapra.woff') format('woff2'),
+        url('../fonts/kapra.woff2') format('woff'),
+        url('../font/kapra.eot') format('eot');
+}
