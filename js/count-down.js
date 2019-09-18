@@ -1,4 +1,4 @@
-function countDown(parent, startDate, endDate, offer, countries){
+function countDown(parent, startDate, endDate, offer, countries, last, days){
 
     //COMPONENT CONTAINER
     var parentElement = document.querySelector(parent);
@@ -87,6 +87,7 @@ function countDown(parent, startDate, endDate, offer, countries){
     clockContainer.style.display = 'flex';
     clockContainer.style.justifyContent = 'center';
     clockContainer.style.alignItems = 'center';
+    clockContainer.style.overflow = 'hidden';
 
     //CREATE COUNTDOWN CLOCK CONTAINER
     var clockFace = document.createElement('div');
@@ -170,7 +171,54 @@ function countDown(parent, startDate, endDate, offer, countries){
     colon.style.letterSpacing = '2px';
     colon.innerText = ':';
 
+    //CLONE COLON ELEMENT 
     var colonClone = colon.cloneNode(true);
+
+    //CREATE DAYS LEFT CONTAINER
+    var daysLeftContainer = document.createElement('div');
+    //daysLeftContainer.style.background = 'red';
+    daysLeftContainer.style.width = 'auto';
+    daysLeftContainer.style.height = 'auto';
+    daysLeftContainer.style.display = 'flex';
+    daysLeftContainer.style.justifyContent = 'center';
+    daysLeftContainer.style.alignItems = 'center';
+
+    //CREATE DAYS LEFT NUMBER CONTAINER
+    var daysLeftNumberContainer = document.createElement('div');
+    //daysLeftNumberContainer.style.background = 'blue';
+    daysLeftNumberContainer.style.width = 'auto';
+    daysLeftNumberContainer.style.height = 'auto';
+    daysLeftNumberContainer.style.padding = '0px 10px 0px 10px';
+
+    //CREATE DAYS LEFT TEXT CONTAINER
+    var daysLeftDaysContainer = document.createElement('div');
+    //daysLeftDaysContainer.style.background = 'green';
+    daysLeftDaysContainer.style.width = 'auto';
+    daysLeftDaysContainer.style.height = 'auto';
+
+    //CREATE DAYS LEFT COUNT TEXT
+    var daysLeftText = document.createElement('p');
+    daysLeftText.innerText = last.toUpperCase();
+    daysLeftText.style.fontFamily = 'kapra';
+    daysLeftText.style.fontSize = '40px';
+    daysLeftText.style.color = '#000';
+    daysLeftText.style.letterSpacing = '2px';
+
+    //CREATE DAYS LEFT NUMER TEXT
+    var daysLeftNumberText = document.createElement('p');
+    daysLeftNumberText.innerText = '0';
+    daysLeftNumberText.style.fontFamily = 'kapra';
+    daysLeftNumberText.style.fontSize = '40px';
+    daysLeftNumberText.style.color = '#000';
+    daysLeftNumberText.style.letterSpacing = '2px';
+
+    //CREATE DAYS LEFT TEXT
+    var daysLeftDayText = document.createElement('p');
+    daysLeftDayText.innerText = days.toUpperCase();
+    daysLeftDayText.style.fontFamily = 'kapra';
+    daysLeftDayText.style.fontSize = '40px';
+    daysLeftDayText.style.color = '#000';
+    daysLeftDayText.style.letterSpacing = '2px';
 
     //APPEND OFFER CONTAINER TO COUNTDOWN CONTAINER
     countDownContainer.appendChild(offerContainer);
@@ -189,27 +237,54 @@ function countDown(parent, startDate, endDate, offer, countries){
     offerSubTextContainer.appendChild(offerSubText);
     offerSubTextContainer.appendChild(offerSubTextSmall);
 
-    //APPEND CLOCK FACE TO CLOCK CONTAINER
-    clockContainer.appendChild(clockFace);
-
-    //APPEND CLOCK TEXT TO CLOCK CONTAINER
-    clockFace.appendChild(clockTextContainer);
-
-    //APPEND CLOCK TEXT TO CLOCK TEXT CONTAINER
-    clockTextContainer.appendChild(clockText);
-
-    //APPEND CLOCK DIGITS TO CLOCK CONTAINER
-    clockFace.appendChild(clockDigits);
-
-    //APPEND CLOCK HOURS MINUTES AND SECONDS 
-    clockDigits.appendChild(hours);
-    clockDigits.appendChild(colon);
-    clockDigits.appendChild(minutes);
-    clockDigits.appendChild(colonClone);
-    clockDigits.appendChild(seconds);
-
     //APPEND COUNTDOWN TO PARENT ELEMENT 
     parentElement.appendChild(countDownContainer);
+
+    //APPENDS ALL THE ELEMENT OF THE CLOCK CONTAINER TO THE DOM
+    function counterHours(){
+        //APPEND CLOCK FACE TO CLOCK CONTAINER
+        clockContainer.appendChild(clockFace);
+
+        //APPEND CLOCK TEXT TO CLOCK CONTAINER
+        clockFace.appendChild(clockTextContainer);
+
+        //APPEND CLOCK TEXT TO CLOCK TEXT CONTAINER
+        clockTextContainer.appendChild(clockText);
+
+        //APPEND CLOCK DIGITS TO CLOCK CONTAINER
+        clockFace.appendChild(clockDigits);
+
+        //APPEND CLOCK HOURS MINUTES AND SECONDS 
+        clockDigits.appendChild(hours);
+        clockDigits.appendChild(colon);
+        clockDigits.appendChild(minutes);
+        clockDigits.appendChild(colonClone);
+        clockDigits.appendChild(seconds);
+    }
+
+    function  counterDays(){
+        //APPEND DAYS LEFT CONTAINER TO CLOCK CONTAINER
+        clockContainer.appendChild(daysLeftContainer);
+
+        //APPEND DAYS LEFT NUMBER CONTAINER TO CLOCK CONTAINER
+        clockContainer.appendChild(daysLeftNumberContainer);
+
+        //APPEND DAYS LEFT NUMBER CONTAINER TO CLOCK CONTAINER
+        clockContainer.appendChild(daysLeftDaysContainer);
+
+        //APPEND LAST TEXT TO DAYS LEFT CONTAINER
+        daysLeftContainer.appendChild(daysLeftText);
+
+        //APPEND LAST DAYS NUMBERS TO DAYS LEFT NUMBER CONTAINER
+        daysLeftNumberContainer.appendChild(daysLeftNumberText);
+
+        //APPEND DAY TEXT TO DAYS LEFT DAYS CONTAINER
+        daysLeftDaysContainer.appendChild(daysLeftDayText);
+    }
+
+    function counterClear(){
+        clockContainer.innerHTML = '';
+    }
 
     //SET MOBILE LAYOUT
     function mobileLayout(){
@@ -325,6 +400,7 @@ function countDown(parent, startDate, endDate, offer, countries){
         var timerMinutes = Math.floor(totalSeconds % 3600 / 60);
         var timerHours = Math.floor(totalSeconds/3600);
         
+        //ADD AN EXTRA ZERO TO ANY DIGIT BELOW 10 
         if(timerHours < 10){
             timerHours = '0' + timerHours;
         }
@@ -335,9 +411,17 @@ function countDown(parent, startDate, endDate, offer, countries){
             timerSeconds = '0' + timerSeconds;
         }
 
-        hours.innerText = timerHours;
-        minutes.innerText = timerMinutes;
-        seconds.innerText = timerSeconds;
+        //CHANGE CLOCK FACE TO SHOW HOURS OR DAYS
+        if(timerHours >= 72){
+            counterDays();
+            daysLeftNumberText.innerText = Math.floor(timerHours / 24);
+        }else{
+            counterClear();
+            counterHours();
+            hours.innerText = timerHours;
+            minutes.innerText = timerMinutes;
+            seconds.innerText = timerSeconds;
+        }
 
         if(timerHours <= 0 && timerMinutes <= 0  && timerSeconds <= 0){
             stopTimer();

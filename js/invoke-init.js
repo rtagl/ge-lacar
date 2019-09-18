@@ -14,15 +14,17 @@ window.addEventListener('load', function(){
         );
         countDown(
             '.parent',
-            'Sep 17 2019 10:00:00', // month-day-year-hours-minutes-seconds
-            'Sep 17 2019 11:00:00', // month-day-year-hours-minutes-seconds
+            'Sep 18 2019 10:00:00', // month-day-year-hours-minutes-seconds
+            'Sep 21 2019 12:46:00', // month-day-year-hours-minutes-seconds
             {
                 offer:     'ADEMAS: ',
                 text:      '50% Descuento',
                 subText:   'en el segundo pasejero',
                 timerText: 'oferta termina en:'
             },
-            ['lac', 'deu']
+            ['lac', 'deu'],
+            'ultimos',
+            'dias'
         );
     });
 
