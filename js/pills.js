@@ -137,6 +137,13 @@ function pill(shipNames, promoDates, sailingDates, numberOfNights, ports, itiner
 
 window.addEventListener('load', ()=>{
     pill(
+        //PILL DETAILS
+        {
+            color: '#110000',
+            text: 'Buy one get one free',
+            id: 'pill_bogo'
+        },
+
         //SHIPCODES
         ['ID', 'EM'],
         
@@ -173,16 +180,29 @@ window.addEventListener('load', ()=>{
         //ITINERARIES
         null,
 
-        //PILL COLOR
-        '#110000', 
-
-        //PILL INNER TEXT
-        '50% discount on drinks' 
+        //EXCLUSIONS
+        {
+            ships:['EM', 'NE', 'OA', 'AL'],
+            numberOfNights: [7, 9],
+            averageCost: '200-400', //from-to
+            departurePorts: ['Miami', 'Sidney', 'Orlando'],
+            destinationPorts: ['Mexico', 'Puerto Rico'],
+            departureDates: [
+                {
+                    startDate: 'Sep 25 2019',
+                    endDate:' Oct 13 2019'
+                },
+                {
+                    startDate:'Oct 15 2019',
+                    endDate: 'Oct 27 2019'
+                }
+            ],
+            otherPills: ['pill_ksf', 'pill_obc']
+        }
     );
 });
 
 
-//exclusions type
 
 
 
