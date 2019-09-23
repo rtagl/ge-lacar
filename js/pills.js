@@ -42,37 +42,36 @@
 //set pill color
 //set pill text
 
-function pill(shipNames, promoDates, sailingDates, numberOfNights, ports, itineraries, color, text){
+//sailing dates cover a range or valid departure dates for the promotions
+//get departure date from dom
+//match departure dates to valid depature dates 
+
+//check if item shipcode matches the pill shipcodes 
+//check if item sailDate is within pill sailing dates
+//check if item number of nights matched pill number of nights
+//check if item departure port matches pill departure ports
+
+function pill(pillDetails, shipCodes, promoDates, sailingDates, numberOfNights, departurePorts, itineraries, exclusions){
 
     let target = document.querySelector('.itinerary-promotions');
 
     let pillListItem = document.createElement('li');
-    pillListItem.style.background = color;
+    pillListItem.style.background = 'green';
     pillListItem.style.width = 'auto';
     pillListItem.style.height = 'auto';
     pillListItem.style.padding = '5px 10px 0px 10px';
     pillListItem.style.margin = '0px';
-    pillListItem.innerText = text;
+    pillListItem.innerText = "This pill needs text";
     
     let itineraryElements = document.querySelectorAll('.itinerary-card-component');
     let itineraryDescriptions = document.querySelectorAll('.itinerary-description');
 
-    let shipCodes = [];
-    let sailDates = [];
-    let departurePorts = [];
+    let shipCodesArr = [];
+    let sailDatesArr = [];
+    let departurePortsArr = [];
 
     let promoDatesObjects = [];
     let sailingDatesObjects = [];
-
-    promoDates.forEach((promo)=>{
-        promoDatesObjects.push(new Date(promo.startDate));
-        promoDatesObjects.push(new Date(promo.endDate));
-    });
-
-    sailingDates.forEach((sail)=>{
-        sailingDatesObjects.push(new Date(sail.startDate));
-        sailingDatesObjects.push(new Date(sail.endDate));
-    });
 
     let timeZone = '';
     let country = 'https://www.royalcaribbean.com/lac/es/core/header.html?g11n=false'.split('/')[3];
@@ -95,43 +94,85 @@ function pill(shipNames, promoDates, sailingDates, numberOfNights, ports, itiner
 
     // let prevBtn = document.querySelector('.mat-paginator-navigation-previous');
     // let nextBtn = document.querySelector('.mat-paginator-navigation-next');
-    
-    //LOOP THOUGH ITINERARIES AND GET SHIP CODES AND SAILDATES
+
+    //GET SHIP CODES AND SAILDATES
     itineraryElements.forEach((node)=>{
-        shipCodes.push(node.attributes.shipcode.value);
-        sailDates.push(node.attributes.saildate.value);
+        shipCodesArr.push(node.attributes.shipcode.value);
+        sailDatesArr.push(node.attributes.saildate.value);
     });
 
-    //LOOP THROUGH INTERNERARY DESCRIPTIONS AND GET DEPARTURE PORTS
+    //GET PROMO DATE OBJECTS PUSH THEN TO DATE OBJECT ARRAY
+    promoDates.forEach((promo)=>{
+        promoDatesObjects.push(new Date(promo.startDate));
+        promoDatesObjects.push(new Date(promo.endDate));
+    });
+
+    //GET DATE OBJECTS PUSH THEM TO DATE OBJECT ARRAY
+    sailingDates.forEach((sail)=>{
+        sailingDatesObjects.push(new Date(sail.startDate));
+        sailingDatesObjects.push(new Date(sail.endDate));
+    });
+
+    //GET DEPARTURE PORTS
     itineraryDescriptions.forEach((node)=>{
         let nodeText = node.innerText.substring(node.innerText.lastIndexOf(":")+2, node.innerText.lastIndexOf(",")).split(',');
-        departurePorts.push(nodeText[0]);
+        departurePortsArr.push(nodeText[0]);
     });
 
-    if(currentDate < promoStartDate || currentDate > promoEndDate){
-        console.log('not in date range');
+    //CHECK FOR PILL REQUIREMENTS
+    if(pillDetails !== null || pillDetails !== ''){
+        pillListItem.style.background = pillDetails.color;
+        pillListItem.innerText = pillDetails.text;
+        pillListItem.setAttribute('id', pillDetails.id);
     }
 
-    console.log(sailDates);
+    //CHECK APPLICABLE SHIPCODES
+    if(shipCodes.length !== 0 || shipCodes !== null){
+        check(shipCodesArr, shipCodes);
+    }
 
-    function check(){
-        for(let i = 0; i < sailDates.length; i++) {
-            if(new Date(sailDates[i].value) >= sailingStartDate && new Date(sailDates[i].value) <= sailingEndDate) {
-                console.log('1');
+    //CHECK APPLICABLE PROMODATES
+    if(promoDates.length !== 0 || promoDates !== null){
+        checkPromoDates(promoDatesObjects);
+    }
+
+    //CHECK ALL SHIP CODES AND COMPARE
+    function check(arrOne, arrTwo){
+
+        let str = arrTwo.join('');
+
+        for(let i = 0; i < arrOne.length; i++){
+            if(str.indexOf(arrOne[i]) !== -1){
+                console.log(i);
             }
-            if(shipNames.includes(shipCodes[i].value)) {
-                console.log('2');
-            } 
-            if(departures.includes(departurePorts[i])) {
-                console.log('lodestar');
+        }
+
+    }
+
+    //CHECK THE PROMO DATES
+    function checkPromoDates(promoDatesObjects){
+
+        let currentDate = new Date();
+
+        console.log(currentDate);
+
+        for(let i = 0; i < promoDatesObjects.length; i+=2){
+            if(promoDatesObjects[i] < currentDate && promoDatesObjects[i+1] > currentDate){
+                console.log('good to go');
+            }else{
+                console.log('no go');
             }
-
-            if(promoDatesObjects[i] >= ){
-
-            }
-
         }
     }
+
+    let sailDate = 
+
+    function checkSailDates(sailsDatesObjects, sailDate){
+
+        
+
+    }
+    
 
 }
 
@@ -145,7 +186,7 @@ window.addEventListener('load', ()=>{
         },
 
         //SHIPCODES
-        ['ID', 'EM'],
+        ['NV', 'EM'],
         
         //PROMO DATES
         [
