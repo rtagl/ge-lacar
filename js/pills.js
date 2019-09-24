@@ -190,94 +190,145 @@ function pill(pillDetails, shipCodes, promoDates, sailingDates, numberOfNights, 
 
 window.addEventListener('load', ()=>{
 
-    // pill(
-    //     //PILL DETAILS
-    //     {
-    //         color: '#110000',
-    //         text: 'Buy one get one free',
-    //         id: 'pill_bogo'
-    //     },
-
-    //     //SHIPCODES
-    //     ['NV', 'EM'],
-        
-    //     //PROMO DATES
-    //     [
-    //         {
-    //             startDate: 'Sep 18 2019 10:00:00', 
-    //             endDate: 'Oct 22 2019 10:00:00'    
-    //         },
-    //         {
-    //             startDate: 'Oct 24 2019 10:00:00',
-    //             endDate: 'Nov 05 2019 10:00:00'
-    //         }
-    //     ],
-
-    //     //SAILING DATES
-    //     [
-    //         {
-    //             startDate: 'Sep 20 2019 10:00:00', 
-    //             endDate: 'Oct 27 2019 10:00:00'   
-    //         },
-    //         {
-    //             startDate: 'Oct 25 2019 10:00:00',
-    //             endDate: 'Nov 02 2019 10:00:00'
-    //         }
-    //     ],
-        
-    //     //NUMBER OF NIGHTS
-    //     3, 
-
-    //     //DEPARTURE PORTS
-    //     ['Fort Lauderdale', 'Miami'],
-
-    //     //ITINERARIES
-    //     null,
-
-    //     //EXCLUSIONS
-    //     {
-    //         ships:['EM', 'NE', 'OA', 'AL'],
-    //         numberOfNights: [7, 9],
-    //         averageCost: '200-400', //from-to
-    //         departurePorts: ['Miami', 'Sidney', 'Orlando'],
-    //         destinationPorts: ['Mexico', 'Puerto Rico'],
-    //         departureDates: [
-    //             {
-    //                 startDate: 'Sep 25 2019',
-    //                 endDate:' Oct 13 2019'
-    //             },
-    //             {
-    //                 startDate:'Oct 15 2019',
-    //                 endDate: 'Oct 27 2019'
-    //             }
-    //         ],
-    //         otherPills: ['pill_ksf', 'pill_obc']
-    //     }
-    // );
-
-    pills();
+    pills(
+        {
+            pillDetails: {
+                color: '#110000',
+                text: ' Buy one get one free',
+                class: 'pill_bogo'
+            },
+            pillCriteria: {
+                shipCodes: ['NV', 'EM'],
+                promoDates: [
+                    {
+                        startDate: 'Sep 18 2019 10:00:00', 
+                        endDate: 'Oct 22 2019 10:00:00' 
+                    },
+                    {
+                        startDate: 'Oct 24 2019 10:00:00',
+                        endDate: 'Nov 05 2019 10:00:00'
+                    }
+                ],
+                sailingDates: [
+                    {
+                        startDate: 'Sep 20 2019 10:00:00', 
+                        endDate: 'Oct 27 2019 10:00:00'   
+                    },
+                    {
+                        startDate: 'Oct 25 2019 10:00:00',
+                        endDate: 'Nov 02 2019 10:00:00'
+                    }
+                ],
+                numberOfNights: 3,
+                departurePorts: ['Fort Lauderdale', 'Miami'],
+            },
+            pillExclusion: {
+                shipCodes: ['EM', 'NE'],
+                numberOfNight: [7,9],
+                averageCost: [200,400],//from - to
+                departurePorts: ['Miami', 'Sidney', 'Orlando'],
+                destinationPorts: ['Mexico', 'Puerto Rico'],
+                departureDates: [
+                    {
+                        startDate: 'Sep 25 2019',
+                        endDate:' Oct 13 2019'
+                    },
+                    {
+                        startDate:'Oct 15 2019',
+                        endDate: 'Oct 27 2019'
+                    }
+                ],
+                otherPills: ['pill_bogo']
+            }
+        }
+    );
 
 });
 
-function pills(){
+function pills(data){
 
+    //GET ALL ITITNERARIES ON PAGE
     let itineraries = document.querySelectorAll('.itinerary-card-component');
 
+    let itineraryDetails = [];
+
+    //LOOP OVER AL ITINERARIES AND VALIDATE FOR PILL
     itineraries.forEach((itinerary)=>{
-        console.log(itinerary.attributes.shipcode);
-        console.log(itinerary.attributes.saildate);
-        console.log(
-            itinerary.childNodes[3]
-        );
-        //console.log(itinerary.innerText);
+        itineraryDetails.push(crawlItineraries(itinerary));
     });
 
-    function getShipCode(){
-        return false; 
+    console.log(itineraryDetails);
+
+    //VALIDATES THE ITINERARY TO SEE OF IT TAKES A PILL
+    function crawlItineraries(itinerary){
+        //SHIP CODES
+        let shipCode = itinerary.attributes.shipcode.value;
+        
+        //SAIL DATE
+        let sailDate = itinerary.attributes.saildate.value;
+        
+        //DEPARTURE PORTS
+        let portString = itinerary.children[0].children[1].children[2].innerText;
+        let portStringArray = portString.substring(portString.lastIndexOf(":")+2, portString.lastIndexOf(",")).split(',');
+        let port = portStringArray[0];
+
+        //NIGHTS
+        let numberOfNights = itinerary.children[0].innerText.split(' ')[0];
+
+        //DESTINATION PORTS
+        let destinationPortsStrinArray = itinerary.children[0].children[1].children[4].innerText.split(':\n').pop().split(' | ')
+        let destinationPorts = [];
+        destinationPortsStrinArray.forEach((port)=>{
+            destinationPorts.push(port.split(',')[0]);
+        });
+
+        //OTHER PILLS
+        let existingPills = itinerary.children[0].children[1].children[3].children[0].children;
+        let pillIds = [];
+        for(let i = 0; i < existingPills.length; i++){
+            if(existingPills[i].attributes.class){
+                pillIds.push(existingPills[i].attributes.class.value);
+            }else{
+                pillIds.push('no pill id');
+            }
+        }
+
+        return ({
+            shipCode: shipCode,
+            sailDate: sailDate,
+            departurePort: port,
+            numberOfNights: numberOfNights,
+            destinationPorts: destinationPorts,
+            pillIds: pillIds
+        });
+
     }
 
-    console.log(itineraries);
+    function createPill(pillDetails){
+        //CREATE PILL LIST ITEM
+        let pillListItem = document.createElement('li');
+        pillListItem.style.background = 'green';
+        pillListItem.style.width = 'auto';
+        pillListItem.style.height = 'auto';
+        pillListItem.style.padding = '5px 10px 0px 10px';
+        pillListItem.style.margin = '0px';
+        pillListItem.innerText = "This pill needs text";
+        pillListItem.setAttribute('id', 'pill_'+Math.round(Math.random() * 10));
 
+        if(pillDetails.color){
+            pillListItem.style.background = pillDetails.color;
+        }
+
+        if(pillDetails.text){
+            pillListItem.innerText = pillDetails.text;
+        }
+
+        if(pillDetails.id){
+            pillListItem.setAttribute('id', pillDetails.id);
+        }
+
+        return pillListItem;
+    }
 }
 
 
