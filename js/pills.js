@@ -323,8 +323,8 @@ function pills(data){
             pillListItem.innerText = pillDetails.text;
         }
 
-        if(pillDetails.id){
-            pillListItem.setAttribute('id', pillDetails.id);
+        if(pillDetails.class){
+            pillListItem.addClass(pillDetails.class);
         }
 
         return pillListItem;
