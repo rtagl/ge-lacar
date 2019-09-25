@@ -1,8 +1,3 @@
-//take arguments
-// shipCode<string>, sailings<array of strings>, numOfNights<array of strings>, departures<array of strings>, itinerary<array of strings>
-// .itinerary-visiting-ports 
-// .itinerary-promotions
-
 /*
     MA04S213-2019-10-07
     
@@ -32,108 +27,10 @@
 //     }
 // };
 
-//get all itinerary elements
-//loop through them and get all all ship codes, saildates, departure ports, 
-//check range of promotions
-//check rannge of sail dates
-//check nights
-//check departurePorts
-//check itineraries
-//set pill color
-//set pill text
-
-//sailing dates cover a range or valid departure dates for the promotions
-//get departure date from dom
-//match departure dates to valid depature dates 
-
-//check if item shipcode matches the pill shipcodes 
-//check if item sailDate is within pill sailing dates
-//check if item number of nights matched pill number of nights
-//check if item departure port matches pill departure ports
 
 function pill(pillDetails, shipCodes, promoDates, sailingDates, numberOfNights, departurePorts, exclusions){
 
     let target = document.querySelector('.itinerary-promotions');
-
-    let pillListItem = document.createElement('li');
-    pillListItem.style.background = 'green';
-    pillListItem.style.width = 'auto';
-    pillListItem.style.height = 'auto';
-    pillListItem.style.padding = '5px 10px 0px 10px';
-    pillListItem.style.margin = '0px';
-    pillListItem.innerText = "This pill needs text";
-    
-    let itineraryElements = document.querySelectorAll('.itinerary-card-component');
-    let itineraryDescriptions = document.querySelectorAll('.itinerary-description');
-
-    let shipCodesArr = [];
-    let sailDatesArr = [];
-
-    //GET DEPARTURE PORTS
-    //let departurePort = document .innerText.substring(node.innerText.lastIndexOf(":")+2, node.innerText.lastIndexOf(",")).split(',');
-
-    let promoDatesObjects = [];
-    let sailingDatesObjects = [];
-
-    let timeZone = '';
-    let country = 'https://www.royalcaribbean.com/lac/es/core/header.html?g11n=false'.split('/')[3];
-
-    switch(country){
-        case 'lac':
-            timeZone = 'GMT-0300';
-        break;
-        case 'deu':
-        case 'esp':
-        case 'ita':
-        case 'nor':
-        case 'swe':
-            timeZone = 'GMT+0200';
-        break;
-        case 'mex':
-            timeZone = 'GMT-0500';
-        break;
-    }
-
-    //GET SHIP CODES AND SAILDATES
-    itineraryElements.forEach((node)=>{
-        shipCodesArr.push(node.attributes.shipcode.value);
-        sailDatesArr.push(node.attributes.saildate.value);
-    });
-
-    //GET PROMO DATE OBJECTS PUSH THEN TO DATE OBJECT ARRAY
-    promoDates.forEach((promo)=>{
-        promoDatesObjects.push(new Date(promo.startDate));
-        promoDatesObjects.push(new Date(promo.endDate));
-    });
-
-    //GET DATE OBJECTS PUSH THEM TO DATE OBJECT ARRAY
-    sailingDates.forEach((sail)=>{
-        sailingDatesObjects.push(new Date(sail.startDate));
-        sailingDatesObjects.push(new Date(sail.endDate));
-    });
-
-
-    //CHECK FOR PILL REQUIREMENTS
-    if(pillDetails !== null || pillDetails !== ''){
-        pillListItem.style.background = pillDetails.color;
-        pillListItem.innerText = pillDetails.text;
-        pillListItem.setAttribute('id', pillDetails.id);
-    }
-
-    //CHECK ALL SHIP CODES AND COMPARE
-    function check(arrOne, arrTwo){
-
-        let indices = [];
-        let str = arrTwo.join('');
-
-        for(let i = 0; i < arrOne.length; i++){
-            if(str.indexOf(arrOne[i]) !== -1){
-                indices.push(i);
-            }
-        }
-
-        return indices
-    }
 
     //CHECK THE PROMO DATES
     function checkPromoDates(promoDatesObjects){
@@ -168,28 +65,10 @@ function pill(pillDetails, shipCodes, promoDates, sailingDates, numberOfNights, 
         }
 
     }   
-
-    //CHECK THE DEPARTURE PORTS
-    function checkDeparturePorts(departurePorts, departurePort){
-
-        for(let i = 0; i < departurePorts.length; i++){
-
-        }
-
-        console.log(departurePortsArr);
-        console.log(departurePorts);
-
-    }
-
-    checkSailDates(sailingDatesObjects, sailDatesArr[0]);
-
-    checkDeparturePorts(departurePortsArr, departurePorts);
     
-
 }
 
 window.addEventListener('load', ()=>{
-
     pills(
         {
             pillDetails: {
@@ -211,21 +90,20 @@ window.addEventListener('load', ()=>{
                 ],
                 sailingDates: [
                     {
-                        startDate: 'Sep 20 2019 10:00:00', 
+                        startDate: 'Oct 20 2019 10:00:00', 
                         endDate: 'Oct 27 2019 10:00:00'   
                     },
                     {
-                        startDate: 'Oct 25 2019 10:00:00',
+                        startDate: 'Oct 28 2019 10:00:00',
                         endDate: 'Nov 02 2019 10:00:00'
                     }
                 ],
                 numberOfNights: 3,
                 departurePorts: ['Fort Lauderdale', 'Miami'],
             },
-            pillExclusion: {
+            pillExclusions: {
                 shipCodes: ['EM', 'NE'],
-                numberOfNight: [7,9],
-                averageCost: [200,400],//from - to
+                numberOfNights: [7,9],
                 departurePorts: ['Miami', 'Sidney', 'Orlando'],
                 destinationPorts: ['Mexico', 'Puerto Rico'],
                 departureDates: [
@@ -242,22 +120,68 @@ window.addEventListener('load', ()=>{
             }
         }
     );
-
 });
 
 function pills(data){
+
+    //STORES THE FINAL COMPAREDM AND MATCHED VALUES
+    let comparedValues = [];
 
     //GET ALL ITITNERARIES ON PAGE
     let itineraries = document.querySelectorAll('.itinerary-card-component');
 
     let itineraryDetails = [];
 
-    //LOOP OVER AL ITINERARIES AND VALIDATE FOR PILL
+    let timeZone = '';
+    let country = 'https://www.royalcaribbean.com/lac/es/core/header.html?g11n=false'.split('/')[3];
+
+    //SETS TIME ZONE BASED ON COUNTRY FOUND IN URL
+    switch(country){
+        case 'lac':
+            timeZone = 'GMT-0300';
+        break;
+        case 'deu':
+        case 'esp':
+        case 'ita':
+        case 'nor':
+        case 'swe':
+            timeZone = 'GMT+0200';
+        break;
+        case 'mex':
+            timeZone = 'GMT-0500';
+        break;
+    }
+
+    //CREATES DATE OBJECTS FROM CRITERIA SAILING DATES
+    let criteriaSailDates = [];
+    data.pillCriteria.sailingDates.forEach((sailDate)=>{
+        criteriaSailDates.push(new Date(sailDate.startDate+' '+timeZone));
+        criteriaSailDates.push(new Date(sailDate.endDate+' '+timeZone));
+    });
+    
+    //CREATES DATE OBJECTS FROM PROMO SAILING DATES
+    let criteriaPromoDates = [];
+    data.pillCriteria.promoDates.forEach((promoDate)=>{
+        criteriaPromoDates.push(new Date(promoDate.startDate+' '+timeZone));
+        criteriaPromoDates.push(new Date(promoDate.endDate+' '+timeZone));
+    });
+
+    let exclusionsDepartureDates = [];
+    data.pillExclusions.departureDates.forEach((excludedDate)=>{
+        exclusionsDepartureDates.push(new Date(excludedDate.startDate+' '+timeZone));
+        exclusionsDepartureDates.push(new Date(excludedDate.endDate+' '+timeZone));
+    });
+
+    //LOOP OVER AL ITINERARIES AND COLLECT RELEVANT DATA
     itineraries.forEach((itinerary)=>{
         itineraryDetails.push(crawlItineraries(itinerary));
     });
 
-    console.log(itineraryDetails);
+    //lOOP OVER ITINERARY DETAILS AND COMPARE AGAINST CRITERIA
+    itineraryDetails.forEach((itineraryDetail)=>{
+        comparedValues.push(compareCriteria(itineraryDetail, data.pillCriteria));
+        comparedValues.push(checkExclusions(itineraryDetail, data.pillExclusions));
+    });
 
     //VALIDATES THE ITINERARY TO SEE OF IT TAKES A PILL
     function crawlItineraries(itinerary){
@@ -284,12 +208,12 @@ function pills(data){
 
         //OTHER PILLS
         let existingPills = itinerary.children[0].children[1].children[3].children[0].children;
-        let pillIds = [];
+        let pills = [];
         for(let i = 0; i < existingPills.length; i++){
             if(existingPills[i].attributes.class){
-                pillIds.push(existingPills[i].attributes.class.value);
+                pills.push(existingPills[i].attributes.class.value);
             }else{
-                pillIds.push('no pill id');
+                pills.push('no pill class');
             }
         }
 
@@ -299,11 +223,92 @@ function pills(data){
             departurePort: port,
             numberOfNights: numberOfNights,
             destinationPorts: destinationPorts,
-            pillIds: pillIds
+            pills: pills
         });
 
     }
 
+    //COMPARES PILL CRITERIA AND MATCHES IT TO ITINERARIES
+    function compareCriteria(itineraryDetail, criteria){
+
+        let matched = [];
+
+        //CHECK THAT CRITERIA SHIPCODE IS IN ITINERARY
+        if(criteria.shipCodes.indexOf(itineraryDetail.shipCode) !== -1){
+            matched.push(true);
+        }else{
+            matched.push(false);
+        }
+        
+        //CHECK THAT CRITIRIA NUMBER OF NIGHTS IS EQUAL TO ITINERARY'S
+        if(criteria.numberOfNights === Number(itineraryDetail.numberOfNights)){
+            matched.push(true);
+        }else{
+            matched.push(false);
+        }
+
+        //CHECK THAT CRITERIA DEPARTURE PORT IS IN ITINERARY
+        if(criteria.departurePorts.indexOf(itineraryDetails.departurePorts) !== -1){
+            matched.push(true);
+        }else{
+            matched.push(true);
+        }
+
+        //CHECK THAT CRITERIA SAILING DATES MATCH ITINERARY
+        matched.push(checkSailDates(criteriaSailDates, itineraryDetail.sailDate));
+        
+        //CHECK THAT CRITERIA PROMO DATES MATCH ITINERARY
+        matched.push(checkPromoDates(criteriaPromoDates));
+        
+        return matched;
+    }
+
+    //CHECKS ITINERARY SAIL DATE IS WITHIN THE CRITERIA SAILING DATES TIME RANGE
+    function checkSailDates(sailDatesObjects, sailDate){
+
+        let date = sailDate.split('-');
+        let parsedDateString = new Date(date[1]+' '+date[2]+' '+date[0]+' '+'00:00:00');
+        let dates = [];
+
+        for(let i = 0; i < sailDatesObjects.length; i+=2){
+            if(parsedDateString > sailDatesObjects[i] && parsedDateString < sailDatesObjects[i+1]){
+                dates.push(true);
+            }else{
+                dates.push(false);
+            }
+        }
+
+        if(dates.indexOf(true) !== -1){
+            return true;
+        }else{
+            return false;
+        }
+
+    }
+
+    //CHECKS CURRENT DATE IS WITHIN THE CRITERIA PROMO DATES TIME RANGE
+    function checkPromoDates(promoDatesObjects){
+
+        let currentDate = new Date();
+        let dates = [];
+
+        for(let i = 0; i < promoDatesObjects.length; i+=2){
+            if(promoDatesObjects[i] <= currentDate && promoDatesObjects[i+1] >= currentDate){
+                dates.push(true);
+            }else{
+                dates.push(false);
+            }
+        }
+
+        if(dates.indexOf(true) !== -1){
+            return true;
+        }else{
+            return false;
+        }
+
+    }
+
+    //CREATES THE PILL DOM ELEMENT 
     function createPill(pillDetails){
         //CREATE PILL LIST ITEM
         let pillListItem = document.createElement('li');
@@ -313,22 +318,67 @@ function pills(data){
         pillListItem.style.padding = '5px 10px 0px 10px';
         pillListItem.style.margin = '0px';
         pillListItem.innerText = "This pill needs text";
-        pillListItem.setAttribute('id', 'pill_'+Math.round(Math.random() * 10));
+        pillListItem.addClass('pill_default');
 
         if(pillDetails.color){
             pillListItem.style.background = pillDetails.color;
+        }else{
+            console.log('The pill color was not specified, default will be set');
         }
 
         if(pillDetails.text){
             pillListItem.innerText = pillDetails.text;
+        }else{
+            console.log('The pill text was not specified, default will be set');
         }
 
         if(pillDetails.class){
             pillListItem.addClass(pillDetails.class);
+        }else{
+            console.log('The pill class was not specified, default will be set');
         }
 
         return pillListItem;
     }
+
+    //CHECK EXCLUSIONS
+    function checkExclusions(itineraryDetail, exclusions){
+
+        console.log('itinerary', itineraryDetail);
+        console.log('exlcusions', exclusions);
+
+        let checked = [];
+
+        if(exclusions.shipCodes.indexOf(itineraryDetail.shipCode) !== -1){
+            checked.push(false);
+        }else{
+            checked.push(true);
+        }
+
+        if(exclusions.departurePorts.indexOf(itineraryDetail.departurePort) !== -1){
+            checked.push(false);
+        }else{
+            checked.push(true);
+        }
+
+        //CHECK DESTINATION PORTS BOTH VARIABLES ARE ARRAYS OF STRINGS
+        //CHECK DEPATURE DATES
+
+        //CHECK EXCLUSIONS NUMBER OF NIGHTS
+        if(exclusions.numberOfNights.indexOf(itineraryDetail.numberOfNights) !== -1){
+            checked.push(false);
+        }else{
+            checked.push(true);
+        }
+
+
+        //CHECK OTHER PILLS BOTH VARIABLES ARE ARRAYS OFSTRINGS
+        console.log(itineraryDetail);
+
+    }
+
+    //CREATE PILL
+
 }
 
 
