@@ -29,43 +29,7 @@
 
 
 function pill(pillDetails, shipCodes, promoDates, sailingDates, numberOfNights, departurePorts, exclusions){
-
-    let target = document.querySelector('.itinerary-promotions');
-
-    //CHECK THE PROMO DATES
-    function checkPromoDates(promoDatesObjects){
-
-        let currentDate = new Date();
-
-        for(let i = 0; i < promoDatesObjects.length; i+=2){
-            if(promoDatesObjects[i] < currentDate && promoDatesObjects[i+1] > currentDate){
-                console.log('good to go');
-                return true;
-            }else{
-                console.log('no go');
-                return false;
-            }
-        }
-    }
-
-    //CHECK THE SAILING DATE
-    function checkSailDates(sailDatesObjects, sailDate){
-
-        let date = sailDate.split('-');
-        let parsedDateString = new Date(date[1]+' '+date[2]+' '+date[0]+' '+'00:00:00');
-
-        for(let i = 0; i < sailDatesObjects.length; i+=2){
-            if(parsedDateString > sailDatesObjects[i] && parsedDateString < sailDatesObjects[i+1]){
-                console.log('you are good to go');
-                return true;
-            }else{
-                console.log('you are not good to go');
-                return false;
-            }
-        }
-
-    }   
-    
+    let target = document.querySelector('.itinerary-promotions'); 
 }
 
 window.addEventListener('load', ()=>{
@@ -116,7 +80,7 @@ window.addEventListener('load', ()=>{
                         endDate: 'Oct 27 2019'
                     }
                 ],
-                otherPills: ['pill_bogo']
+                otherPills: ['pill_bogo', 'pill_ksf']
             }
         }
     );
@@ -166,6 +130,7 @@ function pills(data){
         criteriaPromoDates.push(new Date(promoDate.endDate+' '+timeZone));
     });
 
+    //CREATE DATE OBJECTS FROM EXCLUSION DATES
     let exclusionsDepartureDates = [];
     data.pillExclusions.departureDates.forEach((excludedDate)=>{
         exclusionsDepartureDates.push(new Date(excludedDate.startDate+' '+timeZone));
@@ -349,31 +314,41 @@ function pills(data){
 
         let checked = [];
 
-        if(exclusions.shipCodes.indexOf(itineraryDetail.shipCode) !== -1){
+        //CHECK SHIPCODES
+        if(exclusions.shipCodes.indexOf(itineraryDetail.shipCode) === -1){
             checked.push(false);
         }else{
             checked.push(true);
         }
 
-        if(exclusions.departurePorts.indexOf(itineraryDetail.departurePort) !== -1){
-            checked.push(false);
-        }else{
+        //CHECK DEPARTURE PORTS
+        if(exclusions.departurePorts.indexOf(itineraryDetail.departurePort) === -1){
             checked.push(true);
+        }else{
+            checked.push(false);
         }
 
         //CHECK DESTINATION PORTS BOTH VARIABLES ARE ARRAYS OF STRINGS
         //CHECK DEPATURE DATES
 
         //CHECK EXCLUSIONS NUMBER OF NIGHTS
-        if(exclusions.numberOfNights.indexOf(itineraryDetail.numberOfNights) !== -1){
+        if(Number(itineraryDetail.numberOfNights) <= exclusions.numberOfNights[0] ||
+            Number(itineraryDetail.numberOfNights) >= exclusions.numberOfNights[1]
+        ){
             checked.push(false);
         }else{
             checked.push(true);
         }
 
+        //CHECK OTHER PILLS BOTH VARIABLES ARE ARRAYS OF STRINGS
+        let pills = exclusions.otherPills.join('');
+        if(itineraryDetail.pills.indexOf(pills) !== -1){
+            checked.push(false);
+        }else{
+            checked.push(true);
+        }
 
-        //CHECK OTHER PILLS BOTH VARIABLES ARE ARRAYS OFSTRINGS
-        console.log(itineraryDetail);
+        console.log(checked);
 
     }
 
