@@ -10,10 +10,6 @@
 
 //FIX DEPARTURE PORTS ON EXCLUSIONS
 
-function pill(pillDetails, shipCodes, promoDates, sailingDates, numberOfNights, departurePorts, exclusions){
-    let target = document.querySelector('.itinerary-promotions'); 
-}
-
 window.addEventListener('load', ()=>{
     pills(
         {
@@ -62,7 +58,7 @@ window.addEventListener('load', ()=>{
                 //         endDate: 'Nov 13 2019'
                 //     }
                 // ],
-                //otherPills: ['pill_yoda', 'pill_dawg']
+                otherPills: [/*'pill_yoda',*/ 'mx_savings']
             }
         }
     );
@@ -157,14 +153,23 @@ function pills(data){
 
         //OTHER PILLS
         let existingPills = itinerary.children[0].children[1].children[3].children[0].children;
-        let pills = [];
+        let pillClasses = [];
         for(let i = 0; i < existingPills.length; i++){
-            if(existingPills[i].attributes.class){
-                pills.push(existingPills[i].attributes.class.value);
+            if(existingPills[i].classList){
+                pillClasses.push(existingPills[i].attributes.class.value);
             }else{
-                pills.push('no pill class');
+                pillClasses.push('no pill class');
             }
         }
+
+        let pills = [];
+        pillClasses.forEach((pill)=>{
+            if(pill.indexOf(' ') !== -1){
+                pills.push(pill.split(' '));
+            }else{
+                pills.push(pill);
+            }
+        });
 
         return ({
             shipCode: shipCode,
@@ -322,13 +327,17 @@ function pills(data){
 
         //CHECK OTHER PILLS BOTH VARIABLES ARE ARRAYS OF STRINGS
         if(exclusions.otherPills){
-            let pills = exclusions.otherPills.join('');
 
-            if(itineraryDetail.pills.indexOf(pills) !== -1){
-                checked.push(false);
-            }else{
-                checked.push(true);
-            }
+            console.log(itineraryDetail.pills);
+            console.log(exclusions.otherPills);
+
+            itineraryDetail.pills.forEach((pill)=>{
+                if(pill.indexOf(exclusions.otherPills) === -1){
+                    checked.push(true);
+                }else{
+                    checked.push(false);
+                }
+            });
 
         }
 
@@ -394,8 +403,3 @@ function pills(data){
     targetAndInjectPill(itineraries, comparedValues, injectPill);
 
 }
-
-
-
-
-
