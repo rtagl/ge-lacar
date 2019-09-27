@@ -8,8 +8,6 @@
     2019-10-07 = sailDate
 */
 
-//FIX DEPARTURE PORTS ON EXCLUSIONS
-
 window.addEventListener('load', ()=>{
     pills(
         {
@@ -19,7 +17,7 @@ window.addEventListener('load', ()=>{
                 class: 'pill_bogo'
             },
             pillCriteria: {
-                shipCodes: ['NV', 'EM'],
+                shipCodes: ['NV'],
                 promoDates: [
                     {
                         startDate: 'Sep 18 2019 10:00:00', 
@@ -45,9 +43,9 @@ window.addEventListener('load', ()=>{
             },
             pillExclusions: {
                 //shipCodes: ['NE'],
-                //numberOfNights: [7,9],
-                //departurePorts: ['Miami', 'Sidney', 'Orlando'],
-                //destinationPorts: ['Mexico', 'Puerto Rico'],
+                //numberOfNights: [4, 9],
+                //departurePorts: ['Miami', 'Fort Lauderdale'],
+                //destinationPorts: ['Nassau'],
                 // departureDates: [
                 //     {
                 //         startDate: 'Sep 25 2019',
@@ -58,13 +56,22 @@ window.addEventListener('load', ()=>{
                 //         endDate: 'Nov 13 2019'
                 //     }
                 // ],
-                otherPills: [/*'pill_yoda',*/ 'mx_savings']
+                //otherPills: ['mx_savings']
             }
         }
     );
 });
 
 function pills(data){
+
+    //CHECK IF CRITERIA IS NOT SET
+    // if( !data.pillCriteria.shipCode ||
+    //     !data.pillCriteria.promoDates ||
+    //     !data.pillCriteria.sailingDates ||
+    //     !data.pillCriteria.numberOfNights ||
+    //     !data.pillCriteria.departurePorts){
+    //     return console.log('Pill criteria is required');
+    // }
 
     //STORES THE FINAL COMPARED AND MATCHED VALUES
     let comparedValues = [];
@@ -107,6 +114,7 @@ function pills(data){
         criteriaPromoDates.push(new Date(promoDate.startDate+' '+timeZone));
         criteriaPromoDates.push(new Date(promoDate.endDate+' '+timeZone));
     });
+    
 
     //CREATE DATE OBJECTS FROM EXCLUSION DATES
     let exclusionsDepartureDates = [];
@@ -188,33 +196,43 @@ function pills(data){
         let matched = [];
 
         //CHECK THAT CRITERIA SHIPCODE IS IN ITINERARY
-        if(criteria.shipCodes.indexOf(itineraryDetail.shipCode) !== -1){
-            matched.push(true);
-        }else{
-            matched.push(false);
+        if(criteria.shipCode){
+            if(criteria.shipCodes.indexOf(itineraryDetail.shipCode) !== -1){
+                matched.push(true);
+            }else{
+                matched.push(false);
+            }
         }
         
         //CHECK THAT CRITIRIA NUMBER OF NIGHTS IS EQUAL TO ITINERARY'S
-        if(criteria.numberOfNights === Number(itineraryDetail.numberOfNights)){
-            matched.push(true);
-        }else{
-            matched.push(false);
+        if(criteria.numberOfNights){
+            if(criteria.numberOfNights === Number(itineraryDetail.numberOfNights)){
+                matched.push(true);
+            }else{
+                matched.push(false);
+            }
         }
 
         //CHECK THAT CRITERIA DEPARTURE PORT IS IN ITINERARY
-        if(criteria.departurePorts.indexOf(itineraryDetails.departurePorts) !== -1){
-            matched.push(true);
-        }else{
-            matched.push(true);
-        }
+        if(criteria.departurePorts){
+            if(criteria.departurePorts.indexOf(itineraryDetails.departurePorts) !== -1){
+                matched.push(true);
+            }else{
+                matched.push(true);
+            }
+        }   
 
         //CHECK THAT CRITERIA SAILING DATES MATCH ITINERARY
-        matched.push(checkSailDates(criteriaSailDates, itineraryDetail.sailDate));
+        if(criteria.sailingDates){
+            matched.push(checkSailDates(criteriaSailDates, itineraryDetail.sailDate));
+        }
         
         //CHECK THAT CRITERIA PROMO DATES MATCH ITINERARY
-        matched.push(checkPromoDates(criteriaPromoDates));
-        
-        return matched;
+        if(criteria.promoDates){
+            matched.push(checkPromoDates(criteriaPromoDates));
+        }
+
+        return matched.length !== 0?matched:true;
     }
 
     //CHECKS ITINERARY SAIL DATE IS WITHIN THE CRITERIA SAILING DATES TIME RANGE
@@ -316,36 +334,37 @@ function pills(data){
 
         //CHECK EXCLUSIONS NUMBER OF NIGHTS
         if(exclusions.numberOfNights){
-            if( Number(itineraryDetail.numberOfNights) <= exclusions.numberOfNights[0] ||
-                Number(itineraryDetail.numberOfNights) >= exclusions.numberOfNights[1]
+            if( Number(itineraryDetail.numberOfNights) < exclusions.numberOfNights[0] ||
+                Number(itineraryDetail.numberOfNights) > exclusions.numberOfNights[1]
             ){
-                checked.push(false);
-            }else{
                 checked.push(true);
+            }else{
+                checked.push(false);
             }
         }
 
         //CHECK OTHER PILLS BOTH VARIABLES ARE ARRAYS OF STRINGS
         if(exclusions.otherPills){
-
-            console.log(itineraryDetail.pills);
-            console.log(exclusions.otherPills);
-
             itineraryDetail.pills.forEach((pill)=>{
-                if(pill.indexOf(exclusions.otherPills) === -1){
-                    checked.push(true);
-                }else{
-                    checked.push(false);
-                }
+                exclusions.otherPills.forEach((otherPill)=>{
+                    if(pill.indexOf(otherPill) === -1){
+                        checked.push(true);
+                    }else{
+                        checked.push(false);
+                    }
+                });
             });
-
         }
 
+        console.log(checked);
+
         //SET THE RETURN OF THE FUNCTION
-        if(checked.indexOf(false) === -1 && checked.length !== 0){
-            return false;
-        }else{  
+        if(checked.length == 0){
             return true;
+        }else if(checked.indexOf(false) === -1){
+            return true;
+        }else{
+            return false;
         }
 
     }
