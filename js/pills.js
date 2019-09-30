@@ -32,8 +32,8 @@ window.addEventListener('load', ()=>{
                 // departurePorts: ['Fort Lauderdale', 'Miami'],
             },
             pillExclusions: {
-                //shipCodes: ['NV'],
-                //numberOfNights: [4, 9],
+                shipCodes: ['NV'],
+                numberOfNights: [6, 9],
                 //departurePorts: ['Miami', 'Fort Lauderdale'],
                 //destinationPorts: ['Nassau'],
                 // departureDates: [
@@ -103,7 +103,6 @@ function pills(data){
         criteriaPromoDates.push(new Date());
         criteriaPromoDates.push(new Date(Date.now()+1000*60*60*24*30));
     }
-    console.log(criteriaPromoDates);
     
     //CREATE DATE OBJECTS FROM EXCLUSION DATES
     let exclusionsDepartureDates = [];
@@ -384,12 +383,14 @@ function pills(data){
         pillListItem.style.background = 'green';
         pillListItem.style.width = 'auto';
         pillListItem.style.height = 'auto';
-        pillListItem.style.padding = '5px 10px 5px 10px';
-        pillListItem.style.margin = '0px 7px 7px 0px';
+        pillListItem.style.padding = '0px 10px 0px 10px';
+        pillListItem.style.margin = '10px 7px 5px 0px';
+        pillListItem.style.display = 'inline-flex';
         pillListItem.style.color = '#ffffff';
         pillListItem.style.fontFamily = 'proxima-bold, Helvetica Neue, Roboto, Arial, sans-serif';
         pillListItem.style.letterSpacing = '0.75px';
-        pillListItem.style.fontSize = '12px';
+        pillListItem.style.lineHeight = '25px';
+        pillListItem.style.fontSize = '10px';
         pillListItem.style.fontWeight = '400';
         pillListItem.innerText = "This pill needs text";
         pillListItem.classList.add('pill_default');
