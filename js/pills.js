@@ -61,7 +61,8 @@ function pills(data){
     let itineraries = document.querySelectorAll('.itinerary-card-component');
     let itineraryDetails = [];
     let timeZone = '';
-    let country = 'https://www.royalcaribbean.com/lac/es/core/header.html?g11n=false'.split('/')[3];
+    let country = window.location.href.split('/')[3];
+    console.log('its me mario!', window.location.href, country);
 
     //SETS TIME ZONE BASED ON COUNTRY FOUND IN URL
     switch(country){
@@ -432,6 +433,14 @@ function pills(data){
         });
 
     }
+
+    //REFRESH PILLS ON PAGE URL CHANGE
+    // function refreshPills(){
+    //     let pillOnPage = document.querySelector('.'+data.pillDetails.class);
+    //     if(!pillOnPage){
+    //         targetAndInjectPill(itineraries, comparedValues, injectPill);
+    //     }
+    // }
 
     targetAndInjectPill(itineraries, comparedValues, injectPill);
 
