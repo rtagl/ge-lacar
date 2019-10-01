@@ -7,7 +7,7 @@ window.addEventListener('load', ()=>{
                 class: 'pill_bogo'
             },
             pillCriteria: {
-                shipCodes: ['NV', 'OA', 'MJ'],
+                //shipCodes: ['NV', 'OA', 'MJ'],
                 // promoDates: [
                 //     {
                 //         startDate: 'Sep 18 2019 10:00:00', 
@@ -20,22 +20,22 @@ window.addEventListener('load', ()=>{
                 // ],
                 // sailingDates: [
                 //     {
-                //         startDate: 'Oct 20 2019 10:00:00', 
-                //         endDate: 'Oct 27 2019 10:00:00'   
+                //         startDate: 'Oct 1 2019 10:00:00', 
+                //         endDate: 'Apr 26 2021 10:00:00'   
                 //     },
                 //     {
                 //         startDate: 'Oct 28 2019 10:00:00',
                 //         endDate: 'Nov 03 2019 10:00:00'
                 //     }
                 // ],
-                // numberOfNights: [3, 9],
+                numberOfNights: [3, 8],
                 // departurePorts: ['Fort Lauderdale', 'Miami'],
             },
             pillExclusions: {
-                shipCodes: ['NV'],
-                numberOfNights: [6, 9],
-                //departurePorts: ['Miami', 'Fort Lauderdale'],
-                //destinationPorts: ['Nassau'],
+                // shipCodes: ['NV'],
+                // numberOfNights: [6, 9],
+                // departurePorts: ['Miami', 'Fort Lauderdale'],
+                // destinationPorts: ['Nassau'],
                 // departureDates: [
                 //     {
                 //         startDate: 'Sep 25 2019',
@@ -62,7 +62,6 @@ function pills(data){
     let itineraryDetails = [];
     let timeZone = '';
     let country = window.location.href.split('/')[3];
-    console.log('its me mario!', window.location.href, country);
 
     //SETS TIME ZONE BASED ON COUNTRY FOUND IN URL
     switch(country){
@@ -138,8 +137,8 @@ function pills(data){
         let portStringArray = portString.substring(portString.lastIndexOf(":")+2, portString.lastIndexOf(",")).split(',');
         let port = portStringArray[0];
 
-        //NIGHTS
-        let numberOfNights = itinerary.children[0].innerText.split(' ')[0];
+        //NUMBER OF NIGHTS
+        let numberOfNights = itinerary.children[0].children[1].children[0].innerText.split(' ')[0];
 
         //DESTINATION PORTS
         let destinationPortsStrinArray = itinerary.children[0].children[1].children[4].innerText.split(':\n').pop().split(' | ')
@@ -195,8 +194,8 @@ function pills(data){
         
         //CHECK THAT CRITIRIA NUMBER OF NIGHTS IS EQUAL TO ITINERARY'S
         if(criteria.numberOfNights){
-            if( criteria.numberOfNights[0] <= Number(itineraryDetail.numberOfNights) ||
-                criteria.numberOfNights[1] >= Number(itineraryDetail.numberOfNights)
+            if( Number(itineraryDetail.numberOfNights) >= criteria.numberOfNights[0] &&
+                Number(itineraryDetail.numberOfNights) <= criteria.numberOfNights[1]
             ){
                 matched.push(true);
             }else{
@@ -435,13 +434,18 @@ function pills(data){
     }
 
     //REFRESH PILLS ON PAGE URL CHANGE
-    // function refreshPills(){
-    //     let pillOnPage = document.querySelector('.'+data.pillDetails.class);
-    //     if(!pillOnPage){
-    //         targetAndInjectPill(itineraries, comparedValues, injectPill);
-    //     }
-    // }
+    function refreshPills(){
+        let pillOnPage = document.querySelectorAll('.'+data.pillDetails.class);
+
+        if(pillOnPage.length !== 0){
+            pillOnPage.forEach((pill)=>{
+                pill.remove();
+            });
+            targetAndInjectPill(itineraries, comparedValues, injectPill);
+        }
+    }
 
     targetAndInjectPill(itineraries, comparedValues, injectPill);
+    refreshPills();
 
 }
