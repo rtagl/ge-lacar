@@ -21,14 +21,14 @@ window.addEventListener('load', ()=>{
                 // sailingDates: [
                 //     {
                 //         startDate: 'Oct 1 2019 10:00:00', 
-                //         endDate: 'Apr 26 2021 10:00:00'   
+                //         endDate: 'Nov 15 2019 10:00:00'   
                 //     },
                 //     {
-                //         startDate: 'Oct 28 2019 10:00:00',
-                //         endDate: 'Nov 03 2019 10:00:00'
+                //         startDate: 'Mar 10 2020 10:00:00',
+                //         endDate: 'Nov 03 2020 10:00:00'
                 //     }
                 // ],
-                numberOfNights: [3, 8],
+                numberOfNights: [0, 9],
                 // departurePorts: ['Fort Lauderdale', 'Miami'],
             },
             pillExclusions: {
@@ -36,16 +36,16 @@ window.addEventListener('load', ()=>{
                 // numberOfNights: [6, 9],
                 // departurePorts: ['Miami', 'Fort Lauderdale'],
                 // destinationPorts: ['Nassau'],
-                // departureDates: [
-                //     {
-                //         startDate: 'Sep 25 2019',
-                //         endDate:' Oct 13 2019'
-                //     },
-                //     {
-                //         startDate:'Oct 26 2019',
-                //         endDate: 'Nov 13 2019'
-                //     }
-                // ],
+                departureDates: [
+                    {
+                        startDate: 'Sep 25 2019',
+                        endDate:' Oct 13 2019'
+                    },
+                    {
+                        startDate:'Apr 01 2020',
+                        endDate: 'Jul 26 2020'
+                    }
+                ],
                 //otherPills: ['mx_savings']
             }
         }
@@ -102,15 +102,6 @@ function pills(data){
     }else{
         criteriaPromoDates.push(new Date());
         criteriaPromoDates.push(new Date(Date.now()+1000*60*60*24*30));
-    }
-    
-    //CREATE DATE OBJECTS FROM EXCLUSION DATES
-    let exclusionsDepartureDates = [];
-    if(data.pillExclusions.departureDates){
-        data.pillExclusions.departureDates.forEach((excludedDate)=>{
-            exclusionsDepartureDates.push(new Date(excludedDate.startDate+' '+timeZone));
-            exclusionsDepartureDates.push(new Date(excludedDate.endDate+' '+timeZone));
-        });
     }
 
     //LOOP OVER AL ITINERARIES AND COLLECT RELEVANT DATA
@@ -229,17 +220,19 @@ function pills(data){
     function checkSailDates(sailDatesObjects, sailDate){
 
         let date = sailDate.split('-');
-        let parsedDateString = new Date(date[1]+' '+date[2]+' '+date[0]+' '+'00:00:00'+' '+timeZone);
+        let itineraryDate = new Date(date[1]+' '+date[2]+' '+date[0]+' '+'00:00:00'+' '+timeZone);
         let dates = [];
 
         for(let i = 0; i < sailDatesObjects.length; i+=2){
-            if(parsedDateString > sailDatesObjects[i] && parsedDateString < sailDatesObjects[i+1]){
+            if(itineraryDate >= sailDatesObjects[i] && itineraryDate <= sailDatesObjects[i+1]){
                 dates.push(true);
             }else{
                 dates.push(false);
             }
         }
 
+        //dates is an array of arrays need a loop to check each arry element
+        console.log(dates);
         if(dates.indexOf(true) !== -1){
             return true;
         }else{
@@ -314,7 +307,9 @@ function pills(data){
                 departureDates.push(new Date(date.endDate+' '+timeZone));
             });
 
-            if(checkSailDates(departureDates, itineraryDetail.sailDate)){
+            console.log(checkSailDates(departureDates, itineraryDetail.sailDate));
+
+            if(checkSailDates(departureDates, itineraryDetail.sailDate) === true){
                 checked.push(true);
             }else{
                 checked.push(false);
@@ -347,6 +342,7 @@ function pills(data){
         }
 
         //CHECK IF THERE ARE EXLUSIONS THAT ARE CONTINGENT
+        //UPON OTHER EXCLUSIONS
         //AND SET THE RETURN OF THE FUNCTION
         if(Object.keys(exclusions).length > 1){
             //SET THE RETURN OF THE FUNCTION
