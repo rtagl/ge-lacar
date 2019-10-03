@@ -8,45 +8,45 @@ window.addEventListener('load', function(){
             },
             pillCriteria: {
                 shipCodes: ['NV', 'OA', 'MJ'],
-                // promoDates: [
-                //     {
-                //         startDate: 'Sep 18 2019 10:00:00', 
-                //         endDate: 'Oct 22 2019 10:00:00' 
-                //     },
-                //     {
-                //         startDate: 'Oct 24 2019 10:00:00',
-                //         endDate: 'Nov 05 2019 10:00:00'
-                //     }
-                // ],
-                sailingDates: [
-                    // {
-                    //     startDate: 'Oct 1 2019', 
-                    //     endDate: 'Nov 1 2019'   
-                    // },
+                promoDates: [
                     {
-                        startDate: 'Apr 9 2020',
-                        endDate: 'Apr 15 2020'
+                        startDate: 'Sep 18 2019 10:00:00', 
+                        endDate: 'Oct 22 2019 10:00:00' 
+                    },
+                    {
+                        startDate: 'Oct 24 2019 10:00:00',
+                        endDate: 'Nov 05 2019 10:00:00'
                     }
                 ],
-                //numberOfNights: [0, 9],
-                // departurePorts: ['Fort Lauderdale', 'Miami'],
+                sailingDates: [
+                    {
+                        startDate: 'Oct 1 2019', 
+                        endDate: 'Nov 1 2019'   
+                    },
+                    {
+                        startDate: 'Jan 1 2020',
+                        endDate: 'Dec 31 2020'
+                    }
+                ],
+                numberOfNights: [0, 9],
+                departurePorts: ['Fort Lauderdale', 'Miami'],
             },
             pillExclusions: {
-                // shipCodes: ['NV'],
-                // numberOfNights: [6, 9],
-                // departurePorts: ['Miami', 'Fort Lauderdale'],
-                // destinationPorts: ['Nassau'],
+                shipCodes: ['NV'],
+                numberOfNights: [6, 9],
+                departurePorts: ['Miami', 'Fort Lauderdale'],
+                destinationPorts: ['Nassau'],
                 departureDates: [
-                    // {
-                    //     startDate: 'Oct 28 2019',
-                    //     endDate:' Nov 13 2019'
-                    // },
+                    {
+                        startDate: 'Oct 28 2019',
+                        endDate:' Nov 13 2019'
+                    },
                     {
                         startDate:'Apr 15 2020',
                         endDate: 'Apr 17 2020'
                     }
                 ],
-                //otherPills: ['mx_savings']
+                otherPills: ['mx_savings']
             }
         }
     );
@@ -82,6 +82,8 @@ function pills(data){
     var itineraryDetails = [];
     var timeZone = '';
     var country = window.location.href.split('/')[3];
+    
+    console.log(country);
 
     //SETS TIME ZONE BASED ON COUNTRY FOUND IN URL
     switch(country){
@@ -98,7 +100,11 @@ function pills(data){
         case 'mex':
             timeZone = 'GMT-0500';
         break;
+        default:
+            timeZone =  'GMT-0500';
     }
+
+    console.log(timeZone);
 
     //CREATES DATE OBJECTS FROM CRITERIA SAILING DATES
     var criteriaSailDates = [];
@@ -123,7 +129,7 @@ function pills(data){
         var promoDates = data.pillCriteria.sailingDates
         for(var i = 0; i < promoDates.length; i++){
             criteriaSailDates.push(new Date(promoDates[i].startDate+' '+timeZone));
-            criteriaSailDates.push(new Date(pormoDates[i].endDate+' '+timeZone));
+            criteriaSailDates.push(new Date(promoDates[i].endDate+' '+timeZone));
         }
         // data.pillCriteria.promoDates.forEach(function(promoDate){
         //     criteriaPromoDates.push(new Date(promoDate.startDate+' '+timeZone));

@@ -11,7 +11,8 @@
   <script type="text/javascript" src="js/old-browser-pop-up.js"></script>
   <script type="text/javascript" src="js/invoke-init.js"></script>
   <script type="text/javascript" src="js/pills.js"></script>
-  <!-- <link rel="stylesheet" href="css/fonts.css"> -->
+  <script type="text/javascript" src="js/exit-pop-up-count-down.js"></script>
+  <link rel="stylesheet" href="css/fonts.css">
   <title>Document</title>
   <style>
     body,
@@ -28,18 +29,28 @@
       background: lightblue;
       margin: 10px 0px 0px 0px;
     }
+
+    .reveal-overlay{
+      background: rgba(0, 0, 0, 0.5);
+      width: 100%;
+      height: 100%;
+      position: fixed;
+      display: block;
+      z-index: 999;
+    }
   </style>
 </head>
 
 <body>
-  <div class="parent">
 
+  <div class="reveal-overlay">
+  </div>
+
+  <div class="parent">
   </div>
 
   <div>
-    <form action="/foooooooolllllllsssss" method="get">
-      <button id="button">Submit</button>
-    </form>
+    <button id="button">Submit</button>
   </div>
 
   <section>
