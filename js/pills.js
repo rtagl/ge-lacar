@@ -1,4 +1,11 @@
 window.addEventListener('load', function(){
+
+    document.getElementById('button').addEventListener('click', function(){
+        document.querySelector('.container').remove();
+    });
+
+    domObserver();
+
     pills(
         {
             pillDetails: {
@@ -569,29 +576,32 @@ function pills(data){
             //     pill.remove();
             // });
             targetAndInjectPill(itineraries, comparedValues);
-            console.log(pillOnPage);
         }
     }
 
     function paginationClicks(){
         var prevPage = document.querySelector('.mat-paginator-navigation-previous');
         var nextPage = document.querySelector('.mat-paginator-navigation-next');
-        
-        prevPage.style.background = 'red';
-        prevPage.style.width = '30px';
-        prevPage.style.height = '30px';
-
-        nextPage.style.background = 'red';
-        nextPage.style.width = '30px';
-        nextPage.style.height = '30px';
 
         prevPage.addEventListener('click', function(){
-            refreshPills();
+            domObserver();
         });
 
         nextPage.addEventListener('click', function(){
-            refreshPills();
+            domObserver();
         });
+
+        // function domObserver(){
+        //     var timer = setInterval(function() {
+        //         var itineraryComponents = document.querySelectorAll('.itinerary-card-component');
+        //         if(itineraries[0].attributes.packagecode.value !== itineraryComponents[0].attributes.packagecode.value){
+        //             pills(data);
+        //             clearInterval(timer);
+        //         }else{
+        //             console.log('loading...');
+        //         }
+        //     }, 500);
+        // }
     }
 
     targetAndInjectPill(itineraries, comparedValues);
@@ -599,3 +609,26 @@ function pills(data){
     paginationClicks();
 
 }
+
+function domObserver(){
+   // select the target node
+    var target = document.querySelector('.itinerary-search-results-list');
+    console.log(target);
+    
+    // create an observer instance
+    var observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            console.log(mutation.type);
+        });
+    });
+    
+    // configuration of the observer:
+    var config = { attributes: true, childList: true, characterData: true }
+    
+    // pass in the target node, as well as the observer options
+    observer.observe(target, config);
+    
+    // later, you can stop observing
+    observer.disconnect();
+}
+
