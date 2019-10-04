@@ -10,12 +10,12 @@ window.addEventListener('load', function(){
                 shipCodes: ['NV', 'OA', 'MJ'],
                 promoDates: [
                     {
-                        startDate: 'Sep 18 2019 10:00:00', 
-                        endDate: 'Oct 22 2019 10:00:00' 
+                        startDate: 'Sep 18 2019', 
+                        endDate: 'Oct 22 2019' 
                     },
                     {
-                        startDate: 'Oct 24 2019 10:00:00',
-                        endDate: 'Nov 05 2019 10:00:00'
+                        startDate: 'Oct 24 2019',
+                        endDate: 'Nov 05 2019'
                     }
                 ],
                 sailingDates: [
@@ -82,8 +82,6 @@ function pills(data){
     var itineraryDetails = [];
     var timeZone = '';
     var country = window.location.href.split('/')[3];
-    
-    console.log(country);
 
     //SETS TIME ZONE BASED ON COUNTRY FOUND IN URL
     switch(country){
@@ -103,8 +101,6 @@ function pills(data){
         default:
             timeZone =  'GMT-0500';
     }
-
-    console.log(timeZone);
 
     //CREATES DATE OBJECTS FROM CRITERIA SAILING DATES
     var criteriaSailDates = [];
@@ -126,10 +122,10 @@ function pills(data){
     //CREATES DATE OBJECTS FROM PROMO SAILING DATES
     var criteriaPromoDates = [];
     if(data.pillCriteria.promoDates){
-        var promoDates = data.pillCriteria.sailingDates
+        var promoDates = data.pillCriteria.promoDates
         for(var i = 0; i < promoDates.length; i++){
-            criteriaSailDates.push(new Date(promoDates[i].startDate+' '+timeZone));
-            criteriaSailDates.push(new Date(promoDates[i].endDate+' '+timeZone));
+            criteriaPromoDates.push(new Date(promoDates[i].startDate+' '+timeZone));
+            criteriaPromoDates.push(new Date(promoDates[i].endDate+' '+timeZone));
         }
         // data.pillCriteria.promoDates.forEach(function(promoDate){
         //     criteriaPromoDates.push(new Date(promoDate.startDate+' '+timeZone));
@@ -565,7 +561,7 @@ function pills(data){
     function refreshPills(){
         var pillOnPage = document.querySelectorAll('.'+data.pillDetails.class);
 
-        if(pillOnPage.length !== 0){
+        if(pillOnPage.length > 0){
             for(var i = 0; i < pillOnPage.length; i++){
                 pillOnPage[i].remove();
             }
@@ -573,10 +569,33 @@ function pills(data){
             //     pill.remove();
             // });
             targetAndInjectPill(itineraries, comparedValues);
+            console.log(pillOnPage);
         }
+    }
+
+    function paginationClicks(){
+        var prevPage = document.querySelector('.mat-paginator-navigation-previous');
+        var nextPage = document.querySelector('.mat-paginator-navigation-next');
+        
+        prevPage.style.background = 'red';
+        prevPage.style.width = '30px';
+        prevPage.style.height = '30px';
+
+        nextPage.style.background = 'red';
+        nextPage.style.width = '30px';
+        nextPage.style.height = '30px';
+
+        prevPage.addEventListener('click', function(){
+            refreshPills();
+        });
+
+        nextPage.addEventListener('click', function(){
+            refreshPills();
+        });
     }
 
     targetAndInjectPill(itineraries, comparedValues);
     refreshPills();
+    paginationClicks();
 
 }
