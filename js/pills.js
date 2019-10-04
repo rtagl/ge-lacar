@@ -1,62 +1,68 @@
 window.addEventListener('load', function(){
 
     document.getElementById('button').addEventListener('click', function(){
-        document.querySelector('.container').remove();
+        var nights = document.querySelector('.itinerary-card-component').children[0].children[1].children[0];
+
+        if(nights.innerText === '6 Nights'){
+            nights.innerText = '3 Nights';
+        }else{
+            nights.innerText = '6 Nights';
+        }
     });
 
-    domObserver();
 
-    pills(
-        {
-            pillDetails: {
-                color: 'red',
-                text: ' Buy one get one free',
-                class: 'pill_bogo'
-            },
-            pillCriteria: {
-                shipCodes: ['NV', 'OA', 'MJ'],
-                promoDates: [
-                    {
-                        startDate: 'Sep 18 2019', 
-                        endDate: 'Oct 22 2019' 
-                    },
-                    {
-                        startDate: 'Oct 24 2019',
-                        endDate: 'Nov 05 2019'
-                    }
-                ],
-                sailingDates: [
-                    {
-                        startDate: 'Oct 1 2019', 
-                        endDate: 'Nov 1 2019'   
-                    },
-                    {
-                        startDate: 'Jan 1 2020',
-                        endDate: 'Dec 31 2020'
-                    }
-                ],
-                numberOfNights: [0, 9],
-                departurePorts: ['Fort Lauderdale', 'Miami'],
-            },
-            pillExclusions: {
-                shipCodes: ['NV'],
-                numberOfNights: [6, 9],
-                departurePorts: ['Miami', 'Fort Lauderdale'],
-                destinationPorts: ['Nassau'],
-                departureDates: [
-                    {
-                        startDate: 'Oct 28 2019',
-                        endDate:' Nov 13 2019'
-                    },
-                    {
-                        startDate:'Apr 15 2020',
-                        endDate: 'Apr 17 2020'
-                    }
-                ],
-                otherPills: ['mx_savings']
-            }
+    var data = {
+        pillDetails: {
+            color: 'red',
+            text: ' Buy one get one free',
+            class: 'pill_bogo'
+        },
+        pillCriteria: {
+            shipCodes: ['NV', 'OA', 'MJ'],
+            promoDates: [
+                {
+                    startDate: 'Sep 18 2019', 
+                    endDate: 'Oct 22 2019' 
+                },
+                {
+                    startDate: 'Oct 24 2019',
+                    endDate: 'Nov 05 2019'
+                }
+            ],
+            sailingDates: [
+                {
+                    startDate: 'Oct 1 2019', 
+                    endDate: 'Nov 1 2019'   
+                },
+                {
+                    startDate: 'Jan 1 2020',
+                    endDate: 'Dec 31 2020'
+                }
+            ],
+            numberOfNights: [0, 9],
+            departurePorts: ['Fort Lauderdale', 'Miami'],
+        },
+        pillExclusions: {
+            shipCodes: ['NV'],
+            numberOfNights: [6, 9],
+            // departurePorts: ['Miami', 'Fort Lauderdale'],
+            // destinationPorts: ['Nassau'],
+            // departureDates: [
+            //     {
+            //         startDate: 'Oct 28 2019',
+            //         endDate:' Nov 13 2019'
+            //     },
+            //     {
+            //         startDate:'Apr 15 2020',
+            //         endDate: 'Apr 17 2020'
+            //     }
+            // ],
+            // otherPills: ['mx_savings']
         }
-    );
+    };
+
+    pills(data);
+
 });
 
 function pills(data){
@@ -580,28 +586,16 @@ function pills(data){
     }
 
     function paginationClicks(){
-        var prevPage = document.querySelector('.mat-paginator-navigation-previous');
         var nextPage = document.querySelector('.mat-paginator-navigation-next');
-
-        prevPage.addEventListener('click', function(){
-            domObserver();
-        });
+        var prevPage = document.querySelector('.mat-paginator-navigation-previous');
 
         nextPage.addEventListener('click', function(){
-            domObserver();
+            domObserver(data);
         });
 
-        // function domObserver(){
-        //     var timer = setInterval(function() {
-        //         var itineraryComponents = document.querySelectorAll('.itinerary-card-component');
-        //         if(itineraries[0].attributes.packagecode.value !== itineraryComponents[0].attributes.packagecode.value){
-        //             pills(data);
-        //             clearInterval(timer);
-        //         }else{
-        //             console.log('loading...');
-        //         }
-        //     }, 500);
-        // }
+        prevPage.addEventListener('click', function(){
+            domObserver(data);
+        });
     }
 
     targetAndInjectPill(itineraries, comparedValues);
@@ -610,25 +604,15 @@ function pills(data){
 
 }
 
-function domObserver(){
-   // select the target node
-    var target = document.querySelector('.itinerary-search-results-list');
-    console.log(target);
-    
-    // create an observer instance
-    var observer = new MutationObserver(function(mutations) {
-        mutations.forEach(function(mutation) {
-            console.log(mutation.type);
-        });
-    });
-    
-    // configuration of the observer:
-    var config = { attributes: true, childList: true, characterData: true }
-    
-    // pass in the target node, as well as the observer options
-    observer.observe(target, config);
-    
-    // later, you can stop observing
-    observer.disconnect();
-}
+function domObserver(data){
+    var target = document.querySelector('.itinerary-card-component').attributes.packagecode.value;
 
+    var timer = setInterval(function(){
+        var targetCheck = document.querySelector('.itinerary-card-component').attributes.packagecode.value;
+        if(targetCheck !== target){
+            pills(data);
+            clearInterval(timer);
+        }
+    }, 500);
+
+}
