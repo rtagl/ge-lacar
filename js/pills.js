@@ -11,7 +11,7 @@ window.addEventListener('load', function(){
     });
 
 
-    var data = {
+    pills({
         pillDetails: {
             color: 'red',
             text: ' Buy one get one free',
@@ -59,9 +59,7 @@ window.addEventListener('load', function(){
             // ],
             // otherPills: ['mx_savings']
         }
-    };
-
-    pills(data);
+    });
 
 });
 
@@ -588,13 +586,20 @@ function pills(data){
     function paginationClicks(){
         var nextPage = document.querySelector('.mat-paginator-navigation-next');
         var prevPage = document.querySelector('.mat-paginator-navigation-previous');
+        var nightsFilter = document.querySelectorAll('.mat-button-toggle-label');
+
+        nightsFilter.forEach(function(btn){
+            btn.addEventListener('click', function(){
+                domObserver(data, true);
+            });
+        });
 
         nextPage.addEventListener('click', function(){
-            domObserver(data);
+            domObserver(data, true);
         });
 
         prevPage.addEventListener('click', function(){
-            domObserver(data);
+            domObserver(data, true);
         });
     }
 
@@ -604,15 +609,25 @@ function pills(data){
 
 }
 
-function domObserver(data){
-    var target = document.querySelector('.itinerary-card-component').attributes.packagecode.value;
-
+function domObserver(data, reset){
+    var target = document.querySelectorAll('.itinerary-card-component');
     var timer = setInterval(function(){
-        var targetCheck = document.querySelector('.itinerary-card-component').attributes.packagecode.value;
-        if(targetCheck !== target){
-            pills(data);
-            clearInterval(timer);
+        var newTarget = document.querySelectorAll('.itinerary-card-component');
+        for(var i = 0; i < target.length; i++){
+            if( target[i].attributes.destinationcode !== newTarget[i].attributes.destinationcode ||
+                target[i].attributes.shipcode        !== newTarget[i].attributes.shipcode        ||
+                target[i].attributes.packagecode     !== newTarget[i].attributes.packagecode     ||
+                target[i].attributes.saildate        !== newTarget[i].attributes.saildate        || 
+                target[i].attributes.saildate_first  !== newTarget[i].attributes.saildate_first  ||
+                target[i].attributes.saildate_last   !== newTarget[i].attributes.saildate_last   ||
+                target[i] === undefined || 
+                newTarget[i] === undefined
+            ){  
+                pills(data);
+                clearInterval(timer);
+                break;
+            }
         }
     }, 500);
-
 }
+
