@@ -362,7 +362,7 @@ function countDown(parent, startDate, endDate, offer, countries, last, days){
 
     //CREATE INTERVAL THAT UPDATES COUNTDOWN CLOCK
     var checkTimeInterval = setInterval(function(){ 
-        setTimeDigits(countryInUrl);
+        setTimeDigits(country);
     }, 1000);
     
     //THIS CLEARS THE TIMER ONCE THE COUNTDOWN REACHES 0
@@ -437,14 +437,14 @@ function countDown(parent, startDate, endDate, offer, countries, last, days){
 
     }
 
-    //INVOKE setTimeDigits() FIRST TO AVOID BLACK DIGITS ON LOAD
+    //INVOKE setTimeDigits() FIRST TO AVOID BLANK DIGITS ON LOAD
     //THE setTimeDigits() WILL ONLY RUN FOR COUNTRIES THAT ARE FOUND ON THE WINDOW HREF
     var url = window.location.href;
 
     countries.forEach(function(country){
         if(url.indexOf(country) !== -1){
             setTimeDigits(country);
-            countryInUrl = country;
+            //countryInUrl = country;
         }
     });
     
