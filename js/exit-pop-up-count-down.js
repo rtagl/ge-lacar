@@ -243,6 +243,7 @@ function exitPopUp(props){
 
     parentElement.appendChild(popup);
 
+    //CENTERS POPUP ON SCREEN
     function centerPopup(){
         let windowWidth = (window.innerWidth / 2) - (parseInt(popup.style.width) / 2) + 'px';
         let windowHeight = (window.innerHeight / 2) - (parseInt(popup.style.height) / 2) + 'px';
@@ -250,6 +251,7 @@ function exitPopUp(props){
         popup.style.marginTop = windowHeight;
     }
 
+    //DEFINES THE DESKTOP LAYOUT OF THE POPUP
     function desktopLayout(){
         popup.style.width = '600px';
         popup.style.height = '325px';
@@ -264,6 +266,7 @@ function exitPopUp(props){
         cancelBtn.style.width = '240px';
     }
 
+    //DEFINES THE MOBILE LAYOUT OF THE POPUP
     function mobileLayout(){
         popup.style.width = '100%';
         popup.style.height = '100%';
@@ -279,6 +282,7 @@ function exitPopUp(props){
         cancelBtn.style.width = '100%';
     }
 
+    //SETS THE INITIAL LAYOUT OF THE POPUP 
     function setLayout(screenWidth){
         if(screenWidth <= 750){
             mobileLayout();
@@ -288,6 +292,8 @@ function exitPopUp(props){
         }
     }
 
+
+    //LISTEN TO WINDOW RESIZE TO 
     window.addEventListener('resize', function(){
         setLayout(window.innerWidth)
     });
@@ -375,5 +381,38 @@ function exitPopUp(props){
             countryInUrl = country;
         }
     });
+
+    //CREATE EVENTS FOR CANCEL AND CONTINUE BUTTONS
+    let overlay = document.querySelector('.reveal-overlay');
+    let rcclShield = document.querySelector('[data-open="modal"]');
+    let rcclBaseURL = 'https://www.royalcaribbean.com/';
+
+    //let currentURL = window.location.href.split('/');
+    let currentURL = 'https://www.royalcaribbean.com/esp/es/booking/stateroom?sailDate=2020-06-10&shipCode=SC&packageCode=SC04I496&destinationCode=FAR.E&accessCabin=false&selectedCurrencyCode=EUR'.split('/');
+    let homePageURL = rcclBaseURL+currentURL[3]+'/'+currentURL[4];
+
+    //FADE AND HIDE POPUP
+    continueBtn.addEventListener('click', function(){
+        overlay.style.opacity = 1;
+        let fade = setInterval(function(){
+            overlay.style.opacity -= 0.10;
+        }, 100);
+        setTimeout(function(){
+            clearInterval(fade);
+            overlay.style.display = 'none';
+        },300);
+    });
+
+    //REDIRECT TO USER SPECIFIC COUNTRY URL
+    cancelBtn.addEventListener('click', function(){
+        window.location.href = homePageURL;
+    });
+
+    //SHOW THE POP UP
+    rcclShield.addEventListener('click', function(){
+        overlay.style.opacity = 1.0;
+        overlay.style.display = 'block';
+    });
+    
 
 }
