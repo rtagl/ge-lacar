@@ -1,4 +1,9 @@
 window.addEventListener('load', ()=>{
+
+    //TEST COOKIE
+    document.cookie = "wuc=DEU";
+    document.cookie = "wul=de";
+
     exitPopUp({
         bannerDetails:{
             backgroundColor: '#ffffff',
@@ -385,11 +390,7 @@ function exitPopUp(props){
     //CREATE EVENTS FOR CANCEL AND CONTINUE BUTTONS
     let overlay = document.querySelector('.reveal-overlay');
     let rcclShield = document.querySelector('[data-open="modal"]');
-    let rcclBaseURL = 'https://www.royalcaribbean.com/';
 
-    //let currentURL = window.location.href.split('/');
-    let currentURL = 'https://www.royalcaribbean.com/esp/es/booking/stateroom?sailDate=2020-06-10&shipCode=SC&packageCode=SC04I496&destinationCode=FAR.E&accessCabin=false&selectedCurrencyCode=EUR'.split('/');
-    let homePageURL = rcclBaseURL+currentURL[3]+'/'+currentURL[4];
 
     //FADE AND HIDE POPUP
     continueBtn.addEventListener('click', function(){
@@ -405,7 +406,7 @@ function exitPopUp(props){
 
     //REDIRECT TO USER SPECIFIC COUNTRY URL
     cancelBtn.addEventListener('click', function(){
-        window.location.href = homePageURL;
+        window.location.href = setHomePageURL(getCookie());
     });
 
     //SHOW THE POP UP
@@ -413,6 +414,39 @@ function exitPopUp(props){
         overlay.style.opacity = 1.0;
         overlay.style.display = 'block';
     });
-    
 
+    //GET COOKIE DATA AND RETURN COUNTRY AND LANGUAGE
+    function getCookie(){
+        var cookieData = document.cookie;
+        var country = cookieData.substring(cookieData.indexOf('wuc')+4, cookieData.indexOf('wuc')+7);
+        var language = cookieData.substring(cookieData.indexOf('wul')+4, cookieData.indexOf('wul')+6);
+        return {country: country, language: language};
+    }
+
+    //USING COOKIE DATA RETURN THE HOME PAGE URL 
+    function setHomePageURL(cookieData){
+
+        var url = '';
+
+        switch(cookieData.country){
+            case 'ARG':
+            case 'CHL':
+            case 'COL':
+            case 'PAN':
+                url = 'lac/es?country='+cookieData.country;
+                break;
+            case 'DEU':
+            case 'ESP':  
+            case 'ITA': 
+            case 'NOR':
+            case 'SWE':
+            case 'MEX':
+                url = cookieData.country.toLowerCase()+'/'+cookieData.language+'?country='+cookieData.country;
+                break;
+            default:
+                url = '?country=USA';
+        }
+        
+        return 'https://www.royalcaribbean.com/' + url;
+    }
 }
