@@ -297,7 +297,6 @@ function exitPopUp(props){
         }
     }
 
-
     //LISTEN TO WINDOW RESIZE TO 
     window.addEventListener('resize', function(){
         setLayout(window.innerWidth)
@@ -446,7 +445,7 @@ function exitPopUp(props){
             default:
                 url = '?country=USA';
         }
-        
+
         return 'https://www.royalcaribbean.com/' + url;
     }
 }
