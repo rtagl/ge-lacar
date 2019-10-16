@@ -30,7 +30,7 @@ window.addEventListener('load', ()=>{
         },
         countDown:{
             start:'Oct 10 2019 10:00:00',
-            end: 'Oct 10 2019 16:00:00',
+            end: 'Oct 27 2019 16:00:00',
         },
         countries:[
             'lac'
@@ -43,6 +43,8 @@ function exitPopUp(props){
     let countryInUrl = '';
 
     let parentElement = document.querySelector('.reveal-overlay');
+
+    //document.getElementById('module-modal').remove();
 
     let popup = document.createElement('div');
     popup.style.background = props.bannerDetails.backgroundColor;
@@ -75,7 +77,7 @@ function exitPopUp(props){
     popupOfferText.style.color = props.bannerDetails.textColor;
     popupOfferText.style.fontFamily = 'proxima, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif';
     popupOfferText.style.fontSize = '24px';
-    popupOfferText.style.fontColor = props.bannerDetails.textColor;
+    popupOfferText.style.color = props.bannerDetails.textColor;
     popupOfferText.style.textAlign = 'center';
     popupOfferText.innerText =props.bannerDetails.offerText;
     popupOfferText.style.padding = '0px';
@@ -88,7 +90,7 @@ function exitPopUp(props){
     popupOfferSubText.style.color = props.bannerDetails.textColor;
     popupOfferSubText.style.fontFamily = 'proxima, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif';
     popupOfferSubText.style.fontSize = '16px';
-    popupOfferSubText.style.fontColor = props.bannerDetails.textColor;
+    popupOfferSubText.style.color = props.bannerDetails.textColor;
     popupOfferSubText.style.textAlign = 'center';
     popupOfferSubText.innerText = props.bannerDetails.offerSubText;
 
@@ -107,7 +109,7 @@ function exitPopUp(props){
     clockHours.style.color = props.bannerDetails.textColor;
     clockHours.style.fontFamily = 'proxima, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif';
     clockHours.style.fontSize = '48px';
-    clockHours.style.fontColor = props.bannerDetails.textColor;
+    clockHours.style.color = props.bannerDetails.textColor;
     clockHours.style.textAlign = 'center';
     clockHours.style.letterSpacing = '2px';
     clockHours.innerText = '00';
@@ -120,7 +122,7 @@ function exitPopUp(props){
     clockMinutes.style.color = props.bannerDetails.textColor;
     clockMinutes.style.fontFamily = 'proxima, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif';
     clockMinutes.style.fontSize = '48px';
-    clockMinutes.style.fontColor = props.bannerDetails.textColor;
+    clockMinutes.style.color = props.bannerDetails.textColor;
     clockMinutes.style.textAlign = 'center';
     clockMinutes.style.letterSpacing = '2px';
     clockMinutes.innerText = '00';
@@ -133,7 +135,7 @@ function exitPopUp(props){
     clockSeconds.style.color = props.bannerDetails.textColor;
     clockSeconds.style.fontFamily = 'proxima, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif';
     clockSeconds.style.fontSize = '48px';
-    clockSeconds.style.fontColor = props.bannerDetails.textColor;
+    clockSeconds.style.color = props.bannerDetails.textColor;
     clockSeconds.style.textAlign = 'center';
     clockSeconds.style.letterSpacing = '2px';
     clockSeconds.innerText = '00';
@@ -145,7 +147,7 @@ function exitPopUp(props){
     clockColon.style.color = props.bannerDetails.textColor;
     clockColon.style.fontFamily = 'proxima, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif';
     clockColon.style.fontSize = '48px';
-    clockColon.style.fontColor = props.bannerDetails.textColor;
+    clockColon.style.color = props.bannerDetails.textColor;
     clockColon.style.textAlign = 'center';
     clockColon.innerText = ':';
 
@@ -213,7 +215,6 @@ function exitPopUp(props){
     continueBtn.style.color = props.continueBtn.textColor;
     continueBtn.style.fontFamily = 'proxima, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif';
     continueBtn.style.fontSize = '16px';
-    continueBtn.style.fontColor = props.bannerDetails.textColor;
     continueBtn.style.textAlign = 'center';
     continueBtn.style.border = 'none';
     continueBtn.style.cursor = 'pointer';
@@ -222,8 +223,17 @@ function exitPopUp(props){
     let cancelBtn = continueBtn.cloneNode(true);
     cancelBtn.style.background = props.cancelBtn.backgroundColor;
     cancelBtn.innerText = props.cancelBtn.text;
-    cancelBtn.style.color = props.cancelBtn.color;
+    cancelBtn.style.color = props.cancelBtn.textColor;
     cancelBtn.style.border = 'solid 1px #000000';
+
+    let daysLeftText = document.createElement('h2');
+    //daysLeftText.style.background = 'red';
+    daysLeftText.style.width = '100%';
+    daysLeftText.style.height = 'auto';
+    daysLeftText.style.fontFamily = 'proxima, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif';
+    daysLeftText.style.fontSize = '38px';
+    daysLeftText.style.color = props.bannerDetails.textColor;
+    daysLeftText.style.textAlign = 'center';
 
     popup.appendChild(container);
 
@@ -314,6 +324,17 @@ function exitPopUp(props){
         clearInterval(checkTimeInterval);
     }
 
+    //CLEARS THE DIGITS OF THE CLOCK WHEN THE COUNTDOWN IS GREATER THAN 72HRS
+    function clearClock(){
+        popupClockContainer.innerHTML = '';
+        clockTextIndicators.innerHTML = '';
+    }
+
+    function addHoursLeft(text){
+        daysLeftText.innerText = text + ' hours left!';
+        popupClockContainer.appendChild(daysLeftText);
+    }
+
     //SET COUNTDOWN DIGITS TO MATCH CALCULATED TIME
     function setTimeDigits(country){
 
@@ -356,9 +377,15 @@ function exitPopUp(props){
         }
 
         //CHANGE CLOCK FACE TO SHOW TIME REMAINING
-        clockHours.innerText = timerHours;
-        clockMinutes.innerText = timerMinutes;
-        clockSeconds.innerText = timerSeconds;
+        if(timerHours >= 72){
+            console.log('more than 72hours');
+            clearClock();
+            addHoursLeft(timerHours);
+        }else{
+            clockHours.innerText = timerHours;
+            clockMinutes.innerText = timerMinutes;
+            clockSeconds.innerText = timerSeconds;
+        }
 
         if(timerHours <= 0 && timerMinutes <= 0  && timerSeconds <= 0){
             stopTimer();

@@ -157,5 +157,5 @@ var dictionary = {
 
 
 window.addEventListener('load', function(){
-    console.log(dictionary.obc.hero.NOR);
+    console.log(dictionary.obc.AA.hero.NOR);
 });
