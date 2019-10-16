@@ -13,6 +13,7 @@
   <script type="text/javascript" src="js/pills.js"></script> -->
   <script type="text/javascript" src="js/exit-pop-up-count-down.js"></script>
   <script type="text/javascript" src="js/dictionary-patch.js"></script>
+  <script type="text/javascript" src="js/promo-code.js"></script>
   <link rel="stylesheet" href="css/fonts.css">
   <title>Document</title>
   <style>
@@ -39,6 +40,13 @@
       position: fixed;
       display: none;
       z-index: 999;
+    }
+
+    .page-occupancy{
+      background: red;
+      width: 100%;
+      height: 200px;
+      float: left;
     }
   </style>
 </head>
@@ -1399,8 +1407,189 @@
       </md-paginator>
     </div>
   </section>
-  
-  <input type="date" name="" id="">
+
+  <header class="page-occupancy">
+    
+  </header>
+
+  <section class="occupancy-container">
+
+    <div _ngcontent-c26="" class="init" data-toggler=".is-active" id="glass" aria-expanded="false"></div>
+  <!----><app-exclusive-rates _ngcontent-c26="" _nghost-c27="" class=""><!----><div _ngcontent-c27="" class="panel" data-toggler=".is-active" id="exclusiveRates" aria-expanded="false">
+    <div _ngcontent-c27="" class="innerPanel right">
+        <button _ngcontent-c27="" aria-label="Close menu" class="close-button" type="button">
+            <span _ngcontent-c27="">Cerrar X</span>
+        </button>
+        <div _ngcontent-c27="" class="row title">
+            <div _ngcontent-c27="" class="column"><h3 _ngcontent-c27="" class="small-hdr-3">Consulta si cumples con los requisitos para optar por las tarifas exclusivas</h3>
+                <p _ngcontent-c27=""></p>
+            </div>
+        </div>
+        <div _ngcontent-c27="" class="buttons">
+            <div _ngcontent-c27="" class="row">
+                <!----><div _ngcontent-c27="" class="column medium-6 small-12">
+                    <button _ngcontent-c27="" class="hollow button" id="senior_rate" tabindex="-1">
+                        Mayores de 55 años
+                    </button>
+                    <label _ngcontent-c27="" class="hide-for-small-only"></label>
+                </div>
+                <!---->
+            </div>
+            <div _ngcontent-c27="" class="row bottom">
+                <div _ngcontent-c27="" class="column medium-6 small-12 society text-left" id="exclusive-rates-cas-rate">
+                    <!---->
+                    <input _ngcontent-c27="" class="casid" maxlength="9" type="number" placeholder="Crown &amp; Anchor Society" tabindex="-1">
+                    
+                        <!---->
+                      <!---->
+                    <p _ngcontent-c27=""><a _ngcontent-c27="" tabindex="-1">¿Olvidaste tu número de socio de Crown &amp; Anchor Society?</a>
+                    </p>
+                    
+                </div>
+                <div _ngcontent-c27="" class="column medium-6 small-12 offer-code" id="exclusive-rates-promo-code">
+                    <div _ngcontent-c27="" class="small-8 large-9 column offer-code__input">
+                        <!---->
+                        <input _ngcontent-c27="" type="text" placeholder="Código de promoción" tabindex="-1" class="ng-untouched ng-pristine ng-valid">
+                        <!---->
+                        <!----><p _ngcontent-c27="" class="show">
+                            </p>
+                        
+                    </div>
+                    <div _ngcontent-c27="" class="small-4 large-3 column offer-code__apply">
+                        <a _ngcontent-c27="" class="apply-button" tabindex="-1">Aplicar</a>
+                    </div>
+                </div>
+            </div>
+            <div _ngcontent-c27="" class="row actions">
+                <div _ngcontent-c27="" class="column medium-6 small-12 hide-for-small-only" id="exclusive-rates-cancel">
+                    <button _ngcontent-c27="" class="cancel button" tabindex="-1">
+                        Cancelar
+                    </button>
+                </div>
+                <div _ngcontent-c27="" class="column medium-6 small-12">
+                    <button _ngcontent-c27="" class="button submit center" id="exclusive-rates-continue" tabindex="-1">
+                        Continuar
+                    </button>
+                </div>
+            </div>
+        </div>
+    <p class="mxBlurb">Usa el código de promoción: <b>deal</b> para recibir <b>$25</b> de descuento sobre tu camarote.</p></div>
+</div>
+</app-exclusive-rates>
+  <!---->
+  <h3 _ngcontent-c26="" class="small-hdr-4 medium-hdr-3">
+    <!---->
+    <!----><span _ngcontent-c26="">
+      ¿Cuántos pasajeros?
+    </span>
+  </h3>
+  <p _ngcontent-c26="" class="medium-hdr-5 small-hdr-6">
+    La mayoría de los camarotes son para 4 personas máximo.
+  </p>
+  <div _ngcontent-c26="" class="row align-center">
+    <div _ngcontent-c26="" class="column small-10 large-2 amount">
+      <app-amount _ngcontent-c26="" class="row" _nghost-c23=""><div _ngcontent-c23="" class="row small-12">
+  <button _ngcontent-c23="" class="column small-4 left-button" id="adult_minus" tabindex="0" data-selector="occupancy-adults-minus">
+    <span _ngcontent-c23="">
+      <div _ngcontent-c23="" class="minus"> - </div>
+    </span>
+  </button>
+  <div _ngcontent-c23="" class="column amount small-4">
+    <div _ngcontent-c23="">
+      <div _ngcontent-c23="">
+        2
+      </div>
+    </div>
+  </div>
+  <button _ngcontent-c23="" class="column small-4 right-button" id="adult_plus" tabindex="0" data-selector="occupancy-adults-plus">
+    <span _ngcontent-c23="">
+      <div _ngcontent-c23="" class="plus"> + </div>
+    </span>
+  </button>
+</div>
+</app-amount>
+      <span _ngcontent-c26="" class="legend small-hdr-6 medium-hdr-4">Adultos</span>
+    </div>
+    <div _ngcontent-c26="" class="column medium-1 show-for-large"></div>
+    <div _ngcontent-c26="" class="column small-10 large-2 amount">
+      <app-amount _ngcontent-c26="" class="row" _nghost-c23=""><div _ngcontent-c23="" class="row small-12">
+  <button _ngcontent-c23="" class="column small-4 left-button disabled" id="child_minus" tabindex="0" data-selector="occupancy-child-minus">
+    <span _ngcontent-c23="">
+      <div _ngcontent-c23="" class="minus"> - </div>
+    </span>
+  </button>
+  <div _ngcontent-c23="" class="column amount small-4">
+    <div _ngcontent-c23="">
+      <div _ngcontent-c23="">
+        0
+      </div>
+    </div>
+  </div>
+  <button _ngcontent-c23="" class="column small-4 right-button" id="child_plus" tabindex="0" data-selector="occupancy-child-plus">
+    <span _ngcontent-c23="">
+      <div _ngcontent-c23="" class="plus"> + </div>
+    </span>
+  </button>
+</div>
+</app-amount>
+      <span _ngcontent-c26="" class="legend small-hdr-6 medium-hdr-4">Niños (Edades 0-12)</span>
+
+      <div _ngcontent-c26="" class="row align-center hide">
+        <div _ngcontent-c26="" class="column small-12">
+          Edad del niño (en el momento de zarpar):
+        </div>
+        <div _ngcontent-c26="" class="column">
+          <form-select _ngcontent-c26="" data-selector="occupancy-child-1-age" _nghost-c28=""><select _ngcontent-c28="" tabindex="0" class="ng-untouched ng-pristine ng-valid">
+  <!---->
+  <!----><option _ngcontent-c28="" value="0">0</option><option _ngcontent-c28="" value="1">1</option><option _ngcontent-c28="" value="2">2</option><option _ngcontent-c28="" value="3">3</option><option _ngcontent-c28="" value="4">4</option><option _ngcontent-c28="" value="5">5</option><option _ngcontent-c28="" value="6">6</option><option _ngcontent-c28="" value="7">7</option><option _ngcontent-c28="" value="8">8</option><option _ngcontent-c28="" value="9">9</option><option _ngcontent-c28="" value="10">10</option><option _ngcontent-c28="" value="11">11</option><option _ngcontent-c28="" value="12">12</option>
+</select>
+</form-select>
+        </div>
+        <div _ngcontent-c26="" class="column hide">
+          <form-select _ngcontent-c26="" data-selector="occupancy-child-2-age" _nghost-c28=""><select _ngcontent-c28="" tabindex="0" class="ng-untouched ng-pristine ng-valid">
+  <!---->
+  <!----><option _ngcontent-c28="" value="0">0</option><option _ngcontent-c28="" value="1">1</option><option _ngcontent-c28="" value="2">2</option><option _ngcontent-c28="" value="3">3</option><option _ngcontent-c28="" value="4">4</option><option _ngcontent-c28="" value="5">5</option><option _ngcontent-c28="" value="6">6</option><option _ngcontent-c28="" value="7">7</option><option _ngcontent-c28="" value="8">8</option><option _ngcontent-c28="" value="9">9</option><option _ngcontent-c28="" value="10">10</option><option _ngcontent-c28="" value="11">11</option><option _ngcontent-c28="" value="12">12</option>
+</select>
+</form-select>
+        </div>
+        <div _ngcontent-c26="" class="column hide">
+          <form-select _ngcontent-c26="" data-selector="occupancy-child-3-age" _nghost-c28=""><select _ngcontent-c28="" tabindex="0" class="ng-untouched ng-pristine ng-valid">
+  <!---->
+  <!----><option _ngcontent-c28="" value="0">0</option><option _ngcontent-c28="" value="1">1</option><option _ngcontent-c28="" value="2">2</option><option _ngcontent-c28="" value="3">3</option><option _ngcontent-c28="" value="4">4</option><option _ngcontent-c28="" value="5">5</option><option _ngcontent-c28="" value="6">6</option><option _ngcontent-c28="" value="7">7</option><option _ngcontent-c28="" value="8">8</option><option _ngcontent-c28="" value="9">9</option><option _ngcontent-c28="" value="10">10</option><option _ngcontent-c28="" value="11">11</option><option _ngcontent-c28="" value="12">12</option>
+</select>
+</form-select>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div _ngcontent-c26="" class="column small-12" style="background: orange none repeat scroll 0% 0%;">
+    <!----><div class="mxPromoBadge"><div class="mxTitle">Recibe <span class="mxPrice">$25</span> de descuento</div><div class="mxBlurb">Usando código de promoción:</div><div class="mxCode">deal</div> <div class="mxCTA button">APLICA AHORA</div><div class="mxOr">O</div></div><div _ngcontent-c26="" class="exclusiveRates align-center" id="exclusive_rates" style="display: none;">
+      <a _ngcontent-c26="" class="small-hdr-6 medium-hdr-5 exclusiveRatesLink" data-selector="occupancy-exclusive-rates" id="exclusive_rates" tabindex="0">Consulta si cumples con los requisitos para optar por las tarifas exclusivas</a>
+    </div>
+    <button _ngcontent-c26="" class="button submit center small-wide" data-selector="occupancy-continue" id="occupancy-continue" tabindex="0">Continuar</button>
+  <p _ngcontent-c26="" class="medium-hdr-5 warning occupancy-info">
+    ¿Necesitas más de 4 pasajeros? Por favor llámanos al +1-305-341-0204
+  </p></div>
+  <!----><div _ngcontent-c26="" class="accessibility" id="accessible_stateroom">
+    <app-checkbox _ngcontent-c26="" _nghost-c29=""><div _ngcontent-c29="" class="form-control ng-untouched ng-pristine ng-valid">
+  <label _ngcontent-c29="" class="control-label" for="accessibility" tabindex="0">
+    <input _ngcontent-c29="" type="checkbox" data-selector="occupancy-accessible-stateroom" id="accessibility" name="accessibility" class="ng-untouched ng-pristine ng-valid">
+    
+  </label>
+</div>
+</app-checkbox>
+    <span _ngcontent-c26="" class="icon">
+      <figure _ngcontent-c26="">
+        <app-svg _ngcontent-c26="" _nghost-c9="">
+    <svg _ngcontent-c9="" role="img"><use _ngcontent-c9="" xlink:href="/gdpassets/js/assets/svg/sprites.svg?_=101120191610333#accesibility-icon"></use></svg>
+  </app-svg>
+      </figure>
+    </span>
+    <label _ngcontent-c26="" class="medium-hdr-5" for="accessibility">Necesito un camarote de discapacitado</label>
+  </div>
+
+  </section>
+
 </body>
 
 </html>

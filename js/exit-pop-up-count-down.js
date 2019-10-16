@@ -26,6 +26,7 @@ window.addEventListener('load', ()=>{
             hours:'HOURS',
             minutes: 'MINUTES',
             seconds: 'SECONDS',
+            hoursLeft: 'hours left',
             textColor: '#ce0f69'
         },
         countDown:{
@@ -331,7 +332,7 @@ function exitPopUp(props){
     }
 
     function addHoursLeft(text){
-        daysLeftText.innerText = text + ' hours left!';
+        daysLeftText.innerText = text + ' ' + props.clock.hoursLeft;
         popupClockContainer.appendChild(daysLeftText);
     }
 
@@ -378,7 +379,6 @@ function exitPopUp(props){
 
         //CHANGE CLOCK FACE TO SHOW TIME REMAINING
         if(timerHours >= 72){
-            console.log('more than 72hours');
             clearClock();
             addHoursLeft(timerHours);
         }else{
@@ -406,7 +406,6 @@ function exitPopUp(props){
     var url = window.location.href;
 
     props.countries.forEach(function(country){
-        console.log(country);
         if(url.indexOf(country) !== -1){
             setTimeDigits(country);
             countryInUrl = country;
