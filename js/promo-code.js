@@ -4,15 +4,35 @@ window.addEventListener('load', ()=>{
         {
             bannerDetails:{
                 backgroundColor: '#005edc',
-                textColor: '#fff'
+                textColor: '#fff',
+                text: 'for a limited time',
+                subtext: 'use promo code',
+                code: 'GET IT'
             },
-            text: 'for a limited time',
-            subtext: 'use promo code',
-            code: 'GET IT'
+            buttonDetails:{
+                content:{
+                    header: 'Receive $25 discount',
+                    subtext:'Using promotional code'
+                },
+                button:{
+                    backgroundColor: '#005EDC',
+                    textColor: '#fff',
+                    text: 'APPLY NOW'
+                }
+            },
+            promoCriteria:{
+                promo: 'deal',
+                ships: ['AD', 'OA', 'OV'],
+                destinations: true,
+                dateRange: [
+
+                ],
+                amount: 25
+            },
         }
     );
 
-});;
+});
 
 function promoCode(props){
 
@@ -32,7 +52,7 @@ function promoCode(props){
     //promoBannerText.style.background = 'red';
     promoBannerText.style.width = 'auto';
     promoBannerText.style.height = 'auto';
-    promoBannerText.innerText = props.text.toUpperCase();
+    promoBannerText.innerText = props.bannerDetails.text.toUpperCase();
     promoBannerText.style.color = props.bannerDetails.textColor;
     promoBannerText.style.fontFamily = 'proxima, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif';
     promoBannerText.style.fontSize = '32px';
@@ -47,7 +67,7 @@ function promoCode(props){
     promoBannerBoxText.style.border = 'solid 1px ' + props.bannerDetails.textColor;
     promoBannerBoxText.style.padding = '4px 20px 4px 20px';
     promoBannerBoxText.style.textAlign = 'center';
-    promoBannerBoxText.innerText = props.subtext.toUpperCase() + ':';
+    promoBannerBoxText.innerText = props.bannerDetails.subtext.toUpperCase() + ':';
     promoBannerBoxText.style.color = props.bannerDetails.textColor;
     promoBannerBoxText.style.fontFamily = 'proxima, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif';
     promoBannerBoxText.style.fontSize = '16px';
@@ -63,13 +83,88 @@ function promoCode(props){
     promoBannerBoxTextSpan.style.textAlign = 'center';
     promoBannerBoxTextSpan.style.padding = '0px 0px 0px 15px';
 
+    var applyPromoContainer = document.createElement('div');
+    applyPromoContainer.style.background = 'red';
+    applyPromoContainer.style.width = '100%';
+    applyPromoContainer.style.height = 'auto';
+    applyPromoContainer.style.display = 'flex';
+    applyPromoContainer.style.flexDirection = 'column';
+    applyPromoContainer.style.justifyContent = 'center';
+    applyPromoContainer.style.alignItems = 'center';
 
+    var applyPromoHeader = document.createElement('h4');
+    //applyPromoHeader.style.background = 'yellow';
+    applyPromoHeader.style.width = '100%';
+    applyPromoHeader.style.height = 'auto';
+    applyPromoHeader.style.padding = '0px';
+    applyPromoHeader.style.margin = '0px';
+    applyPromoHeader.style.fontSize = '16px';
+    applyPromoHeader.style.fontFamily = 'proxima, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif';
+    applyPromoHeader.style.textAlign = 'center';
+    applyPromoHeader.innerText = props.buttonDetails.content.header;
+
+    var applyPromoSubText = document.createElement('p');
+    //applyPromoSubText.style.background = 'purple';
+    applyPromoSubText.style.width = '100%';
+    applyPromoSubText.style.height = 'auto';
+    applyPromoSubText.style.padding = '0px';
+    applyPromoSubText.style.margin = '10px 0px 0px 0px';
+    applyPromoSubText.style.fontSize = '12px';
+    applyPromoSubText.style.fontFamily = 'proxima, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif';
+    applyPromoSubText.style.textAlign = 'center';
+    applyPromoSubText.innerText = props.buttonDetails.content.subtext;
+
+    var applyPromoCode = document.createElement('h2');
+    //applyPromoCode.style.background = 'orange';
+    applyPromoCode.style.width = '100%';
+    applyPromoCode.style.height = 'auto';
+    applyPromoCode.style.padding = '0px';
+    applyPromoCode.style.margin = '0px';
+    applyPromoCode.style.fontSize = '32px';
+    applyPromoCode.style.fontFamily = 'proxima, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif';
+    applyPromoCode.style.textAlign = 'center';
+    applyPromoCode.innerText = props.bannerDetails.code;
+
+    var applyPromoCodeBtn = document.createElement('button');
+    applyPromoCodeBtn.style.background = props.buttonDetails.button.backgroundColor;
+    applyPromoCodeBtn.style.width = '240px';
+    applyPromoCodeBtn.style.height = '40px';
+    applyPromoCodeBtn.style.padding = '10px 0px';
+    applyPromoCodeBtn.style.margin = '16px 0px';
+    applyPromoCodeBtn.style.border = 'none';
+    applyPromoCodeBtn.style.fontFamily = 'proxima, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif';
+    applyPromoCodeBtn.style.fontSize = '18px';
+    applyPromoCodeBtn.style.textAlign = 'center';
+    applyPromoCodeBtn.style.letterSpacing = '2px';
+    applyPromoCodeBtn.style.color = props.buttonDetails.button.textColor;
+    applyPromoCodeBtn.innerText = props.buttonDetails.button.text;
+
+    var applyPromoZero = document.createElement('p');
+    //applyPromoZero.style.background = 'magenta';
+    applyPromoZero.style.width = '100%';
+    applyPromoZero.style.height = 'auto';
+    applyPromoZero.style.padding = '0px';
+    applyPromoZero.style.margin = '0px';
+    applyPromoZero.style.fontFamily = 'proxima, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif';
+    applyPromoZero.style.fontSize = '12px';
+    applyPromoZero.style.color = '#000000';
+    applyPromoZero.style.textAlign = 'center';
+    applyPromoZero.innerText = '0';
+
+    //APPENDS ALL THE ELEMENTS OF THE PROMO BANNER COMPONENT
     promoBanner.appendChild(promoBannerText);
     promoBanner.appendChild(promoBannerBoxText);
-
     promoBannerBoxText.appendChild(promoBannerBoxTextSpan);
-
     promoTarget.appendChild(promoBanner);
+
+    //APPENDS ALL THE ELEMENTS OF THE APPLY PROMO BUTTON COMPONENT
+    applyPromoContainer.appendChild(applyPromoHeader);
+    applyPromoContainer.appendChild(applyPromoSubText);
+    applyPromoContainer.appendChild(applyPromoCode);
+    applyPromoContainer.appendChild(applyPromoCodeBtn);
+    applyPromoContainer.appendChild(applyPromoZero);
+
+    applyDealBtnTarget.appendChild(applyPromoContainer);
 
     function mobileLayout(){
         promoBanner.style.flexFlow = 'column';
@@ -85,14 +180,33 @@ function promoCode(props){
         promoBannerBoxText.style.margin = '0px 0px 0px 40px';
     }
 
-    window.addEventListener('resize', function(){
-        
+    function applyPromoBtnMobileLayout(){
+        var width = document.getElementById('occupancy-continue').style.width;
+        applyPromoCodeBtn.style.width = width;
+    }
+
+    function applyPromoBtnDesktopLayout(){
+        applyPromoCodeBtn.style.width = '240px';
+    }
+
+    function setLayout(){
         if(window.innerWidth <= 1024){
             mobileLayout();
         }else{
             desktopLayout();
         }
 
+        if(window.matchMedia("(max-width: 638px)").matches){
+            applyPromoBtnMobileLayout();
+        }else{
+            applyPromoBtnDesktopLayout();
+        }
+    }
+
+    window.addEventListener('resize', function(){
+        setLayout()
     });
+    
+    setLayout();
 
 }
