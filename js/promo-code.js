@@ -33,6 +33,8 @@ window.addEventListener('load', ()=>{
     );
 
 });
+let urlOne = 'https://www.royalcaribbean.com/lac/es/booking/stateroom?sailDate=2020-08-08&shipCode=AD&packageCode=AD05B062&destinationCode=BERMU&accessCabin=false&selectedCurrencyCode=USD';
+let urlTwo = 'https://www.royalcaribbean.com/lac/es/booking/occupancy?accessCabin=false&connectedRooms=false&destinationCode=BERMU&packageCode=AD05B062&sailDate=2020-08-08&selectedCurrencyCode=USD&shipCode=AD'
 
 function promoCode(props){
 
@@ -203,10 +205,34 @@ function promoCode(props){
         }
     }
 
+    function digestURL(url){
+        var codes = url.split('&');
+        let dataCodes = codes.filter(function(code){
+            return (code.indexOf('/') === -1 ? code : null);
+        });
+
+        let dataCodesSplit = [];
+        dataCodes.forEach(function(dataCode, i){
+            dataCodesSplit.push(dataCode.split('=')[0]);
+            dataCodesSplit.push(dataCode.split('=')[1]);
+        });
+
+        let dataObject = {};
+        for(var i = 0; i < dataCodesSplit.length; i+=2){
+            Object.assign(dataObject, {[dataCodesSplit[i]]: dataCodesSplit[i+1]});
+        }
+
+        console.log(dataCodes);
+        console.log(dataCodesSplit);
+        console.log(dataObject);
+    }
+
+    digestURL(urlOne);
+
     window.addEventListener('resize', function(){
         setLayout()
     });
-    
+
     setLayout();
 
 }
