@@ -21,11 +21,10 @@ window.addEventListener('load', ()=>{
                 }
             },
             promoCriteria:{
-                promo: 'deal',
                 ships: ['AD', 'OA', 'OV'],
-                destinations: true,
+                destinations: ['BERMU'],
                 dateRange: [
-
+                    promoSeasons.lateSummer2020
                 ],
                 amount: 25
             },
@@ -33,6 +32,7 @@ window.addEventListener('load', ()=>{
     );
 
 });
+
 let urlOne = 'https://www.royalcaribbean.com/lac/es/booking/stateroom?sailDate=2020-08-08&shipCode=AD&packageCode=AD05B062&destinationCode=BERMU&accessCabin=false&selectedCurrencyCode=USD';
 let urlTwo = 'https://www.royalcaribbean.com/lac/es/booking/occupancy?accessCabin=false&connectedRooms=false&destinationCode=BERMU&packageCode=AD05B062&sailDate=2020-08-08&selectedCurrencyCode=USD&shipCode=AD'
 
@@ -206,6 +206,7 @@ function promoCode(props){
     }
 
     function digestURL(url){
+
         var codes = url.split('&');
         let dataCodes = codes.filter(function(code){
             return (code.indexOf('/') === -1 ? code : null);
@@ -222,12 +223,13 @@ function promoCode(props){
             Object.assign(dataObject, {[dataCodesSplit[i]]: dataCodesSplit[i+1]});
         }
 
-        console.log(dataCodes);
-        console.log(dataCodesSplit);
-        console.log(dataObject);
+        return dataObject;
+
     }
 
-    digestURL(urlOne);
+    //compare criterea vs dataObject 
+   console.log(digestURL(urlTwo));
+
 
     window.addEventListener('resize', function(){
         setLayout()
@@ -236,3 +238,11 @@ function promoCode(props){
     setLayout();
 
 }
+
+
+/*Possible strategy
+    we can on APPLY NOW btn click
+    suppress the popup
+    then fill the popup input with the PROMO CODE
+    then fire the invoke the function that applies the PROMO CODE
+*/
