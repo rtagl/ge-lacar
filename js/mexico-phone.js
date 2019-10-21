@@ -13,8 +13,13 @@ function mexicoPhoneEdit(){
 
     //GET PHONE NUMBER CONTAINER ELEMENT AND CHANGE TEXT
     function getPhoneNumberContainer(text){
-        var phoneNumberContainer = document.querySelector('.headerPhoneNumber__value');
-        phoneNumberContainer.innerText = text;
+        var phoneNumberContainer;
+        if(document.querySelector('.headerPhoneNumber__value')){
+            phoneNumberContainer = document.querySelector('.headerPhoneNumber__value');
+            phoneNumberContainer.innerText = text;
+        }else{
+            console.log('No header on page');
+        }
     }
 
     //EXCUTE FUNCTIONS IF COOKIE OR PATH MATCH 
@@ -23,9 +28,16 @@ function mexicoPhoneEdit(){
     }
 
 }
-window.addEventListener('DOMContentLoaded', function(){
-    mexicoPhoneEdit();
-});
+
+var runCounter = 0;
+var timer = setInterval(function(){
+    if(runCounter < 5){
+        mexicoPhoneEdit();
+        runCounter++;
+    }else{
+        clearInterval(timer);
+    }
+},1000);
 
 
 

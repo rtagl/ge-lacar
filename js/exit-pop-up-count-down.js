@@ -1,4 +1,4 @@
-window.addEventListener('load', ()=>{
+window.addEventListener('load', function(){
 
     //TEST COOKIE
     document.cookie = "wuc=DEU";

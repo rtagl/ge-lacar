@@ -1,4 +1,4 @@
-window.addEventListener('load', ()=>{
+window.addEventListener('load', function(){
 
     promoCode(
         {
@@ -24,7 +24,8 @@ window.addEventListener('load', ()=>{
                 ships: ['AD', 'OA', 'OV'],
                 destinations: ['BERMU'],
                 dateRange: [
-                    promoSeasons.lateSummer2020
+                    promoSeasons.lateSummer2020,
+                    promoSeasons.winter
                 ],
                 amount: 25
             },
@@ -39,7 +40,11 @@ let urlTwo = 'https://www.royalcaribbean.com/lac/es/booking/occupancy?accessCabi
 function promoCode(props){
 
     var promoTarget = document.querySelector('.page-occupancy');
-    var applyDealBtnTarget = document.querySelector('.occupancy-container').children[5];
+    var applyDealBtnTarget = document.querySelector('#exclusive_rates');
+    var pageLink = applyDealBtnTarget.children[0].href;
+
+    //CLEAR CONTAINER CONTENTS
+    applyDealBtnTarget.innerHTML = '';
 
     var promoBanner = document.createElement('div');
     promoBanner.style.background = props.bannerDetails.backgroundColor;
@@ -80,7 +85,7 @@ function promoCode(props){
     promoBannerBoxText.style.alignItems = 'center';
 
     var promoBannerBoxTextSpan = document.createElement('span');
-    promoBannerBoxTextSpan.innerText = props.code; 
+    promoBannerBoxTextSpan.innerText = props.bannerDetails.code; 
     promoBannerBoxTextSpan.style.fontSize = '24px';
     promoBannerBoxTextSpan.style.textAlign = 'center';
     promoBannerBoxTextSpan.style.padding = '0px 0px 0px 15px';
@@ -127,10 +132,10 @@ function promoCode(props){
     applyPromoCode.style.textAlign = 'center';
     applyPromoCode.innerText = props.bannerDetails.code;
 
-    var applyPromoCodeBtn = document.createElement('button');
+    var applyPromoCodeBtn = document.createElement('a');
     applyPromoCodeBtn.style.background = props.buttonDetails.button.backgroundColor;
     applyPromoCodeBtn.style.width = '240px';
-    applyPromoCodeBtn.style.height = '40px';
+    applyPromoCodeBtn.style.height = 'auto';
     applyPromoCodeBtn.style.padding = '10px 0px';
     applyPromoCodeBtn.style.margin = '16px 0px';
     applyPromoCodeBtn.style.border = 'none';
@@ -139,7 +144,9 @@ function promoCode(props){
     applyPromoCodeBtn.style.textAlign = 'center';
     applyPromoCodeBtn.style.letterSpacing = '2px';
     applyPromoCodeBtn.style.color = props.buttonDetails.button.textColor;
+    applyPromoCodeBtn.style.textDecoration = 'none';
     applyPromoCodeBtn.innerText = props.buttonDetails.button.text;
+    applyPromoCodeBtn.href = pageLink;
 
     var applyPromoZero = document.createElement('p');
     //applyPromoZero.style.background = 'magenta';
@@ -220,22 +227,85 @@ function promoCode(props){
 
         let dataObject = {};
         for(var i = 0; i < dataCodesSplit.length; i+=2){
-            Object.assign(dataObject, {[dataCodesSplit[i]]: dataCodesSplit[i+1]});
+            //Object.assign(dataObject, {[dataCodesSplit[i]]: dataCodesSplit[i+1]});
+            dataObject[dataCodesSplit[i]] = dataCodesSplit[i+1];
         }
 
         return dataObject;
 
     }
 
-    //compare criterea vs dataObject 
-   console.log(digestURL(urlTwo));
+    function checkCriteriaDateRange(dateRange){
+        
+        var sailDate = digestURL(urlTwo).sailDate.split('-');
+        var sailDateYear = sailDate[0];
+        var sailDateMonth = '';
+        var sailDateDay = sailDate[2];
 
+        //SWITCH NUMBERED MONTHS TO TEXT MONTHS, BECAUSE IE!
+        switch(sailDate[1]){
+            case '01':
+                sailDateMonth = 'Jan';
+            break;
+            case '02':
+                sailDateMonth = 'Feb';
+            break;
+            case '03':
+                sailDateMonth = 'Mar';
+            break;
+            case '04':
+                sailDateMonth = 'Apr';
+            break;
+            case '05':
+                sailDateMonth = 'May';
+            break;
+            case '06':
+                sailDateMonth = 'Jun';
+            break;
+            case '07':
+                sailDateMonth = 'Jul';
+            break;
+            case '08':
+                sailDateMonth = 'Aug';
+            break;
+            case '09':
+                sailDateMonth = 'Sep';
+            break;
+            case '10':
+                sailDateMonth = 'Oct';
+            break;
+            case '11':
+                sailDateMonth = 'Nov';
+            break;
+            case '12':
+                sailDateMonth = 'Dec';
+            break;
+        }
+        var sailDate = new Date(sailDateMonth+' '+sailDateDay+', '+sailDateYear);
+
+        var dateRanges = [];
+        props.promoCriteria.dateRange.forEach(function(dateRange, i){
+            dateRanges.push(new Date(dateRange.start));
+            dateRanges.push(new Date(dateRange.end));
+        });
+
+        //compare if sail date is greater than or equal than dateRange start 
+        //compare if sail date is smaller than or equal than dateRange end
+
+        console.log(digestURL(urlTwo).sailDate);
+        console.log(dateRanges);
+        
+    }
+
+    checkCriteriaDateRange();
 
     window.addEventListener('resize', function(){
         setLayout()
     });
 
     setLayout();
+    //compare criterea vs dataObject 
+    console.log(digestURL(urlTwo));
 
 }
 
@@ -246,3 +316,5 @@ function promoCode(props){
     then fill the popup input with the PROMO CODE
     then fire the invoke the function that applies the PROMO CODE
 */
+//use this to set the the promo code and active the code on check out
+//window.sessionStorage.setItem('promoCode', 'DEAL');
