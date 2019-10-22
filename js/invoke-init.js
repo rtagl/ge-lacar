@@ -28,7 +28,7 @@ window.addEventListener('load', function(){
         );
     });
 
-    oldBrowserPopUp();
+    //oldBrowserPopUp();
     
 });
 

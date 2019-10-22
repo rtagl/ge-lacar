@@ -197,12 +197,17 @@ function countDown(parent, startDate, endDate, offer, countries, last, days){
     daysLeftDaysContainer.style.height = 'auto';
 
     //CREATE DAYS LEFT COUNT TEXT
-    var daysLeftText = document.createElement('p');
-    daysLeftText.innerText = last.toUpperCase();
-    daysLeftText.style.fontFamily = 'kapra';
-    daysLeftText.style.fontSize = '40px';
-    daysLeftText.style.color = '#000';
-    daysLeftText.style.letterSpacing = '2px';
+    if(last !== undefined){
+        var daysLeftText = document.createElement('p');
+        daysLeftText.innerText = last.toUpperCase();
+        daysLeftText.style.fontFamily = 'kapra';
+        daysLeftText.style.fontSize = '40px';
+        daysLeftText.style.color = '#000';
+        daysLeftText.style.letterSpacing = '2px';
+    }else{
+        var daysLeftText = document.createElement('p');
+        daysLeftText.innerText = last;
+    }
 
     //CREATE DAYS LEFT NUMER TEXT
     var daysLeftNumberText = document.createElement('p');
@@ -213,12 +218,17 @@ function countDown(parent, startDate, endDate, offer, countries, last, days){
     daysLeftNumberText.style.letterSpacing = '2px';
 
     //CREATE DAYS LEFT TEXT
-    var daysLeftDayText = document.createElement('p');
-    daysLeftDayText.innerText = days.toUpperCase();
-    daysLeftDayText.style.fontFamily = 'kapra';
-    daysLeftDayText.style.fontSize = '40px';
-    daysLeftDayText.style.color = '#000';
-    daysLeftDayText.style.letterSpacing = '2px';
+    if(days !== undefined){
+        var daysLeftDayText = document.createElement('p');
+        daysLeftDayText.innerText = days.toUpperCase();
+        daysLeftDayText.style.fontFamily = 'kapra';
+        daysLeftDayText.style.fontSize = '40px';
+        daysLeftDayText.style.color = '#000';
+        daysLeftDayText.style.letterSpacing = '2px';
+    }else{
+        var daysLeftDayText = document.createElement('p');
+        daysLeftDayText.innerText = days;
+    }
 
     //APPEND OFFER CONTAINER TO COUNTDOWN CONTAINER
     countDownContainer.appendChild(offerContainer);
@@ -361,8 +371,9 @@ function countDown(parent, startDate, endDate, offer, countries, last, days){
     checkLayout();
 
     //CREATE INTERVAL THAT UPDATES COUNTDOWN CLOCK
+    var countryInUrl = '';
     var checkTimeInterval = setInterval(function(){ 
-        setTimeDigits(country);
+        setTimeDigits(countryInUrl);
     }, 1000);
     
     //THIS CLEARS THE TIMER ONCE THE COUNTDOWN REACHES 0
@@ -444,7 +455,7 @@ function countDown(parent, startDate, endDate, offer, countries, last, days){
     countries.forEach(function(country){
         if(url.indexOf(country) !== -1){
             setTimeDigits(country);
-            //countryInUrl = country;
+            countryInUrl = country;
         }
     });
     

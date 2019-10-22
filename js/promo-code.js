@@ -24,7 +24,7 @@ window.addEventListener('load', function(){
                 ships: ['AD', 'OA', 'OV'],
                 destinations: ['BERMU'],
                 dateRange: [
-                    promoSeasons.lateSummer2020,
+                    promoSeasons.summer2020,
                     promoSeasons.winter
                 ],
                 amount: 25
@@ -284,10 +284,21 @@ function promoCode(props){
         var sailDate = new Date(sailDateMonth+' '+sailDateDay+', '+sailDateYear);
 
         var dateRanges = [];
-        props.promoCriteria.dateRange.forEach(function(dateRange, i){
+        props.promoCriteria.dateRange.forEach(function(dateRange){
             dateRanges.push(new Date(dateRange.start));
             dateRanges.push(new Date(dateRange.end));
         });
+
+        var checked = [];
+        for(var i = 0; i < dateRanges.length; i+=2){
+            if(sailDate >= dateRanges[i] && sailDate <= dateRanges[i+1]){
+                checked.push(true);
+            }else{
+                checked.push(false);
+            }
+        }
+
+        console.log(checked);
 
         //compare if sail date is greater than or equal than dateRange start 
         //compare if sail date is smaller than or equal than dateRange end
