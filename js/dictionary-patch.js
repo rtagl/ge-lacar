@@ -153,9 +153,53 @@ var dictionary = {
             }
         }
     },
+    support:{
+        promoCode:{
+            banner:{
+                text: {
+                    US: 'for a limited time',
+                    LACAR: '',
+                    SPA: '',
+                    MEX: '',
+                    NOR: '',
+                    SWE: ''
+                },
+                subText:{
+                    US: 'use promo code',
+                    LACAR: '',
+                    SPA: '',
+                    MEX: '',
+                    NOR: '',
+                    SWE: ''
+                }
+            },
+            button:{
+                offerText:{
+                    US: 'Receive discount',
+                    LACAR: '',
+                    SPA: '',
+                    MEX: '',
+                    NOR: '',
+                    SWE: ''
+                },
+                subText:{
+                    US: 'Using promotional code',
+                    LACAR: '',
+                    SPA: '',
+                    MEX: '',
+                    NOR: '',
+                    SWE: ''
+                },
+                buttonText:{
+                    US: 'apply now',
+                    LACAR: '',
+                    SPA: '',
+                    MEX: '',
+                    NOR: '',
+                    SWE: ''
+                }
+            }
+        },
+        //more support texts
+    }
 };
-
-
-window.addEventListener('load', function(){
-    console.log(dictionary.obc.AA.hero.NOR);
-});

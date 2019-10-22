@@ -5,8 +5,8 @@ window.addEventListener('load', function(){
             bannerDetails:{
                 backgroundColor: '#005edc',
                 textColor: '#fff',
-                text: 'for a limited time',
-                subtext: 'use promo code',
+                text: dictionary.support.promoCode.banner.text.US,
+                subtext: dictionary.support.promoCode.banner.subText.US,
                 code: 'GET IT'
             },
             buttonDetails:{
@@ -21,12 +21,18 @@ window.addEventListener('load', function(){
                 }
             },
             promoCriteria:{
-                ships: ['AD', 'OA', 'OV'],
-                destinations: ['BERMU'],
+                ships: ['AD', 'OV'],
+                destinations: [
+                    destinationCodes.BERMU,
+                    destinationCodes.CARIB
+                ],
                 dateRange: [
                     promoSeasons.summer2020,
                     promoSeasons.winter
                 ],
+                text: dictionary.support.promoCode.button.offerText.US,
+                subText: dictionary.support.promoCode.button.subText.US,
+                buttonText: dictionary.support.promoCode.button.buttonText.US,
                 amount: 25
             },
         }
@@ -34,6 +40,8 @@ window.addEventListener('load', function(){
 
 });
 
+//FIX IN LIVE DEPLOY
+//var url = window.location.href;
 let urlOne = 'https://www.royalcaribbean.com/lac/es/booking/stateroom?sailDate=2020-08-08&shipCode=AD&packageCode=AD05B062&destinationCode=BERMU&accessCabin=false&selectedCurrencyCode=USD';
 let urlTwo = 'https://www.royalcaribbean.com/lac/es/booking/occupancy?accessCabin=false&connectedRooms=false&destinationCode=BERMU&packageCode=AD05B062&sailDate=2020-08-08&selectedCurrencyCode=USD&shipCode=AD'
 
@@ -164,7 +172,7 @@ function promoCode(props){
     promoBanner.appendChild(promoBannerText);
     promoBanner.appendChild(promoBannerBoxText);
     promoBannerBoxText.appendChild(promoBannerBoxTextSpan);
-    promoTarget.appendChild(promoBanner);
+    //promoTarget.appendChild(promoBanner);
 
     //APPENDS ALL THE ELEMENTS OF THE APPLY PROMO BUTTON COMPONENT
     applyPromoContainer.appendChild(applyPromoHeader);
@@ -173,7 +181,15 @@ function promoCode(props){
     applyPromoContainer.appendChild(applyPromoCodeBtn);
     applyPromoContainer.appendChild(applyPromoZero);
 
-    applyDealBtnTarget.appendChild(applyPromoContainer);
+    //applyDealBtnTarget.appendChild(applyPromoContainer);
+
+    function createPromoCodeBanner(){
+        promoTarget.appendChild(promoBanner);
+    }
+
+    function createApplyPromoCodeBtn(){
+        applyDealBtnTarget.appendChild(applyPromoContainer);
+    }
 
     function mobileLayout(){
         promoBanner.style.flexFlow = 'column';
@@ -235,9 +251,9 @@ function promoCode(props){
 
     }
 
-    function checkCriteriaDateRange(dateRange){
+    function checkCriteriaDateRange(sailing, dateRange){
         
-        var sailDate = digestURL(urlTwo).sailDate.split('-');
+        var sailDate = sailing.split('-');
         var sailDateYear = sailDate[0];
         var sailDateMonth = '';
         var sailDateDay = sailDate[2];
@@ -281,10 +297,11 @@ function promoCode(props){
                 sailDateMonth = 'Dec';
             break;
         }
+
         var sailDate = new Date(sailDateMonth+' '+sailDateDay+', '+sailDateYear);
 
         var dateRanges = [];
-        props.promoCriteria.dateRange.forEach(function(dateRange){
+        dateRange.forEach(function(dateRange){
             dateRanges.push(new Date(dateRange.start));
             dateRanges.push(new Date(dateRange.end));
         });
@@ -298,34 +315,59 @@ function promoCode(props){
             }
         }
 
-        console.log(checked);
-
-        //compare if sail date is greater than or equal than dateRange start 
-        //compare if sail date is smaller than or equal than dateRange end
-
-        console.log(digestURL(urlTwo).sailDate);
-        console.log(dateRanges);
+        if(checked.indexOf(true) !== -1){
+            return true;
+        }else{
+            return false;
+        }
         
     }
 
-    checkCriteriaDateRange();
+    function checkCriteriaShipCode(shipCode){
+        if(props.promoCriteria.ships.indexOf(shipCode) !== -1){
+            return true;
+        }else{
+            return false;
+        }
+    }
 
+    function checkCriteriaDestinationCode(currentDestination, destinationCodes){
+        if(destinationCodes.indexOf(currentDestination) !== -1){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    //NEED A FUNCTION TO DEAL WITH PROMO AMOUNT
+
+    function validateCriteria(){
+        var criteriaValues = [];
+        criteriaValues.push(checkCriteriaDestinationCode(digestURL(urlTwo).destinationCode, props.promoCriteria.destinations));
+        criteriaValues.push(checkCriteriaDateRange(digestURL(urlTwo).sailDate, props.promoCriteria.dateRange));
+        criteriaValues.push(checkCriteriaShipCode(digestURL(urlTwo).shipCode));
+        
+        if(criteriaValues.indexOf(false) !== -1){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    function renderPromoComponents(criteria){
+        if(criteria === true){
+            createPromoCodeBanner();
+            createApplyPromoCodeBtn()
+        }
+    }
+
+    //INITIALIZE THE LAYOUT AND PROMO COMPONENTS
+    setLayout();
+    renderPromoComponents(validateCriteria());
+
+    //LISTEN TO WINDOW RESIZE EVENT TO ADAPT LAYOUT
     window.addEventListener('resize', function(){
         setLayout()
     });
 
-    setLayout();
-    //compare criterea vs dataObject 
-    console.log(digestURL(urlTwo));
-
 }
-
-
-/*Possible strategy
-    we can on APPLY NOW btn click
-    suppress the popup
-    then fill the popup input with the PROMO CODE
-    then fire the invoke the function that applies the PROMO CODE
-*/
-//use this to set the the promo code and active the code on check out
-//window.sessionStorage.setItem('promoCode', 'DEAL');
