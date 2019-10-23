@@ -11,17 +11,17 @@ window.addEventListener('load', function(){
             },
             buttonDetails:{
                 content:{
-                    header: 'Receive $25 discount',
-                    subtext:'Using promotional code',
+                    header: dictionary.support.promoCode.button.offerText.US,
+                    subtext: dictionary.support.promoCode.button.subText.US,
                 },
                 button:{
                     backgroundColor: '#005EDC',
                     textColor: '#fff',
-                    text: 'APPLY NOW'
+                    text: dictionary.support.promoCode.button.buttonText.US
                 }
             },
             promoCriteria:{
-                ships: ['AD', 'OV'],
+                shipCodes: ['AD'],
                 destinations: [
                     destinationCodes.BERMU,
                     destinationCodes.CARIB
@@ -30,12 +30,9 @@ window.addEventListener('load', function(){
                     promoSeasons.summer2020,
                     promoSeasons.winter
                 ],
-                text: dictionary.support.promoCode.button.offerText.US,
-                subText: dictionary.support.promoCode.button.subText.US,
-                buttonText: dictionary.support.promoCode.button.buttonText.US,
-                amount: 25
             },
         }
+        
     );
 
 });
@@ -154,7 +151,7 @@ function promoCode(props){
     applyPromoCodeBtn.style.letterSpacing = '2px';
     applyPromoCodeBtn.style.color = props.buttonDetails.button.textColor;
     applyPromoCodeBtn.style.textDecoration = 'none';
-    applyPromoCodeBtn.innerText = props.buttonDetails.button.text;
+    applyPromoCodeBtn.innerText = props.buttonDetails.button.text.toUpperCase();
     applyPromoCodeBtn.href = pageLink;
 
     var applyPromoZero = document.createElement('p');
@@ -173,7 +170,6 @@ function promoCode(props){
     promoBanner.appendChild(promoBannerText);
     promoBanner.appendChild(promoBannerBoxText);
     promoBannerBoxText.appendChild(promoBannerBoxTextSpan);
-    //promoTarget.appendChild(promoBanner);
 
     //APPENDS ALL THE ELEMENTS OF THE APPLY PROMO BUTTON COMPONENT
     applyPromoContainer.appendChild(applyPromoHeader);
@@ -181,8 +177,6 @@ function promoCode(props){
     applyPromoContainer.appendChild(applyPromoCode);
     applyPromoContainer.appendChild(applyPromoCodeBtn);
     applyPromoContainer.appendChild(applyPromoZero);
-
-    //applyDealBtnTarget.appendChild(applyPromoContainer);
 
     function createPromoCodeBanner(){
         promoTarget.appendChild(promoBanner);
@@ -302,10 +296,15 @@ function promoCode(props){
         var sailDate = new Date(sailDateMonth+' '+sailDateDay+', '+sailDateYear);
 
         var dateRanges = [];
-        dateRange.forEach(function(dateRange){
-            dateRanges.push(new Date(dateRange.start));
-            dateRanges.push(new Date(dateRange.end));
-        });
+        if(dateRanges === undefined || dateRanges.length === 0){
+            return true;
+        }else{
+            dateRange.forEach(function(dateRange){
+                dateRanges.push(new Date(dateRange.start));
+                dateRanges.push(new Date(dateRange.end));
+            });
+        }
+        
 
         var checked = [];
         for(var i = 0; i < dateRanges.length; i+=2){
@@ -324,8 +323,12 @@ function promoCode(props){
         
     }
 
-    function checkCriteriaShipCode(shipCode){
-        if(props.promoCriteria.ships.indexOf(shipCode) !== -1){
+    function checkCriteriaShipCode(shipCode, shipCodes){
+        if(shipCodes === undefined){
+            return true;
+        }else if(shipCodes.indexOf(shipCode) !== -1){
+            return true
+        }else if(shipCodes.length === 0){
             return true;
         }else{
             return false;
@@ -333,17 +336,14 @@ function promoCode(props){
     }
 
     function checkCriteriaDestinationCode(currentDestination, destinationCodes){
-        if(destinationCodes.indexOf(currentDestination) !== -1){
+        if(destinationCodes === undefined){
+            return true;
+        }else if(destinationCodes.indexOf(currentDestination) !== -1){
+            return true;
+        }else if(destinationCodes.length === 0){
             return true;
         }else{
             return false;
-        }
-    }
-
-    //NEED A FUNCTION TO DEAL WITH PROMO AMOUNT
-    function promoAmount(amount){
-        if(amount){
-            var 
         }
     }
 
@@ -351,7 +351,7 @@ function promoCode(props){
         var criteriaValues = [];
         criteriaValues.push(checkCriteriaDestinationCode(digestURL(urlTwo).destinationCode, props.promoCriteria.destinations));
         criteriaValues.push(checkCriteriaDateRange(digestURL(urlTwo).sailDate, props.promoCriteria.dateRange));
-        criteriaValues.push(checkCriteriaShipCode(digestURL(urlTwo).shipCode));
+        criteriaValues.push(checkCriteriaShipCode(digestURL(urlTwo).shipCode, props.promoCriteria.shipCodes));
         
         if(criteriaValues.indexOf(false) !== -1){
             return false;

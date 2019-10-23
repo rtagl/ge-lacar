@@ -175,26 +175,26 @@ var dictionary = {
             },
             button:{
                 offerText:{
-                    US: 'Receive discount',
-                    LACAR: '',
-                    SPA: '',
-                    MEX: '',
-                    NOR: '',
-                    SWE: ''
+                    US:    'Receive $25 discount',
+                    LACAR: 'Recibe $25 de descuento',
+                    SPA:   'Recibe €25 de descuento',
+                    MEX:   'Recibe mex500 de descuento',
+                    NOR:   '',
+                    SWE:   ''
                 },
                 subText:{
-                    US: 'Using promotional code',
-                    LACAR: '',
-                    SPA: '',
-                    MEX: '',
-                    NOR: '',
-                    SWE: ''
+                    US:    'Use promotional code:',
+                    LACAR: 'Usando código de promoción:',
+                    SPA:   'Usando código de promoción:',
+                    MEX:   'Usando código de promoción:',
+                    NOR:   '',
+                    SWE:   ''
                 },
                 buttonText:{
                     US: 'apply now',
-                    LACAR: '',
-                    SPA: '',
-                    MEX: '',
+                    LACAR: 'applicar ahora',
+                    SPA: 'applicar ahora',
+                    MEX: 'applicar ahora',
                     NOR: '',
                     SWE: ''
                 }
