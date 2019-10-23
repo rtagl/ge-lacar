@@ -43,7 +43,7 @@ function exitPopUp(props){
 
     let countryInUrl = '';
 
-    let parentElement = document.querySelector('.reveal-overlay');
+    let parentElement = document.querySelectorAll('.reveal-overlay')[document.querySelectorAll('.reveal-overlay').length-1];
 
     //document.getElementById('module-modal').remove();
 
@@ -55,6 +55,7 @@ function exitPopUp(props){
     popup.style.display = 'flex';
     popup.style.justifyContent = 'center';
     popup.style.alignItems = 'center';
+    popup.style.zIndex = '999';
     
     let windowWidth = (window.innerWidth / 2) - (parseInt(popup.style.width) / 2) + 'px';
     let windowHeight = (window.innerHeight / 2) - (parseInt(popup.style.height) / 2) + 'px';
@@ -413,7 +414,7 @@ function exitPopUp(props){
     });
 
     //CREATE EVENTS FOR CANCEL AND CONTINUE BUTTONS
-    let overlay = document.querySelector('.reveal-overlay');
+    let overlay = parentElement;
     let rcclShield = document.querySelector('[data-open="modal"]');
 
 

@@ -12,7 +12,7 @@ window.addEventListener('load', function(){
             buttonDetails:{
                 content:{
                     header: 'Receive $25 discount',
-                    subtext:'Using promotional code'
+                    subtext:'Using promotional code',
                 },
                 button:{
                     backgroundColor: '#005EDC',
@@ -47,6 +47,7 @@ let urlTwo = 'https://www.royalcaribbean.com/lac/es/booking/occupancy?accessCabi
 
 function promoCode(props){
 
+    //var url = window.location.href;
     var promoTarget = document.querySelector('.page-occupancy');
     var applyDealBtnTarget = document.querySelector('#exclusive_rates');
     var pageLink = applyDealBtnTarget.children[0].href;
@@ -340,6 +341,11 @@ function promoCode(props){
     }
 
     //NEED A FUNCTION TO DEAL WITH PROMO AMOUNT
+    function promoAmount(amount){
+        if(amount){
+            var 
+        }
+    }
 
     function validateCriteria(){
         var criteriaValues = [];
