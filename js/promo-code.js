@@ -1,56 +1,54 @@
 window.addEventListener('load', function(){
 
-    promoCode(
-        {
-            bannerDetails:{
-                backgroundColor: '#005edc',
+    var props = {
+        bannerDetails:{
+            backgroundColor: '#005edc',
+            textColor: '#fff',
+            text: dictionary.support.promoCode.banner.text.US,
+            subtext: dictionary.support.promoCode.banner.subText.US,
+            code: 'GET IT'
+        },
+        buttonDetails:{
+            content:{
+                header: dictionary.support.promoCode.button.offerText.US,
+                subtext: dictionary.support.promoCode.button.subText.US,
+            },
+            button:{
+                backgroundColor: '#005EDC',
                 textColor: '#fff',
-                text: dictionary.support.promoCode.banner.text.US,
-                subtext: dictionary.support.promoCode.banner.subText.US,
-                code: 'GET IT'
-            },
-            buttonDetails:{
-                content:{
-                    header: dictionary.support.promoCode.button.offerText.US,
-                    subtext: dictionary.support.promoCode.button.subText.US,
-                },
-                button:{
-                    backgroundColor: '#005EDC',
-                    textColor: '#fff',
-                    text: dictionary.support.promoCode.button.buttonText.US
-                }
-            },
-            promoCriteria:{
-                shipCodes: ['AD'],
-                destinations: [
-                    destinationCodes.BERMU,
-                    destinationCodes.CARIB
-                ],
-                dateRange: [
-                    promoSeasons.summer2020,
-                    promoSeasons.winter
-                ],
-            },
-        }
-        
-    );
+                text: dictionary.support.promoCode.button.buttonText.US
+            }
+        },
+        promoCriteria:{
+            shipCodes: ['AD'],
+            destinations: [
+                destinationCodes.BERMU,
+                destinationCodes.CARIB
+            ],
+            dateRange: [
+                promoSeasons.summer2020,
+                promoSeasons.winter
+            ],
+        },
+    };
 
+    promoCode(props);
 });
-
-//FIX IN LIVE DEPLOY
-//var url = window.location.href;
-let urlOne = 'https://www.royalcaribbean.com/lac/es/booking/stateroom?sailDate=2020-08-08&shipCode=AD&packageCode=AD05B062&destinationCode=BERMU&accessCabin=false&selectedCurrencyCode=USD';
-let urlTwo = 'https://www.royalcaribbean.com/lac/es/booking/occupancy?accessCabin=false&connectedRooms=false&destinationCode=BERMU&packageCode=AD05B062&sailDate=2020-08-08&selectedCurrencyCode=USD&shipCode=AD'
 
 function promoCode(props){
 
-    //var url = window.location.href;
-    var promoTarget = document.querySelector('.page-occupancy');
-    var applyDealBtnTarget = document.querySelector('#exclusive_rates');
-    var pageLink = applyDealBtnTarget.children[0].href;
+    var pageURL = window.location.href;
+    var promoTarget = document.querySelector('header');
+    var applyDealBtnTarget;
+    var pageLink;
 
-    //CLEAR CONTAINER CONTENTS
-    applyDealBtnTarget.innerHTML = '';
+    if(document.querySelector('#exclusive_rates')){
+        applyDealBtnTarget = document.querySelector('#exclusive_rates');
+        pageLink = applyDealBtnTarget.children[0].href;
+
+        //CLEAR CONTAINER CONTENTS
+        applyDealBtnTarget.innerHTML = '';
+    }
 
     var promoBanner = document.createElement('div');
     promoBanner.style.background = props.bannerDetails.backgroundColor;
@@ -97,7 +95,7 @@ function promoCode(props){
     promoBannerBoxTextSpan.style.padding = '0px 0px 0px 15px';
 
     var applyPromoContainer = document.createElement('div');
-    applyPromoContainer.style.background = 'red';
+    //applyPromoContainer.style.background = 'red';
     applyPromoContainer.style.width = '100%';
     applyPromoContainer.style.height = 'auto';
     applyPromoContainer.style.display = 'flex';
@@ -224,8 +222,9 @@ function promoCode(props){
     }
 
     function digestURL(url){
-
-        var codes = url.split('&');
+        
+        var query = url.split('?')[1];
+        var codes = query.split('&');
         let dataCodes = codes.filter(function(code){
             return (code.indexOf('/') === -1 ? code : null);
         });
@@ -243,11 +242,12 @@ function promoCode(props){
         }
 
         return dataObject;
-
     }
 
     function checkCriteriaDateRange(sailing, dateRange){
         
+        console.log(sailing);
+
         var sailDate = sailing.split('-');
         var sailDateYear = sailDate[0];
         var sailDateMonth = '';
@@ -348,10 +348,13 @@ function promoCode(props){
     }
 
     function validateCriteria(){
+        console.log(pageURL);
+        console.log(digestURL(pageURL));
+
         var criteriaValues = [];
-        criteriaValues.push(checkCriteriaDestinationCode(digestURL(urlTwo).destinationCode, props.promoCriteria.destinations));
-        criteriaValues.push(checkCriteriaDateRange(digestURL(urlTwo).sailDate, props.promoCriteria.dateRange));
-        criteriaValues.push(checkCriteriaShipCode(digestURL(urlTwo).shipCode, props.promoCriteria.shipCodes));
+        criteriaValues.push(checkCriteriaDestinationCode(digestURL(pageURL).destinationCode, props.promoCriteria.destinations));
+        criteriaValues.push(checkCriteriaDateRange(digestURL(pageURL).sailDate, props.promoCriteria.dateRange));
+        criteriaValues.push(checkCriteriaShipCode(digestURL(pageURL).shipCode, props.promoCriteria.shipCodes));
         
         if(criteriaValues.indexOf(false) !== -1){
             return false;
@@ -361,15 +364,40 @@ function promoCode(props){
     }
 
     function renderPromoComponents(criteria){
-        if(criteria === true){
+        if(criteria === true && promoTarget.classList.value === 'page-occupancy'){
+            //applyDealBtnTarget = document.querySelector('#exclusive_rates');
             createPromoCodeBanner();
-            createApplyPromoCodeBtn()
+            createApplyPromoCodeBtn();
+        }else if(criteria === true){
+            createPromoCodeBanner();
+        }
+    }
+
+    function onContinue(){
+        var stateroomBtn;
+        var occupancyBtn;
+    
+        if(document.getElementById('stateroom-continue')){
+            stateroomBtn = document.getElementById('stateroom-continue');
+            stateroomBtn.addEventListener('click', function(){
+                setLayout();
+                renderPromoComponents(validateCriteria());
+            });
+        }
+    
+        if(document.getElementById('occupancy-continue')){
+            occupancyBtn = document.getElementById('occupancy-continue');
+            occupancyBtn.addEventListener('click', function(){
+                setLayout();
+                renderPromoComponents(validateCriteria());
+            });
         }
     }
 
     //INITIALIZE THE LAYOUT AND PROMO COMPONENTS
     setLayout();
     renderPromoComponents(validateCriteria());
+    onContinue();
 
     //LISTEN TO WINDOW RESIZE EVENT TO ADAPT LAYOUT
     window.addEventListener('resize', function(){
