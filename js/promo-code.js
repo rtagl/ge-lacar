@@ -37,9 +37,9 @@ window.addEventListener('load', function(){
 
 function promoCode(props){
 
-    //var pageURL = window.location.href;
+    var pageURL = window.location.href;
     //THIS VAR IS USED TO TEST ON THE LOCAL ENVIRONMENT ONLY
-    var pageURL = 'https://www.royalcaribbean.com/lac/es/booking/occupancy?accessCabin=false&connectedRooms=false&destinationCode=BERMU&jackdaw=&packageCode=MJ7BH058&sailDate=2020-08-08&selectedCurrencyCode=USD&shipCode=AD';
+    //var pageURL = 'https://www.royalcaribbean.com/lac/es/booking/occupancy?accessCabin=false&connectedRooms=false&destinationCode=BERMU&jackdaw=&packageCode=MJ7BH058&sailDate=2020-08-08&selectedCurrencyCode=USD&shipCode=AD';
     var promoTarget = document.querySelector('header');
 
     var promoBanner = document.createElement('div');
@@ -128,10 +128,6 @@ function promoCode(props){
     applyPromoCode.style.textAlign = 'center';
     applyPromoCode.innerText = props.bannerDetails.code;
 
-    var applyPromoCodeBtn;
-    var applyDealBtnTarget;
-    var pageLink;
-
     var applyPromoZero = document.createElement('p');
     //applyPromoZero.style.background = 'magenta';
     applyPromoZero.style.width = '100%';
@@ -155,7 +151,11 @@ function promoCode(props){
     applyPromoContainer.appendChild(applyPromoCode);
     applyPromoContainer.appendChild(applyPromoZero);
 
-    function createPromoBtn(){
+    var applyPromoCodeBtn;
+    var applyDealBtnTarget;
+    var pageLink;
+
+    function createPromoCodeBtn(){
         if(document.querySelector('#exclusive_rates')){
             applyDealBtnTarget = document.querySelector('#exclusive_rates');     
             pageLink = applyDealBtnTarget.children[0];
@@ -189,13 +189,9 @@ function promoCode(props){
         promoTarget.appendChild(promoBanner);
     }
 
-    function createApplyPromoCodeBtn(){
-        if(applyDealBtnTarget){
-            applyDealBtnTarget.appendChild(applyPromoContainer);
-
-            createPromoBtn();
-        }
-    }
+    // function createApplyPromoCodeBtn(){
+    //     applyDealBtnTarget.appendChild(applyPromoContainer);
+    // }
 
     function mobileLayout(){
         promoBanner.style.flexFlow = 'column';
@@ -243,7 +239,6 @@ function promoCode(props){
     }
 
     function digestURL(url){
-        console.log(url);
         var query = url.split('?')[1];
         var codes = query.split('&');
         let dataCodes = codes.filter(function(code){
@@ -392,18 +387,19 @@ function promoCode(props){
     }
 
     //HIS FUNCTION IS USED ONLY LOCAL TO TEST THE COMPONENT FUNCTIONALITY
-    function setClass(){
-        var header = document.querySelector('header');
-        header.classList.add('page-occupancy');
+    // function setClass(){
+    //     var header = document.querySelector('header');
+    //     header.classList.add('page-occupancy');
         
-        var target = document.querySelector('.target');
-        target.setAttribute('id', 'exclusive_rates');
-    }
+    //     var target = document.querySelector('.target');
+    //     target.setAttribute('id', 'exclusive_rates');
+    // }
 
     function renderPromoComponents(criteria){
         if(criteria === true && promoTarget.classList.value === 'page-occupancy'){
             createPromoCodeBanner();
-            createApplyPromoCodeBtn();
+            createPromoCodeBtn();
+            //createApplyPromoCodeBtn();
         }else if(criteria === true){
             createPromoCodeBanner();
         }
@@ -413,20 +409,49 @@ function promoCode(props){
        if(document.getElementById('stateroom-continue')){
            var continueBtn = document.getElementById('stateroom-continue');
            continueBtn.onclick = function(){
-               setClass();
+               //setClass();
                renderPromoComponents(validateCriteria());
            }
        }
+    }
+
+    function detectBackAndForth(){
+        window.addEventListener('popstate', function(e){
+            console.log(e);
+            renderPromoComponents(validateCriteria());
+        })
     }
 
     //INITIALIZE THE LAYOUT AND PROMO COMPONENTS
     setLayout();
     renderPromoComponents(validateCriteria());
     onContinue();
+    detectBackAndForth();
 
     //LISTEN TO WINDOW RESIZE EVENT TO ADAPT LAYOUT
     window.addEventListener('resize', function(){
         setLayout()
     });
 
+}
+
+function promoCodeBanner(){
+    function digestURL(url){
+        var query = url.split('?')[1];
+        var codes = query.split('&');
+        let dataCodes = codes.filter(function(code){
+            return (code.indexOf('/') === -1 ? code : null);
+        });
+
+        let dataCodesSplit = [];
+        dataCodes.forEach(function(dataCode, i){
+            dataCodesSplit.push(dataCode.split('=')[0]);
+            dataCodesSplit.push(dataCode.split('=')[1]);
+        });
+
+        let dataObject = {};
+        for(var i = 0; i < dataCodesSplit.length; i+=2){
+            //Object.assign(dataObject, {[dataCodesSplit[i]]: dataCodesSplit[i+1]});
+            dataObject[dataCodesSplit[i]] = dataCodesSplit[i+1];
+        }
 }
