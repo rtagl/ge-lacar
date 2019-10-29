@@ -23,7 +23,7 @@ countDown(
     //CREATE COMPONENT
     var countDownContainer = document.createElement('div');
     //countDownContainer.style.background = 'red';
-    countDownContainer.style.width = '100%';
+    countDownContainer.style.width = parentElement.clientWidth+'px';
     countDownContainer.style.height = '68px';
     countDownContainer.style.display = 'flex';
     countDownContainer.style.justifyContent = 'space-between';

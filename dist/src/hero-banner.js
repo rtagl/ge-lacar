@@ -22,13 +22,14 @@ heroBanner(
     var banner = document.createElement('div');
     banner.classList.add('ge-hero-banner');
     banner.style.backgroundImage = 'url('+image[0]+')';
-    banner.style.width = '100%';
+    banner.style.width = parentElement.clientWidth+'px';
     banner.style.height = '200px';
     banner.style.backgroundSize = 'cover';
     banner.style.display = 'flex';
     banner.style.flexDirection = 'column';
     banner.style.justifyContent = 'center';
     banner.style.alignItems = 'center';
+    banner.style.overflow = 'hidden';
 
     //CREATE TEXT CONTAINER
     var textContainer = document.createElement('div');
