@@ -15,6 +15,8 @@ function heroBanner (parent, header, text, alignment, image){
     banner.style.flexDirection = 'column';
     banner.style.justifyContent = 'center';
     banner.style.alignItems = 'center';
+    banner.style.overflow = 'hidden';
+    banner.style.margin = '0px auto 0px auto';
 
     //CREATE TEXT CONTAINER
     var textContainer = document.createElement('div');
@@ -48,6 +50,7 @@ function heroBanner (parent, header, text, alignment, image){
     headerText.style.fontWeight = '400';
     subText.style.margin = '-14px 0px 0px 0px';
     subText.style.padding = '0px';
+    subText.classList.add('hero-subtext');
 
     //APPEND TEXT CONTAINER TO BANNER ELEMENT
     banner.appendChild(textContainer);
@@ -66,7 +69,11 @@ function heroBanner (parent, header, text, alignment, image){
         var banner = document.querySelector('.ge-hero-banner');
         var screenWidth = window.innerWidth;
         
-        if(screenWidth <= 1200 && screenWidth >= 900){
+        if(screenWidth > 1920 ){
+            banner.style.width = '1920px';
+        }else if(screenWidth < 1919){
+            banner.style.width = '100%';
+        }else if(screenWidth <= 1200 && screenWidth >= 900){
             banner.style.height = '150px';
             //banner.style.backgroundPositionX = '-70px';
             headerText.style.fontSize = '76px';
@@ -106,3 +113,16 @@ function heroBanner (parent, header, text, alignment, image){
     });
 
 }
+
+window.addEventListener('load', function(){
+    heroBanner(
+        '.parent',
+        'ninos gratis',
+        'Ahorra hasta 150$ USD', 
+        'center',
+        [
+            'http://sb.monetate.net/img/1/388/2344664.jpg',
+            'http://sb.monetate.net/img/1/388/2344663.jpg'
+        ]
+    );
+});

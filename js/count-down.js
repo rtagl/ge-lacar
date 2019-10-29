@@ -10,6 +10,8 @@ function countDown(parent, startDate, endDate, offer, countries, last, days){
     countDownContainer.style.height = '68px';
     countDownContainer.style.display = 'flex';
     countDownContainer.style.justifyContent = 'space-between';
+    countDownContainer.style.margin = '0px auto 0px auto';
+    countDownContainer.style.overflow = 'hidden';
 
     //CREATE OFFER CONTAINER
     var offerContainer = document.createElement('div');
@@ -353,7 +355,13 @@ function countDown(parent, startDate, endDate, offer, countries, last, days){
     //MOBILE READY FUNCTIONALITY
     function checkLayout(){
         var screenWidth = window.innerWidth;
-    
+        
+            if(screenWidth > 1920){
+                countDownContainer.style.width = '1920px';
+            }else if(screenWidth < 1919){
+                countDownContainer.style.width = '100%';
+            }
+
             if(screenWidth < 768){
                 mobileLayout();
             }
@@ -460,5 +468,22 @@ function countDown(parent, startDate, endDate, offer, countries, last, days){
     });
     
 }
+
+window.addEventListener('load', function(){
+    countDown(
+        '.parent',
+        'Sep 18 2019 10:00:00', // month-day-year-hours-minutes-seconds
+        'Sep 21 2019 12:46:00', // month-day-year-hours-minutes-seconds
+        {
+            offer:     'ADEMAS: ',
+            text:      '50% Descuento',
+            subText:   'en el segundo pasejero',
+            timerText: 'oferta termina en:'
+        },
+        ['lac', 'deu'],
+        'ultimos',
+        'dias'
+    );
+})
 
 

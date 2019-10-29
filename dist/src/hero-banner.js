@@ -12,7 +12,7 @@ heroBanner(
     ]
 ); 
  
- function heroBanner (parent, header, text, alignment, image){
+function heroBanner (parent, header, text, alignment, image){
 
     //GET PARENT ELEMENT FOR HERO BANNER
     var parentElement = document.querySelector(parent);
@@ -22,7 +22,7 @@ heroBanner(
     var banner = document.createElement('div');
     banner.classList.add('ge-hero-banner');
     banner.style.backgroundImage = 'url('+image[0]+')';
-    banner.style.width = parentElement.clientWidth+'px';
+    banner.style.width = '100%';
     banner.style.height = '200px';
     banner.style.backgroundSize = 'cover';
     banner.style.display = 'flex';
@@ -30,6 +30,7 @@ heroBanner(
     banner.style.justifyContent = 'center';
     banner.style.alignItems = 'center';
     banner.style.overflow = 'hidden';
+    banner.style.margin = '0px auto 0px auto';
 
     //CREATE TEXT CONTAINER
     var textContainer = document.createElement('div');
@@ -82,7 +83,11 @@ heroBanner(
         var banner = document.querySelector('.ge-hero-banner');
         var screenWidth = window.innerWidth;
         
-        if(screenWidth <= 1200 && screenWidth >= 900){
+        if(screenWidth > 1920 ){
+            banner.style.width = '1920px';
+        }else if(screenWidth < 1919){
+            banner.style.width = '100%';
+        }else if(screenWidth <= 1200 && screenWidth >= 900){
             banner.style.height = '150px';
             //banner.style.backgroundPositionX = '-70px';
             headerText.style.fontSize = '76px';

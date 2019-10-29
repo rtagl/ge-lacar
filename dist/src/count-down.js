@@ -28,6 +28,8 @@ countDown(
     countDownContainer.style.display = 'flex';
     countDownContainer.style.justifyContent = 'space-between';
     countDownContainer.classList.add("countdown-container");
+    countDownContainer.style.margin = '0px auto 0px auto';
+    countDownContainer.style.overflow = 'hidden';
 
     //CREATE OFFER CONTAINER
     var offerContainer = document.createElement('div');
@@ -371,7 +373,12 @@ countDown(
     //MOBILE READY FUNCTIONALITY
     function checkLayout(){
         var screenWidth = window.innerWidth;
-    
+        
+            if(screenWidth > 1920){
+                countDownContainer.style.width = '1920px';
+            }else if(screenWidth < 1919){
+                countDownContainer.style.width = '100%';
+            }
             if(screenWidth < 768){
                 mobileLayout();
             }
