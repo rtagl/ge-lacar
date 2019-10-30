@@ -1,0 +1,6 @@
+number of nights,
+shipCode,
+date ranges,
+range of destinations,
+
+booking funnel 
