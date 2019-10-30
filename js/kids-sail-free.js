@@ -33,7 +33,7 @@ function ksf(props){
 
     //var pageURL = window.location.href;
     var pageURL = 'https://www.royalcaribbean.com/lac/es/booking/occupancy?accessCabin=false&connectedRooms=false&destinationCode=CARIB&packageCode=MJ5CU004&sailDate=2019-12-09&selectedCurrencyCode=USD&shipCode=MJ'
-    var page = digestURL(pageURL).page;
+    var currentPage = digestURL(pageURL).page;
     //var target = document.querySelectorAll('.column.small-10.large-2.amount')[1];
     var target = document.querySelector('.column.small-10.large-2.amount');
 
@@ -231,14 +231,22 @@ function ksf(props){
 
     }
 
-    function renderComponent(criteria){
-        if(criteria === true){
+    function validatePage(page){
+        if(page.indexOf('occupancy') !==  -1){
+            return true;
+        }else{
+            return false
+        }
+    }
+
+    function renderComponent(criteria, page){
+        if(criteria === true && page === true){
             createKSFcomponent(target, props.details)
         }else{
             console.log('ksf does not apply');
         }
     }
 
-    renderComponent(validateCriteria());
+    renderComponent(validateCriteria(), validatePage(currentPage));
 
 }
