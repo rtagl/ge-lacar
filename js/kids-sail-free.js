@@ -2,6 +2,11 @@ window.addEventListener('load', ()=>{
 
     ksf(
         {
+            details:{
+                backgroundColor: '#cc1d69',
+                text: 'niños gratis (edades 0-12)',
+                textColor: '#ffffff'
+            },
             numberOfNights: 5,
             shipCodes:['MJ', 'AD'],
             dates:[
@@ -29,19 +34,25 @@ function ksf(props){
     //var pageURL = window.location.href;
     var pageURL = 'https://www.royalcaribbean.com/lac/es/booking/occupancy?accessCabin=false&connectedRooms=false&destinationCode=CARIB&packageCode=MJ5CU004&sailDate=2019-12-09&selectedCurrencyCode=USD&shipCode=MJ'
     var page = digestURL(pageURL).page;
+    //var target = document.querySelectorAll('.column.small-10.large-2.amount')[1];
+    var target = document.querySelector('.column.small-10.large-2.amount');
 
-    function createKSFtag(details){
+    function createKSFcomponent(target, details){
         var ksfContainer = document.createElement('div');
         ksfContainer.style.background = details.backgroundColor;
-        ksfContainer.style.width = '250px';
-        ksfContainer.style.height = '50px';
-        ksfContainer.innerText = details.text;
+        ksfContainer.style.width = '145px';
+        ksfContainer.style.height = 'auto';
+        ksfContainer.innerText = details.text.toUpperCase();
         ksfContainer.style.fontFamily = 'proxima, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif'
-        ksfContainer.style.fontSize = '16px';
+        ksfContainer.style.fontSize = '18px';
+        ksfContainer.style.fontWeight = '400';
         ksfContainer.style.textAlign = 'center';
-        ksfContainer.style.margin = '0px';
-        ksfContainer.style.padding = '0px';
+        ksfContainer.style.margin = '0px auto 0px auto';
+        ksfContainer.style.padding = '6px 0px';
+        ksfContainer.style.color = details.textColor;
         //ksfContainer.style.letterSpacing = '3.2px';
+
+        target.appendChild(ksfContainer);
     }
 
     function digestURL(url){
@@ -215,13 +226,23 @@ function ksf(props){
         console.log(criteriaValues);
 
         if(criteriaValues.indexOf(false) !== -1){
+            console.log(false);
             return false;
         }else{
+            console.log(true);
             return true;
         }
 
     }
 
-    console.log(digestURL(pageURL), validateCriteria());
+    function renderComponent(criteria){
+        if(criteria === true){
+            createKSFcomponent(target, props.details)
+        }else{
+            console.log('ksf does not apply');
+        }
+    }
+
+    renderComponent(validateCriteria());
 
 }
