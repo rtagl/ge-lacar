@@ -1,58 +1,44 @@
 window.addEventListener('load', ()=>{
 
-    ksf(
-        {
-            details:{
-                backgroundColor: '#cc1d69',
-                text: 'niños gratis (edades 0-12)',
-                textColor: '#ffffff'
+    iobd({
+        details:{
+            text: 'Save 4500 right now',
+            textColor: '#ffffff'
+        },
+        numberOfNights: 5,
+        shipCodes:['MJ', 'AD'],
+        dates:[
+            {
+                start: 'Nov 23 2020', 
+                end: 'Dec 20 2020'
             },
-            numberOfNights: 5,
-            shipCodes:['MJ', 'AD'],
-            dates:[
-                {
-                    start: 'Nov 23 2020', 
-                    end: 'Dec 20 2020'
-                },
-                {
-                    start: 'Apr 01 2020',
-                    end: 'Aug 10 2020'
-                }
-            ],
-            destinations: [
-                destinationCodes.CARIB,
-                destinationCodes.BAHAM
-            ],
-        }
-    );
+            {
+                start: 'Apr 01 2020',
+                end: 'Aug 10 2020'
+            }
+        ],
+        destinations: [
+            destinationCodes.CARIB,
+            destinationCodes.BAHAM
+        ],
+    });
 
-});
+})
 
-function ksf(props){
+//insideOutsideBalconyDeluxe
+
+function iobd(props){
 
     //var pageURL = window.location.href;
-    var pageURL = 'https://www.royalcaribbean.com/lac/es/booking/occupancy?accessCabin=false&connectedRooms=false&destinationCode=CARIB&packageCode=MJ5CU004&sailDate=2019-12-09&selectedCurrencyCode=USD&shipCode=MJ'
+    var pageURL = 'https://www.royalcaribbean.com/lac/es/booking/superCategory?accessCabin=false&connectedRooms=false&destinationCode=CARIB&packageCode=MJ5CU004&sailDate=2019-12-09&selectedCurrencyCode=USD&shipCode=MJ'
     var currentPage = digestURL(pageURL).page;
-    //var target = document.querySelectorAll('.column.small-10.large-2.amount')[1];
-    var target = document.querySelector('.column.small-10.large-2.amount');
+    var targets = document.querySelectorAll('.name__title');
 
-    function createKSFcomponent(target, details){
-        var ksfContainer = document.createElement('div');
-        ksfContainer.style.background = details.backgroundColor;
-        ksfContainer.style.width = '145px';
-        ksfContainer.style.height = 'auto';
-        ksfContainer.innerText = details.text.toUpperCase();
-        ksfContainer.style.fontFamily = 'proxima, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif'
-        ksfContainer.style.fontSize = '18px';
-        ksfContainer.style.fontWeight = '400';
-        ksfContainer.style.textAlign = 'center';
-        ksfContainer.style.margin = '0px auto 0px auto';
-        ksfContainer.style.padding = '6px 0px';
-        ksfContainer.style.color = details.textColor;
-        //ksfContainer.style.letterSpacing = '3.2px';
+    console.log(targets);
 
-        target.appendChild(ksfContainer);
-    }
+    // function iobdComponent(){
+
+    // }
 
     function digestURL(url){
         var page = url.split('?')[0];
@@ -214,38 +200,14 @@ function ksf(props){
         }
     }
 
-    function validateCriteria(){
-        var criteriaValues = [];
-        var data = digestURL(pageURL);
-        criteriaValues.push(checkCriteriaNumberOfNights(getNumberOfNights(data.packageCode), props.numberOfNights));
-        criteriaValues.push(checkCriteriaDateRange(data.sailDate, props.dates));
-        criteriaValues.push(checkCriteriaShipCode(data.shipCode, props.shipCodes));
-        criteriaValues.push(checkCriteriaDestinationCode(data.destinationCode, props.destinations));
+    // function validatCriteria(){
 
-        if(criteriaValues.indexOf(false) !== -1){
-            return false;
-        }else{
-            return true;
-        }
+    // }  
+    
+    // function renderComponents(){
 
-    }
+    // }
 
-    function validatePage(page){
-        if(page.indexOf('occupancy') !==  -1){
-            return true;
-        }else{
-            return false
-        }
-    }
-
-    function renderComponent(criteria, page){
-        if(criteria === true && page === true){
-            createKSFcomponent(target, props.details)
-        }else{
-            console.log('ksf does not apply');
-        }
-    }
-
-    renderComponent(validateCriteria(), validatePage(currentPage));
+    // renderComponents();
 
 }
