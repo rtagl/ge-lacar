@@ -223,13 +223,9 @@ function ksf(props){
         criteriaValues.push(checkCriteriaShipCode(data.shipCode, props.shipCodes));
         criteriaValues.push(checkCriteriaDestinationCode(data.destinationCode, props.destinations));
 
-        console.log(criteriaValues);
-
         if(criteriaValues.indexOf(false) !== -1){
-            console.log(false);
             return false;
         }else{
-            console.log(true);
             return true;
         }
 
