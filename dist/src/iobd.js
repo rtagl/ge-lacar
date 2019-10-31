@@ -1,44 +1,35 @@
-window.addEventListener('load', ()=>{
-
-    iobd({
-        details:{
-            offerText: {
-                AA: 'Save 4500 right now',
-                A:  'Save 4000 right now',
-                B:  'Save 3500 right now'
-            },
-            textColor: '#ffffff'
+iobd({
+    details:{
+        offerText: {
+            AA: 'Save 4500 right now',
+            A:  'Save 4000 right now',
+            B:  'Save 3500 right now'
         },
-        numberOfNights: 5,
-        shipCodes:['MJ', 'AD'],
-        dates:[
-            {
-                start: 'Nov 23 2020', 
-                end: 'Dec 20 2020'
-            },
-            {
-                start: 'Apr 01 2020',
-                end: 'Aug 10 2020'
-            }
-        ],
-        destinations: [
-            destinationCodes.CARIB,
-            destinationCodes.BAHAM
-        ],
-    });
-
-})
-
-//insideOutsideBalconyDeluxe
+        textColor: '#ffffff'
+    },
+    numberOfNights: 5,
+    shipCodes:['MJ', 'AD'],
+    dates:[
+        {
+            start: 'Nov 23 2020', 
+            end: 'Dec 20 2020'
+        },
+        {
+            start: 'Apr 01 2020',
+            end: 'Aug 10 2020'
+        }
+    ],
+    destinations: [
+        destinationCodes.CARIB,
+        destinationCodes.BAHAM
+    ],
+});
 
 function iobd(props){
 
-    //var pageURL = window.location.href;
-    var pageURL = 'https://www.royalcaribbean.com/lac/es/booking/superCategory?accessCabin=false&connectedRooms=false&destinationCode=CARIB&packageCode=MJ5CU004&sailDate=2019-12-09&selectedCurrencyCode=USD&shipCode=MJ'
+    var pageURL = window.location.href;
     var currentPage = digestURL(pageURL).page;
     var targets = document.querySelectorAll('.promotions-container--wrap');
-
-    console.log(targets);
 
     function iobdComponent(details, target){
 
