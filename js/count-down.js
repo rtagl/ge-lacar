@@ -1,4 +1,4 @@
-function countDown(parent, startDate, endDate, offer, countries, last, days){
+function countDown(parent, startDate, endDate, offer, countries, last, days, dst){
 
     //COMPONENT CONTAINER
     var parentElement = document.querySelector(parent);
@@ -6,10 +6,11 @@ function countDown(parent, startDate, endDate, offer, countries, last, days){
     //CREATE COMPONENT
     var countDownContainer = document.createElement('div');
     //countDownContainer.style.background = 'red';
-    countDownContainer.style.width = '100%';
+    countDownContainer.style.width = parentElement.clientWidth+'px';
     countDownContainer.style.height = '68px';
     countDownContainer.style.display = 'flex';
     countDownContainer.style.justifyContent = 'space-between';
+    countDownContainer.classList.add("countdown-container");
     countDownContainer.style.margin = '0px auto 0px auto';
     countDownContainer.style.overflow = 'hidden';
 
@@ -46,7 +47,7 @@ function countDown(parent, startDate, endDate, offer, countries, last, days){
     offerText.style.textAlign = 'center';
     offerText.style.letterSpacing = '2px';
     offerText.style.color = '#fff';
-    offerText.style.padding = '0px 20px 0px 0px'
+    offerText.style.padding = '0px 20px 0px 0px';
 
     //CREATE SUB TEXT CONTAINER
     var offerSubTextContainer = document.createElement('div');
@@ -334,18 +335,24 @@ function countDown(parent, startDate, endDate, offer, countries, last, days){
     }
 
     //SET FONT SIZE RESPONSIVENESS
-    function setFontSize(screenWidth){
-        if(screenWidth > 450){
+    function setFontSize(){
+        if(window.matchMedia("(min-width: 990px)").matches){
             offerText.style.fontSize = '40px';
             offerSubText.style.fontSize = '28px';
-            offerSubTextSmall.style.fontSize = '16px'; 
-        }
-        if(screenWidth < 450){
+            offerSubTextSmall.style.fontSize = '16px';
+        }else if(window.matchMedia("(min-width: 920px)").matches){ 
             offerText.style.fontSize = '30px';
+            offerSubText.style.fontSize = '22px';
+            offerSubTextSmall.style.fontSize = '14px';
+        }else if(window.matchMedia("(min-width: 810px)").matches){ 
+            offerText.style.fontSize = '28px';
             offerSubText.style.fontSize = '18px';
             offerSubTextSmall.style.fontSize = '14px';
-        }
-        if(screenWidth < 330){
+        }else if(window.matchMedia("(min-width: 450px)").matches){
+            offerText.style.fontSize = '26px';
+            offerSubText.style.fontSize = '18px';
+            offerSubTextSmall.style.fontSize = '14px';
+        }else if(window.matchMedia("(min-width: 330px)").matches){
             offerText.style.fontSize = '22px';
             offerSubText.style.fontSize = '16px';
             offerSubTextSmall.style.fontSize = '14px';
@@ -361,7 +368,6 @@ function countDown(parent, startDate, endDate, offer, countries, last, days){
             }else if(screenWidth < 1919){
                 countDownContainer.style.width = '100%';
             }
-
             if(screenWidth < 768){
                 mobileLayout();
             }
@@ -369,7 +375,7 @@ function countDown(parent, startDate, endDate, offer, countries, last, days){
             if(screenWidth > 768){
                 desktopLayout();
             }
-            setFontSize(screenWidth);
+            setFontSize();
     }
 
     window.addEventListener('resize', function(){
@@ -391,22 +397,35 @@ function countDown(parent, startDate, endDate, offer, countries, last, days){
 
     //SET COUNTDOWN DIGITS TO MATCH CALCULATED TIME
     function setTimeDigits(country){
-
+        var daylightSavings = dst;
+        var heroSubText = document.querySelector('.hero-subtext');
         var timeZone = '';
 
         switch(country){
             case 'lac':
-                timeZone = 'GMT-0300';
+                if (daylightSavings === true) {
+                  timeZone = 'GMT-0300';
+                } else {
+                  timeZone = 'GMT-0400';
+                }
             break;
             case 'deu':
             case 'esp':
             case 'ita':
             case 'nor':
             case 'swe':
-                timeZone = 'GMT+0200';
+                if (daylightSavings === true) {
+                  timeZone = 'GMT+0200';
+                } else {
+                  timeZone = 'GMT+0100';
+                }
             break;
             case 'mex':
-                timeZone = 'GMT-0500';
+                if (daylightSavings === true) {
+                  timeZone = 'GMT-0500';
+                } else {
+                  timeZone = 'GMT-0600';
+                }
             break;
         }
 
@@ -445,15 +464,24 @@ function countDown(parent, startDate, endDate, offer, countries, last, days){
         if(timerHours <= 0 && timerMinutes <= 0  && timerSeconds <= 0){
             stopTimer();
         }
+        if (beginDate < currentDate && heroSubText) {
+           heroSubText.style.display = 'none';
 
-        if(beginDate > stopDate || currentDate > stopDate || beginDate > currentDate){
+        }
+
+        if(beginDate > stopDate || currentDate > stopDate){
             stopTimer();
             hours.innerText = '00';
             minutes.innerText = '00';
             seconds.innerText = '00';
             console.log('The start date for this coutdown is greater than the stop date');
         }
-
+      
+        if (beginDate > currentDate) {
+           
+           document.querySelector('.countdown-container').style.display = 'none';
+        }
+      
     }
 
     //INVOKE setTimeDigits() FIRST TO AVOID BLANK DIGITS ON LOAD
@@ -475,10 +503,10 @@ window.addEventListener('load', function(){
         'Sep 18 2019 10:00:00', // month-day-year-hours-minutes-seconds
         'Sep 21 2019 12:46:00', // month-day-year-hours-minutes-seconds
         {
-            offer:     'ADEMAS: ',
-            text:      '50% Descuento',
-            subText:   'en el segundo pasejero',
-            timerText: 'oferta termina en:'
+            offer:     'INOLTRE: FINO A 35% DI SCONTO',
+            text:      '+ PREZZI SPECIALI',
+            subText:   'FAMIGLIA',
+            timerText: 'oferta termina in:'
         },
         ['lac', 'deu'],
         'ultimos',

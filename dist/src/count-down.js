@@ -15,7 +15,7 @@ countDown(
   false
 );
 
-  function countDown(parent, startDate, endDate, offer, countries, last, days, dst){
+function countDown(parent, startDate, endDate, offer, countries, last, days, dst){
 
     //COMPONENT CONTAINER
     var parentElement = document.querySelector(parent);
@@ -352,18 +352,24 @@ countDown(
     }
 
     //SET FONT SIZE RESPONSIVENESS
-    function setFontSize(screenWidth){
-        if(screenWidth > 450){
+    function setFontSize(){
+        if(window.matchMedia("(min-width: 990px)").matches){
             offerText.style.fontSize = '40px';
             offerSubText.style.fontSize = '28px';
-            offerSubTextSmall.style.fontSize = '16px'; 
-        }
-        if(screenWidth < 450){
+            offerSubTextSmall.style.fontSize = '16px';
+        }else if(window.matchMedia("(min-width: 920px)").matches){ 
             offerText.style.fontSize = '30px';
+            offerSubText.style.fontSize = '22px';
+            offerSubTextSmall.style.fontSize = '14px';
+        }else if(window.matchMedia("(min-width: 810px)").matches){ 
+            offerText.style.fontSize = '28px';
             offerSubText.style.fontSize = '18px';
             offerSubTextSmall.style.fontSize = '14px';
-        }
-        if(screenWidth < 330){
+        }else if(window.matchMedia("(min-width: 450px)").matches){
+            offerText.style.fontSize = '26px';
+            offerSubText.style.fontSize = '18px';
+            offerSubTextSmall.style.fontSize = '14px';
+        }else if(window.matchMedia("(min-width: 330px)").matches){
             offerText.style.fontSize = '22px';
             offerSubText.style.fontSize = '16px';
             offerSubTextSmall.style.fontSize = '14px';
@@ -386,7 +392,7 @@ countDown(
             if(screenWidth > 768){
                 desktopLayout();
             }
-            setFontSize(screenWidth);
+            setFontSize();
     }
 
     window.addEventListener('resize', function(){
