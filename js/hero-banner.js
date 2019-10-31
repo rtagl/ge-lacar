@@ -69,29 +69,29 @@ function heroBanner (parent, header, text, alignment, image){
         var banner = document.querySelector('.ge-hero-banner');
         var screenWidth = window.innerWidth;
         
-        if(screenWidth > 1920 ){
+        if(window.matchMedia("(min-width: 1920px)").matches){
             banner.style.width = '1920px';
-        }else if(screenWidth < 1919){
+        }else if(window.matchMedia("(min-width: 1919px)").matches){
             banner.style.width = '100%';
-        }else if(screenWidth <= 1200 && screenWidth >= 900){
+        }else if(window.matchMedia("(min-width: 1200px)").matches){
             banner.style.height = '150px';
             //banner.style.backgroundPositionX = '-70px';
             headerText.style.fontSize = '76px';
             subText.style.fontSize = '34px';
-        }else if(screenWidth <= 900 && screenWidth >= 750){
+        }else if(window.matchMedia("(min-width: 900px)").matches){
             banner.style.height = '150px';
             //banner.style.backgroundPositionX = '-70px';
             headerText.style.fontSize = '56px';
             subText.style.fontSize = '24px';
-        }else if(screenWidth <= 750){
+        }else if(window.matchMedia("(min-width: 750px)").matches){
             banner.style.height = '150px';
             //banner.style.backgroundPositionX = '-70px';
             headerText.style.fontSize = '46px';
             subText.style.fontSize = '24px';
-        }else{
+        }else if(window.matchMedia("(min-width: 400px)").matches){
             banner.style.height = '200px';
             //banner.style.backgroundPositionX = '0px';
-            headerText.style.fontSize = '96px';
+            headerText.style.fontSize = '46px';
             subText.style.fontSize = '44px';
         }
 
