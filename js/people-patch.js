@@ -2,7 +2,7 @@ var peopleWatchingData = [
     {
         criteria:{
             ships:['AL'],
-            departures:['Miami','Fort Lauderdale', 'word word word'],
+            departures:['Miami','Fort Lauderdale'],
             itinerary:['Caribbean','Perfect Day Island'],
             nights:'>=6'
         },

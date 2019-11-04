@@ -27,10 +27,11 @@ function peopleWatching(props){
 
     //var pageURL = window.location.href;
     //var pageURL = 'https://www.royalcaribbean.com/lac/es/cruises/?country=ARG&itineraryPanel=MJ4CU002-2019-11-30';
-    var pageURL = 'https://www.royalcaribbean.com/lac/es/cruises/itinerary/4-night-western-caribbean-from-fort-lauderdale-on-majesty/AL4CU002?sail-date=2019-11-30&country=ARG&currency=USD'
+    var pageURL = 'https://www.royalcaribbean.com/lac/es/cruises/itinerary/6-night-caribbean-from-fort-lauderdale-on-majesty/AL4CU002?sail-date=2019-11-30&country=ARG&currency=USD'
     var target = document.querySelector('.itinerary-panel-sidenav');
 
-    function peopleWatchingComponent(details){
+    //CREATE PEOPLE WATCHIN COMPONENT
+    function peopleWatchingComponent(details, numberOfPeople){
 
         var component = document.createElement('div');
         component.style.background = '#ff6a6f';
@@ -57,7 +58,7 @@ function peopleWatching(props){
         numberSpan.style.margin = '0px 5px 0px 5px';
         numberSpan.style.padding = '0px';
         numberSpan.style.color = details.textColor;
-        numberSpan.innerText = details.number;
+        numberSpan.innerText = numberOfPeople;
         numberSpan.style.cssFloat = 'left';
 
 
@@ -92,6 +93,7 @@ function peopleWatching(props){
 
     }
 
+    //CHECK IF PAGE URL IS VALID 
     function checkURL(url){
         if(url.indexOf('itinerary') !== -1){
             return true;
@@ -100,6 +102,7 @@ function peopleWatching(props){
         }
     }
 
+    //PROCESS THE ITINERARY CRITERIA FROM URL
     function processItineraryCriterea(url){
         
         var urlSplit = url.split('?');
@@ -128,18 +131,15 @@ function peopleWatching(props){
         }
 
         dataObject.numberOfNights = itineraryDataSplit[0];
-        dataObject.itinerary = itineraryDataSplit[2]+' '+itineraryDataSplit[3];
+        dataObject.itinerary = itineraryDataSplit.slice(itineraryDataSplit.indexOf('night')+1, itineraryDataSplit.indexOf('from')).join(' ');
         dataObject.departure = itineraryDataSplit.slice(itineraryDataSplit.indexOf('from')+1, itineraryDataSplit.indexOf('on')).join(' ');
         dataObject.shipCode = urlData[urlData.length -1].substring(0, 2);
 
         return dataObject;
     }
 
-    //console.log(processItineraryCriterea(pageURL));
-
+    //CHECK PRODUCT CRITERIA
     function checkCriteria(data, criteria){
-
-        console.log(criteria);
 
         var nightsDataObject = data.map(function(d){
             var operator = '';
@@ -161,57 +161,54 @@ function peopleWatching(props){
 
             var checkedCriteria = [];
 
+            //CHECK SHIP-CODES 
             if(d.criteria.ships === undefined || d.criteria.ships.indexOf(criteria.shipCode) !== -1){
                 checkedCriteria.push(true);
             }else{
                 checkedCriteria.push(false);
             }
 
+            //CHECK DEPARTURES 
             if(d.criteria.departures === undefined || d.criteria.departures.join('').split(' ').join('').toLowerCase().indexOf(criteria.departure.split(' ').join('')) !== -1){
                 checkedCriteria.push(true);
             }else{
                 checkedCriteria.push(false);
             }
 
+            //CHECK ITINERARY
             if(d.criteria.itinerary === undefined || d.criteria.itinerary.join('').split(' ').join('').toLowerCase().indexOf(criteria.itinerary.split(' ').join('')) !== -1){
                 checkedCriteria.push(true);
             }else{
                 checkedCriteria.push(false);
             }
-
-            if( nightsDataObject[i] !== null && 
-                nightsDataObject[i].operator === '>=' &&
-                parseInt(criteria.numberOfNights) >= nightsDataObject[i].value
-            ){
-                checkedCriteria.push(true);
-            }else{
-                checkedCriteria.push(false);
+            
+            //CHECK NUMBER OF NIGHTS
+            if(nightsDataObject[i] !== null){
+                switch(nightsDataObject[i].operator){
+                    case '>=':
+                        parseInt(criteria.numberOfNights) >= parseInt(nightsDataObject[i].value) ? checkedCriteria.push(true) : checkedCriteria.push(false);
+                    break;
+                    case '<=':
+                        parseInt(criteria.numberOfNights) <= parseInt(nightsDataObject[i].value) ? checkedCriteria.push(true) : checkedCriteria.push(false);
+                    break;
+                }
             }
 
-            if( nightsDataObject[i] !== null && 
-                nightsDataObject[i].operator === '<=' &&
-                parseInt(criteria.numberOfNights) <= nightsDataObject[i].value
-            ){
-                checkedCriteria.push(true);
-            }else{
-                checkedCriteria.push(false);
-            }
 
+            //CHECK THAT ALL CRITERIA IS TRUE
             if(checkedCriteria.indexOf(false) === -1){
-                numberOfPeople = d.criteria.views;
+                numberOfPeople = d.views;
             }else{
                 numberOfPeople = null;
             }
 
-            console.log(checkedCriteria);
         });
-        console.log(numberOfPeople);
+
         return numberOfPeople;
 
     }
 
-    console.log(checkCriteria(props.data, processItineraryCriterea(pageURL)));
-
+    //RENDER THE COMPONENT 
     function renderComponent(truthyURL, component, target){
 
         if(truthyURL === true && target !== null){
@@ -222,7 +219,69 @@ function peopleWatching(props){
 
     }
 
-    renderComponent(checkURL(pageURL), peopleWatchingComponent(props), target);
+    //SET THE NUMBER OF PEOPLE WATCHING
+    function setPeopleNumber(data){
+
+        var currentTime = new Date();
+
+        var time = {
+            day: '',
+            month: new Date().getMonth()+1,
+            date: new Date().getDate(),
+            year: new Date().getFullYear(),
+        }
+
+        switch(new Date().getDay()){
+            case 1:
+                time.day = 'Mon';
+            break;
+            case 2:
+                time.day = 'Tue';
+            break;
+            case 3:
+                time.day = 'Wed';
+            break;
+            case 4:
+                time.day = 'Thu';
+            break;
+            case 5:
+                time.day = 'Fri';
+            break;
+            case 6:
+                time.day = 'Sat';
+            break;
+            case 7:
+                time.day = 'Sun';
+            break;
+        }
+
+        var hours = {
+            amHours:{
+                start: new Date(time.day+' '+time.month+' '+time.date+' '+time.year+' '+'00:00:00'),
+                end: new Date(time.day+' '+time.month+' '+time.date+' '+time.year+' '+'08:59:59')
+            },
+            bizHours:{
+                start: new Date(time.day+' '+time.month+' '+time.date+' '+time.year+' '+'09:00:00'),
+                end: new Date(time.day+' '+time.month+' '+time.date+' '+time.year+' '+'17:59:59')
+            },
+            pmHours:{
+                start: new Date(time.day+' '+time.month+' '+time.date+' '+time.year+' '+'18:00:00'),
+                end: new Date(time.day+' '+time.month+' '+time.date+' '+time.year+' '+'11:59:59')
+            }
+        }
+
+        if(currentTime >= hours.amHours.start && currentTime <= hours.amHours.end){
+            return Math.floor(Math.random()*(data.am[1]-data.am[0]+1)+data.am[0]);
+        }else if(currentTime >= hours.bizHours.start && currentTime <= hours.bizHours.end){
+            return Math.floor(Math.random()*(data.business[1]-data.business[0]+1)+data.business[0]);
+        }else if(currentTime >= hours.pmHours.start && currentTime <= hours.pmHours.end){
+            return Math.floor(Math.random()*(data.pm[1]-data.pm[0]+1)+data.pm[0]);
+        }
+
+    }
+
+    //RENDER THE COMPONENT
+    renderComponent(checkURL(pageURL), peopleWatchingComponent(props, setPeopleNumber(checkCriteria(props.data, processItineraryCriterea(pageURL)))), target);
 
 }
 
