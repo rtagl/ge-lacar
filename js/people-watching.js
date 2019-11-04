@@ -26,8 +26,8 @@ window.addEventListener('load', function(){
 function peopleWatching(props){
 
     //var pageURL = window.location.href;
-    //var pageURL = 'https://www.royalcaribbean.com/lac/es/cruises/?country=ARG&itineraryPanel=MJ4CU002-2019-11-30';
-    var pageURL = 'https://www.royalcaribbean.com/lac/es/cruises/itinerary/6-night-caribbean-from-fort-lauderdale-on-majesty/AL4CU002?sail-date=2019-11-30&country=ARG&currency=USD'
+    var pageURL = 'https://www.royalcaribbean.com/lac/es/cruises/?itineraryPanel=MJ3BH004-2020-01-05';
+    //var pageURL = 'https://www.royalcaribbean.com/lac/es/cruises/itinerary/6-night-caribbean-from-fort-lauderdale-on-majesty/AL4CU002?sail-date=2019-11-30&country=ARG&currency=USD'
     var target = document.querySelector('.itinerary-panel-sidenav');
 
     //CREATE PEOPLE WATCHIN COMPONENT
@@ -95,47 +95,84 @@ function peopleWatching(props){
 
     //CHECK IF PAGE URL IS VALID 
     function checkURL(url){
-        if(url.indexOf('itinerary') !== -1){
-            return true;
+        if(url.indexOf('itinerary') !== -1 && url.indexOf('itineraryPanel') === -1){
+            return {valid: true, page: 'productView', url: url};
+        }else if(url.indexOf('itineraryPanel') !== -1){
+            return {valid: true, page: 'cruiseSearch', url: url};
         }else{
-            return false;
+            return {valid: false, page: 'none', url: url}
         }
     }
 
     //PROCESS THE ITINERARY CRITERIA FROM URL
-    function processItineraryCriterea(url){
+    function processItineraryCriterea(data){
         
-        var urlSplit = url.split('?');
-        var urlData = urlSplit[0].split('/');
-        var queryData = urlSplit[1].split('&');
+        function productViewStrategy(){
+            var urlSplit = data.url.split('?');
+            var urlData = urlSplit[0].split('/');
+            var queryData = urlSplit[1].split('&');
 
-        var itineraryData = urlData.filter(function(data){
-            return  data.indexOf('night') !== -1 ? data : null;
-        });
+            var itineraryData = urlData.filter(function(data){
+                return  data.indexOf('night') !== -1 ? data : null;
+            });
 
-        var itineraryDataSplit = itineraryData[0].split('-');
+            var itineraryDataSplit = itineraryData[0].split('-');
 
-        let queryDataSplit = [];
-        queryData.forEach(function(data){
-            queryDataSplit.push(data.split('=')[0]);
-            queryDataSplit.push(data.split('=')[1]);
-        });
+            let queryDataSplit = [];
+            queryData.forEach(function(data){
+                queryDataSplit.push(data.split('=')[0]);
+                queryDataSplit.push(data.split('=')[1]);
+            });
 
-        let dataObject = {};
-        for(var i = 0; i < queryDataSplit.length; i+=2){
-            if(queryDataSplit[i] === 'sail-date' || queryDataSplit[i+1] === 'sail-date'){
-                dataObject['sailDate'] = queryDataSplit[i+1];
-            }else{
-                dataObject[queryDataSplit[i]] = queryDataSplit[i+1];
+            let dataObject = {};
+            for(var i = 0; i < queryDataSplit.length; i+=2){
+                if(queryDataSplit[i] === 'sail-date' || queryDataSplit[i+1] === 'sail-date'){
+                    dataObject['sailDate'] = queryDataSplit[i+1];
+                }else{
+                    dataObject[queryDataSplit[i]] = queryDataSplit[i+1];
+                }
             }
+
+            dataObject.numberOfNights = itineraryDataSplit[0];
+            dataObject.itinerary = itineraryDataSplit.slice(itineraryDataSplit.indexOf('night')+1, itineraryDataSplit.indexOf('from')).join(' ');
+            dataObject.departure = itineraryDataSplit.slice(itineraryDataSplit.indexOf('from')+1, itineraryDataSplit.indexOf('on')).join(' ');
+            dataObject.shipCode = urlData[urlData.length -1].substring(0, 2);
+
+            return dataObject;
         }
 
-        dataObject.numberOfNights = itineraryDataSplit[0];
-        dataObject.itinerary = itineraryDataSplit.slice(itineraryDataSplit.indexOf('night')+1, itineraryDataSplit.indexOf('from')).join(' ');
-        dataObject.departure = itineraryDataSplit.slice(itineraryDataSplit.indexOf('from')+1, itineraryDataSplit.indexOf('on')).join(' ');
-        dataObject.shipCode = urlData[urlData.length -1].substring(0, 2);
+        function cruiseSearchStrategy(){
 
-        return dataObject;
+            // country: "ARG"
+            // currency: "USD"
+            // departure: "fort lauderdale"
+            // itinerary: "caribbean"
+            // numberOfNights: "6"
+            // sailDate: "2019-11-30"
+            // shipCode: "AL"
+
+            var dataObject = {};
+
+            var urlSplit = data.url.split('=');
+            var urlSplitData = urlSplit[1].split('-');
+
+            dataObject.sailDate = urlSplitData[1]+'-'+urlSplitData[2]+'-'+urlSplitData[3];
+            dataObject.shipCode = urlSplitData[0].substring(0,2);
+            dataObject
+            dataObject.numberOfNights = document.querySelector('.itinerary-panel-title').innerText.split(' ')[0];
+
+            console.log(dataObject, urlSplitData);
+
+            return dataObject;
+        }
+
+        if(data.page === 'productView'){
+            return productViewStrategy();
+        }else if(data.page === 'cruiseSearch'){
+            return cruiseSearchStrategy();
+        }else{
+            return {};
+        }
     }
 
     //CHECK PRODUCT CRITERIA
@@ -211,7 +248,7 @@ function peopleWatching(props){
     //RENDER THE COMPONENT 
     function renderComponent(truthyURL, component, target){
 
-        if(truthyURL === true && target !== null){
+        if(truthyURL.valid === true && target !== null){
             target.appendChild(component);
         }else{
             console.log('page not relevant');
@@ -281,7 +318,10 @@ function peopleWatching(props){
     }
 
     //RENDER THE COMPONENT
-    renderComponent(checkURL(pageURL), peopleWatchingComponent(props, setPeopleNumber(checkCriteria(props.data, processItineraryCriterea(pageURL)))), target);
+    renderComponent(
+        checkURL(pageURL), 
+        peopleWatchingComponent(props, setPeopleNumber(checkCriteria(props.data, processItineraryCriterea(checkURL(pageURL))))), 
+        target);
 
 }
 
