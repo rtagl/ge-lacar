@@ -1,16 +1,3 @@
-
-
-//if the page url contains 'itinerary'
-//and document.querySelector('.itinerary-panel-sidenav') exists 
-//add the people watchin container
-
-//get departurePort
-//get sailingItinerary
-//get numberOfNights
-//get shipCode
-
-//.itinerary-info
-
 window.addEventListener('load', function(){
 
     peopleWatching({
@@ -25,13 +12,50 @@ window.addEventListener('load', function(){
 
 function peopleWatching(props){
 
-    //var pageURL = window.location.href;
-    var pageURL = 'https://www.royalcaribbean.com/lac/es/cruises/?itineraryPanel=MJ3BH004-2020-01-05';
-    //var pageURL = 'https://www.royalcaribbean.com/lac/es/cruises/itinerary/6-night-caribbean-from-fort-lauderdale-on-majesty/AL4CU002?sail-date=2019-11-30&country=ARG&currency=USD'
+    var pageURL = window.location.href;
     var target = document.querySelector('.itinerary-panel-sidenav');
+    var itineraries = document.querySelectorAll('.itinerary-card-component');
+    var overlays = document.querySelectorAll('.overlay');
+
+    //FOR TESTING PURPOSES 
+    //var pageURL = 'https://www.royalcaribbean.com/lac/es/cruises/?itineraryPanel=AL6CU002-2019-11-30';
+    //var pageURL = 'https://www.royalcaribbean.com/lac/es/cruises/itinerary/6-night-caribbean-from-fort-lauderdale-on-majesty/AL4CU002?sail-date=2019-11-30&country=ARG&currency=USD'
+
+    //ITINERARIES CLICK EVENTS
+    function itinerariesClickEvents(itineraries){
+        if(itineraries.length !== 0){
+
+            itineraries.forEach(function(itinerary){
+                itinerary.addEventListener('click', function(){
+                    renderComponent(
+                        checkURL(pageURL), 
+                        peopleWatchingComponent(
+                            props, 
+                            setPeopleNumber(checkCriteria(props.data, processItineraryCriterea(checkURL(pageURL))))), 
+                        target
+                    );
+                });
+            });
+
+        }
+    }
+
+    //OVERLAYS CLICK EVENTS
+    function deleteComponentOnOverlayClick(overlays){
+        if(overlays.length !== 0){{
+            overlays.forEach(function(ol){
+                ol.addEventListener('click', function(){
+                    document.getElementById('ge_people-watching').remove();
+                })
+            });
+        }}
+    }
 
     //CREATE PEOPLE WATCHIN COMPONENT
     function peopleWatchingComponent(details, numberOfPeople){
+
+        var empty = document.createElement('div');
+        empty.setAttribute('id', 'ge_people-watching');
 
         var component = document.createElement('div');
         component.style.background = '#ff6a6f';
@@ -41,6 +65,7 @@ function peopleWatching(props){
         component.style.display = 'flex';
         component.style.justifyContent = 'center';
         component.style.alignItems = 'center';
+        component.setAttribute('id', 'ge_people-watching');
         
         var eyeSpan = document.createElement('img');
         eyeSpan.style.width = '20px';
@@ -89,7 +114,11 @@ function peopleWatching(props){
         component.appendChild(peopleSpan);
         component.appendChild(watchingSpan);
 
-        return component;
+        if(numberOfPeople === 0){
+            return empty;
+        }else{
+            return component;
+        }
 
     }
 
@@ -143,25 +172,31 @@ function peopleWatching(props){
 
         function cruiseSearchStrategy(){
 
-            // country: "ARG"
-            // currency: "USD"
-            // departure: "fort lauderdale"
-            // itinerary: "caribbean"
-            // numberOfNights: "6"
-            // sailDate: "2019-11-30"
-            // shipCode: "AL"
-
             var dataObject = {};
 
             var urlSplit = data.url.split('=');
             var urlSplitData = urlSplit[1].split('-');
 
+            function getNumberOfNights(packageCode){
+                var numberOfNights = packageCode.split('');
+                var numbers = numberOfNights.filter(function(el, i){
+                    if(!isNaN(parseInt(el))){
+                        if(i === 2 || i === 3){
+                            return el;
+                        }
+                    }
+                });
+
+                if(numbers.length === 1){
+                    return parseInt(numbers[0]);
+                }else{
+                    return parseInt('' + numbers[0] + numbers[1]);
+                }
+            }
+
             dataObject.sailDate = urlSplitData[1]+'-'+urlSplitData[2]+'-'+urlSplitData[3];
             dataObject.shipCode = urlSplitData[0].substring(0,2);
-            dataObject
-            dataObject.numberOfNights = document.querySelector('.itinerary-panel-title').innerText.split(' ')[0];
-
-            console.log(dataObject, urlSplitData);
+            dataObject.numberOfNights = getNumberOfNights(urlSplitData[0]).toString();
 
             return dataObject;
         }
@@ -171,7 +206,9 @@ function peopleWatching(props){
         }else if(data.page === 'cruiseSearch'){
             return cruiseSearchStrategy();
         }else{
-            return {};
+            return {
+
+            };
         }
     }
 
@@ -199,21 +236,21 @@ function peopleWatching(props){
             var checkedCriteria = [];
 
             //CHECK SHIP-CODES 
-            if(d.criteria.ships === undefined || d.criteria.ships.indexOf(criteria.shipCode) !== -1){
+            if(d.criteria.ships === undefined || criteria.shipCode === undefined || d.criteria.ships.indexOf(criteria.shipCode) !== -1){
                 checkedCriteria.push(true);
             }else{
                 checkedCriteria.push(false);
             }
 
             //CHECK DEPARTURES 
-            if(d.criteria.departures === undefined || d.criteria.departures.join('').split(' ').join('').toLowerCase().indexOf(criteria.departure.split(' ').join('')) !== -1){
+            if(d.criteria.departures === undefined || criteria.departure === undefined || d.criteria.departures.join('').split(' ').join('').toLowerCase().indexOf(criteria.departure.split(' ').join('')) !== -1){
                 checkedCriteria.push(true);
             }else{
                 checkedCriteria.push(false);
             }
 
             //CHECK ITINERARY
-            if(d.criteria.itinerary === undefined || d.criteria.itinerary.join('').split(' ').join('').toLowerCase().indexOf(criteria.itinerary.split(' ').join('')) !== -1){
+            if(d.criteria.itinerary === undefined || criteria.itinerary === undefined || d.criteria.itinerary.join('').split(' ').join('').toLowerCase().indexOf(criteria.itinerary.split(' ').join('')) !== -1){
                 checkedCriteria.push(true);
             }else{
                 checkedCriteria.push(false);
@@ -307,12 +344,14 @@ function peopleWatching(props){
             }
         }
 
-        if(currentTime >= hours.amHours.start && currentTime <= hours.amHours.end){
+        if(currentTime >= hours.amHours.start && currentTime <= hours.amHours.end && data !== null){
             return Math.floor(Math.random()*(data.am[1]-data.am[0]+1)+data.am[0]);
-        }else if(currentTime >= hours.bizHours.start && currentTime <= hours.bizHours.end){
+        }else if(currentTime >= hours.bizHours.start && currentTime <= hours.bizHours.end && data !== null){
             return Math.floor(Math.random()*(data.business[1]-data.business[0]+1)+data.business[0]);
-        }else if(currentTime >= hours.pmHours.start && currentTime <= hours.pmHours.end){
+        }else if(currentTime >= hours.pmHours.start && currentTime <= hours.pmHours.end && data !== null){
             return Math.floor(Math.random()*(data.pm[1]-data.pm[0]+1)+data.pm[0]);
+        }else if(data === null){
+            return 0;
         }
 
     }
@@ -321,7 +360,14 @@ function peopleWatching(props){
     renderComponent(
         checkURL(pageURL), 
         peopleWatchingComponent(props, setPeopleNumber(checkCriteria(props.data, processItineraryCriterea(checkURL(pageURL))))), 
-        target);
+        target
+    );
+
+    //DELETE COMPONENT ON OVERLAY CLICK
+    deleteComponentOnOverlayClick(overlays);
+
+    //CREATE COMPONENT ON ITINERARY CLICK
+    itinerariesClickEvents(itineraries);
 
 }
 
