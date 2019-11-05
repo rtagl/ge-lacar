@@ -241,8 +241,8 @@ function ksf(props){
                 if(document.querySelectorAll('.legend')[1]){
                     clearInterval(timer);
                     document.querySelectorAll('.legend')[1].remove();
-                    createKSFcomponent(target, props.details);
                 }
+                createKSFcomponent(target, props.details);
             }, 10);
         }else{
             console.log('ksf does not apply');
