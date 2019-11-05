@@ -243,6 +243,8 @@ function ksf(props){
 
     function renderComponent(criteria, page){
         if(criteria === true && page === true){
+            //DELETE ORIGINAL ELEMENT
+            document.querySelectorAll('.legend')[1].remove();
             createKSFcomponent(target, props.details)
         }else{
             console.log('ksf does not apply');
