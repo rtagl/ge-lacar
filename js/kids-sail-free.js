@@ -254,6 +254,7 @@ function ksf(props){
     }
 
     window.addEventListener('popstate', function(){
+        console.log('ATTENTION WALLMART SHOPPERS PICKLES, THAT IS ALL!');
         renderComponent(validateCriteria(), validatePage(currentPage));
     });
 

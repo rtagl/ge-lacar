@@ -242,14 +242,15 @@ function ksf(props){
                     clearInterval(timer);
                     document.querySelectorAll('.legend')[1].remove();
                 }
-                createKSFcomponent(target, props.details);
             }, 10);
+            createKSFcomponent(target, props.details);
         }else{
             console.log('ksf does not apply');
         }
     }
 
     window.addEventListener('popstate', function(){
+        console.log('ATTENTION WALLMART SHOPPERS PICKLES, THAT IS ALL!');
         renderComponent(validateCriteria(), validatePage(currentPage));
     });
 
