@@ -237,8 +237,13 @@ function ksf(props){
     function renderComponent(criteria, page){
         if(criteria === true && page === true){
             //DELETE ORIGINAL ELEMENT
-            document.querySelectorAll('.legend')[1].remove();
-            createKSFcomponent(target, props.details);
+            var timer = setInterval(function(){
+                if(document.querySelectorAll('.legend')[1]){
+                    clearInterval(timer);
+                    document.querySelectorAll('.legend')[1].remove();
+                    createKSFcomponent(target, props.details);
+                }
+            }, 10);
         }else{
             console.log('ksf does not apply');
         }
