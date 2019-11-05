@@ -240,6 +240,7 @@ function ksf(props){
             var timer = setInterval(function(){
                 if(document.querySelectorAll('.legend')[1]){
                     clearInterval(timer);
+                    target = document.querySelectorAll('.column.small-10.large-2.amount')[1];
                     document.querySelectorAll('.legend')[1].remove();
                 }
             }, 10);
