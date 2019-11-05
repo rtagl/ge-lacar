@@ -36,9 +36,6 @@ function ksf(props){
     var target = document.querySelectorAll('.column.small-10.large-2.amount')[1];
     var currentPage = digestURL(pageURL).page;
 
-    //DELETE ORIGINAL ELEMENT
-    document.querySelectorAll('.legend')[1].remove();
-
     function createKSFcomponent(target, details){
         var ksfContainer = document.createElement('div');
         ksfContainer.style.background = details.backgroundColor;
@@ -237,7 +234,7 @@ function ksf(props){
         if(page.indexOf('occupancy') !==  -1){
             return true;
         }else{
-            return false
+            return false;
         }
     }
 
@@ -257,6 +254,6 @@ function ksf(props){
         renderComponent(validateCriteria(), validatePage(currentPage));
     });
 
-    renderComponent(validateCriteria(), validatePage(currentPage));
+    //renderComponent(validateCriteria(), validatePage(currentPage));
 
 }
