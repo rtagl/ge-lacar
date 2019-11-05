@@ -251,9 +251,9 @@ function ksf(props){
     }
 
     window.addEventListener('popstate', function(){
-        renderComponent(validateCriteria(), validatePage(currentPage));
+        ksf(props);
     });
 
-    //renderComponent(validateCriteria(), validatePage(currentPage));
+    renderComponent(validateCriteria(), validatePage(currentPage));
 
 }

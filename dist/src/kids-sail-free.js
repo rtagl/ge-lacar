@@ -230,7 +230,7 @@ function ksf(props){
         if(page.indexOf('occupancy') !==  -1){
             return true;
         }else{
-            return false
+            return false;
         }
     }
 
@@ -247,7 +247,7 @@ function ksf(props){
     }
 
     window.addEventListener('popstate', function(){
-        renderComponent(validateCriteria(), validatePage(currentPage));
+        ksf(props);
     });
 
     renderComponent(validateCriteria(), validatePage(currentPage));
