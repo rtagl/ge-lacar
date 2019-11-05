@@ -242,9 +242,10 @@ function ksf(props){
                     clearInterval(timer);
                     target = document.querySelectorAll('.column.small-10.large-2.amount')[1];
                     document.querySelectorAll('.legend')[1].remove();
+                    createKSFcomponent(target, props.details);
+                    console.log('ATTENTION TARGET SHOPPERS FREE PIZZA BY CUSTOMER SERVICE HURRY UP FATTIES!');
                 }
             }, 10);
-            createKSFcomponent(target, props.details);
         }else{
             console.log('ksf does not apply');
         }
