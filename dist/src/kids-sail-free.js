@@ -237,17 +237,15 @@ function ksf(props){
     function renderComponent(criteria, page){
         if(criteria === true && page === true){
             //DELETE ORIGINAL ELEMENT
-            if(document.querySelectorAll('.legend')[1]){
-                document.querySelectorAll('.legend')[1].remove();
-            }
-            createKSFcomponent(target, props.details)
+            document.querySelectorAll('.legend')[1].remove();
+            createKSFcomponent(target, props.details);
         }else{
             console.log('ksf does not apply');
         }
     }
 
     window.addEventListener('popstate', function(){
-        ksf(props);
+        renderComponent(validateCriteria(), validatePage(currentPage));
     });
 
     renderComponent(validateCriteria(), validatePage(currentPage));
