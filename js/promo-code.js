@@ -50,7 +50,8 @@ window.addEventListener('load', function(){
 
 function promoCode(props){
 
-    var pageURL = window.location.href;
+    //xvar pageURL = window.location.href;
+    var pageURL = 'https://www.royalcaribbean.com/lac/es/booking/stateroom?sailDate=2020-01-20&shipCode=MJ&packageCode=MJ04W066&destinationCode=CARIB&accessCabin=false&selectedCurrencyCode=USD&penguin=';
     var page = digestURL(pageURL).page;
 
     function digestURL(url){
@@ -78,7 +79,7 @@ function promoCode(props){
     }
 
     //CREATES THE PROMO BANNER COMPONENT
-    function cratePromoCodeBanner(){
+    function createPromoCodeBanner(){
         clearDuplicates();
 
         var promoBanner = document.createElement('div');
@@ -418,10 +419,10 @@ function promoCode(props){
             }
         });
 
-        if(validated.indexOf(false) !== -1){
-            return false;
-        }else{
+        if(validated.indexOf(true) !== -1){
             return true;
+        }else{
+            return false;
         }
 
     }
@@ -437,7 +438,7 @@ function promoCode(props){
 
     function renderComponents(criteria){
         if(page.indexOf('stateroom') !== -1 && criteria === true){
-            var promoBanner = cratePromoCodeBanner();
+            var promoBanner = createPromoCodeBanner();
             document.querySelector('header').appendChild(promoBanner.promoBanner);
             setLayout(promoBanner);
             window.addEventListener('resize', function(){
@@ -445,7 +446,7 @@ function promoCode(props){
             });
 
         }else if(page.indexOf('occupancy') !== -1 && criteria === true){
-            var promoBanner = cratePromoCodeBanner();
+            var promoBanner = createPromoCodeBanner();
             var timer = setInterval(function(){
                 if(document.querySelector('#exclusive_rates')){
                     var applyPromoCodeButton = createApplyPromoCodeBtn();
@@ -469,7 +470,6 @@ function promoCode(props){
                 document.getElementById('stateroom-continue').addEventListener('click', function(){
                     pageURL = window.location.href;
                     page = digestURL(pageURL).page;
-                    console.log(page);
                     renderComponents(validateCriteria());
                 });
                 clearInterval(timer);
