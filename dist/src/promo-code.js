@@ -470,6 +470,7 @@ function promoCode(props){
                     renderComponents(validateCriteria());
                 });
                 clearInterval(timer);
+                clearDuplicates();
             }        
         }, 10); 
     }

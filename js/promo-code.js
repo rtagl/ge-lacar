@@ -461,6 +461,7 @@ function promoCode(props){
             }, 10);
         }else{
             console.log('not in relevant page');
+            clearDuplicates();
         }
     }
 
