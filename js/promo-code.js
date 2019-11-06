@@ -473,7 +473,12 @@ function promoCode(props){
                     renderComponents(validateCriteria());
                 });
                 clearInterval(timer);
-            }        
+            }
+            if(document.getElementById('occupancy-continue')){
+                document.getElementById('occupancy-continue').addEventListener('click', function(){
+                    clearDuplicates();
+                });
+            }     
         }, 10); 
     }
 
