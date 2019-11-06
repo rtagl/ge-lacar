@@ -79,6 +79,27 @@ function promoCode(props){
 
     //CREATES THE PROMO BANNER COMPONENT
     function createPromoCodeBanner(){
+
+        //POLYFILL FOR .remove()
+        (function (arr) {
+            arr.forEach(function (item) {
+                if (item.hasOwnProperty('remove')) {
+                return;
+                }
+                Object.defineProperty(item, 'remove', {
+                configurable: true,
+                enumerable: true,
+                writable: true,
+                value: function remove() {
+                    if (this.parentNode === null) {
+                    return;
+                    }
+                    this.parentNode.removeChild(this);
+                }
+                });
+            });
+        })([Element.prototype, CharacterData.prototype, DocumentType.prototype]);
+
         clearDuplicates();
 
         var promoBanner = document.createElement('div');
@@ -428,12 +449,20 @@ function promoCode(props){
     }
 
     function clearDuplicates(){
+
         if(document.querySelector('#ge_promoBanner')){
             document.querySelector('#ge_promoBanner').remove();
         }else if(document.querySelector('#ge_promoBanner') && document.querySelector('#ge_promoBtn')){
             document.querySelector('#ge_promoBanner').remove();
             document.querySelector('#ge_promoBtn').remove();
         }
+
+        if(document.getElementById('occupancy-continue')){
+            document.getElementById('occupancy-continue').addEventListener('click', function(){
+                clearDuplicates();
+            });
+        } 
+          
     }
 
     function renderComponents(criteria){
