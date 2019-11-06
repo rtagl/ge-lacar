@@ -47,8 +47,7 @@ promoCode(props);
 
 function promoCode(props){
 
-    //xvar pageURL = window.location.href;
-    var pageURL = 'https://www.royalcaribbean.com/lac/es/booking/stateroom?sailDate=2020-01-20&shipCode=MJ&packageCode=MJ04W066&destinationCode=CARIB&accessCabin=false&selectedCurrencyCode=USD&penguin=';
+    var pageURL = window.location.href;
     var page = digestURL(pageURL).page;
 
     function digestURL(url){
@@ -405,10 +404,11 @@ function promoCode(props){
 
         props.promoCriteria.forEach(function(criteria){
             var criteriaValues = [];
+
             criteriaValues.push(checkCriteriaDestinationCode(digestURL(pageURL).destinationCode, criteria.destinations));
             criteriaValues.push(checkCriteriaDateRange(digestURL(pageURL).sailDate, criteria.dateRange));
             criteriaValues.push(checkCriteriaShipCode(digestURL(pageURL).shipCode, criteria.shipCodes));
-            
+
             if(criteriaValues.indexOf(false) !== -1){
                 validated.push(false);
             }else{
@@ -470,7 +470,6 @@ function promoCode(props){
                     renderComponents(validateCriteria());
                 });
                 clearInterval(timer);
-                clearDuplicates();
             }        
         }, 10); 
     }
