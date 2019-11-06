@@ -9,7 +9,7 @@ peopleWatching({
 function peopleWatching(props){
 
     var pageURL = window.location.href;
-    var target = document.querySelector('.itinerary-panel-sidenav');
+    var target = document.querySelector('.itinerary-panel-header');
     var itineraries = document.querySelectorAll('.itinerary-card-component');
     var overlays = document.querySelectorAll('.overlay');
 
