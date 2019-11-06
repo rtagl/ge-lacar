@@ -1,4 +1,4 @@
-promoCode({
+var props = {
     bannerDetails:{
         backgroundColor: '#005edc',
         textColor: '#fff',
@@ -17,18 +17,33 @@ promoCode({
             text: dictionary.support.promoCode.button.buttonText.US
         }
     },
-    promoCriteria:{
-        shipCodes: ['MJ'],
-        destinations: [
-            destinationCodes.BAHAM,
-            destinationCodes.CARIB
-        ],
-        dateRange: [
-            promoSeasons.summer2020,
-            promoSeasons.winter
-        ],
-    },
-});
+    promoCriteria:[
+        {
+            shipCodes: ['MJ'],
+            destinations: [
+                destinationCodes.BAHAM,
+                destinationCodes.CARIB
+            ],
+            dateRange: [
+                promoSeasons.summer2020,
+                promoSeasons.winter
+            ],
+        },
+        {
+            shipCodes: ['AL'],
+            destinations: [
+                destinationCodes.BAHAM,
+                destinationCodes.CARIB
+            ],
+            dateRange: [
+                promoSeasons.summer2020,
+                promoSeasons.winter
+            ],
+        },
+    ],
+}
+
+promoCode(props);
 
 function promoCode(props){
 
@@ -382,17 +397,30 @@ function promoCode(props){
         }
     }
 
+    //TEST THIS BEFORE COMMIT
     function validateCriteria(){
-        var criteriaValues = [];
-        criteriaValues.push(checkCriteriaDestinationCode(digestURL(pageURL).destinationCode, props.promoCriteria.destinations));
-        criteriaValues.push(checkCriteriaDateRange(digestURL(pageURL).sailDate, props.promoCriteria.dateRange));
-        criteriaValues.push(checkCriteriaShipCode(digestURL(pageURL).shipCode, props.promoCriteria.shipCodes));
-        
-        if(criteriaValues.indexOf(false) !== -1){
+
+        var validated = [];
+
+        props.promoCriteria.forEach(function(criteria){
+            var criteriaValues = [];
+            criteriaValues.push(checkCriteriaDestinationCode(digestURL(pageURL).destinationCode, criteria.destinations));
+            criteriaValues.push(checkCriteriaDateRange(digestURL(pageURL).sailDate, criteria.dateRange));
+            criteriaValues.push(checkCriteriaShipCode(digestURL(pageURL).shipCode, criteria.shipCodes));
+            
+            if(criteriaValues.indexOf(false) !== -1){
+                validated.push(false);
+            }else{
+                validated.push(true);
+            }
+        });
+
+        if(validated.indexOf(false) !== -1){
             return false;
         }else{
             return true;
         }
+
     }
 
     function clearDuplicates(){
@@ -443,7 +471,7 @@ function promoCode(props){
                 });
                 clearInterval(timer);
             }        
-        }, 10);  
+        }, 10); 
     }
 
     window.addEventListener('popstate', function(){
