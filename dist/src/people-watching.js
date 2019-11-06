@@ -264,15 +264,16 @@ function peopleWatching(props){
                 }
             }
 
+            console.log(checkedCriteria);
 
             //CHECK THAT ALL CRITERIA IS TRUE
             if(checkedCriteria.indexOf(false) === -1){
                 numberOfPeople = d.views;
-            }else{
-                numberOfPeople = null;
             }
 
         });
+        
+        console.log(numberOfPeople);
 
         return numberOfPeople;
 
