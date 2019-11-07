@@ -8,10 +8,31 @@ peopleWatching({
 
 function peopleWatching(props){
 
+    //POLYFILL FOR .remove 
+    (function (arr) {
+        arr.forEach(function (item) {
+          if (item.hasOwnProperty('remove')) {
+            return;
+          }
+          Object.defineProperty(item, 'remove', {
+            configurable: true,
+            enumerable: true,
+            writable: true,
+            value: function remove() {
+              if (this.parentNode === null) {
+                return;
+              }
+              this.parentNode.removeChild(this);
+            }
+          });
+        });
+    })([Element.prototype, CharacterData.prototype, DocumentType.prototype]);
+
     var pageURL = window.location.href;
-    var target = document.querySelector('.itinerary-panel-header');
+    var target = document.querySelector('.itinerary__ParsysRight');
     var itineraries = document.querySelectorAll('.itinerary-card-component');
     var overlays = document.querySelectorAll('.overlay');
+    var cruiseSearchTarget = document.querySelector('.itinerary-panel-sidenav');
 
     //FOR TESTING PURPOSES 
     //var pageURL = 'https://www.royalcaribbean.com/lac/es/cruises/?itineraryPanel=AL6CU002-2019-11-30';
@@ -23,12 +44,14 @@ function peopleWatching(props){
 
             itineraries.forEach(function(itinerary){
                 itinerary.addEventListener('click', function(){
+                    removeDuplicates();
                     renderComponent(
-                        checkURL(pageURL), 
+                        checkURL(window.location.href), 
                         peopleWatchingComponent(
                             props, 
-                            setPeopleNumber(checkCriteria(props.data, processItineraryCriterea(checkURL(pageURL))))), 
-                        target
+                            setPeopleNumber(checkCriteria(props.data, processItineraryCriterea(checkURL(window.location.href))))
+                        ),
+                        cruiseSearchTarget
                     );
                 });
             });
@@ -45,6 +68,12 @@ function peopleWatching(props){
                 })
             });
         }}
+    }
+
+    function removeDuplicates(){
+        if(document.getElementById('ge_people-watching')){
+            document.getElementById('ge_people-watching').remove();
+        }
     }
 
     //CREATE PEOPLE WATCHIN COMPONENT
@@ -117,7 +146,7 @@ function peopleWatching(props){
         }
 
     }
-
+    //bug is here
     //CHECK IF PAGE URL IS VALID 
     function checkURL(url){
         if(url.indexOf('itinerary') !== -1 && url.indexOf('itineraryPanel') === -1){
@@ -143,13 +172,13 @@ function peopleWatching(props){
 
             var itineraryDataSplit = itineraryData[0].split('-');
 
-            let queryDataSplit = [];
+            var queryDataSplit = [];
             queryData.forEach(function(data){
                 queryDataSplit.push(data.split('=')[0]);
                 queryDataSplit.push(data.split('=')[1]);
             });
 
-            let dataObject = {};
+            var dataObject = {};
             for(var i = 0; i < queryDataSplit.length; i+=2){
                 if(queryDataSplit[i] === 'sail-date' || queryDataSplit[i+1] === 'sail-date'){
                     dataObject['sailDate'] = queryDataSplit[i+1];
@@ -264,16 +293,14 @@ function peopleWatching(props){
                 }
             }
 
-            console.log(checkedCriteria);
-
             //CHECK THAT ALL CRITERIA IS TRUE
             if(checkedCriteria.indexOf(false) === -1){
                 numberOfPeople = d.views;
+            }else{
+                numberOfPeople = {am:[10, 20], business:[75, 150], pm:[150, 250]};
             }
 
         });
-        
-        console.log(numberOfPeople);
 
         return numberOfPeople;
 
@@ -282,8 +309,12 @@ function peopleWatching(props){
     //RENDER THE COMPONENT 
     function renderComponent(truthyURL, component, target){
 
+        if(truthyURL.page === 'cruiseSearch'){
+            target = cruiseSearchTarget;
+        }
+
         if(truthyURL.valid === true && target !== null){
-            target.appendChild(component);
+            target.insertBefore(component, target.children[0]);
         }else{
             console.log('page not relevant');
         }
