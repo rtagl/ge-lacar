@@ -495,7 +495,6 @@ function countDown(parent, startDate, endDate, offer, countries, last, days, dst
         }
       
         if (beginDate > currentDate) {
-           
            document.querySelector('.countdown-container').style.display = 'none';
         }
       

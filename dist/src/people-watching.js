@@ -111,7 +111,6 @@ function peopleWatching(props){
         numberSpan.innerText = numberOfPeople;
         numberSpan.style.cssFloat = 'left';
 
-
         var peopleSpan = document.createElement('span');
         peopleSpan.style.width = 'auto';
         peopleSpan.style.height = 'auto';
@@ -146,7 +145,7 @@ function peopleWatching(props){
         }
 
     }
-    //bug is here
+
     //CHECK IF PAGE URL IS VALID 
     function checkURL(url){
         if(url.indexOf('itinerary') !== -1 && url.indexOf('itineraryPanel') === -1){
@@ -310,6 +309,7 @@ function peopleWatching(props){
     function renderComponent(truthyURL, component, target){
 
         if(truthyURL.page === 'cruiseSearch'){
+            document.querySelector('.itinerary-panel-details').style.paddingTop = '30px';
             target = cruiseSearchTarget;
         }
 
