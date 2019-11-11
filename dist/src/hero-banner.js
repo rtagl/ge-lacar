@@ -1,6 +1,4 @@
 // HERO BANNER COMPONENT
-
-
 heroBanner(
     '.hero-image-container',
     'FINO A 150€ DI SCONTO',
@@ -10,9 +8,9 @@ heroBanner(
     'http://sb.monetate.net/img/1/388/2428142.jpg',
     'http://sb.monetate.net/img/1/388/2428145.jpg'
     ]
-); 
- 
-function heroBanner (parent, header, text, alignment, image){
+);
+
+function heroBanner (parent, header, text, alignment, image, headerDropShadow, subDropShadow){
 
     //GET PARENT ELEMENT FOR HERO BANNER
     var parentElement = document.querySelector(parent);
@@ -51,6 +49,10 @@ function heroBanner (parent, header, text, alignment, image){
     headerText.style.letterSpacing = '5px';
     headerText.style.margin = '0px 0px 0px 0px';
     headerText.style.padding = '0px 0px 0px 0px';
+   
+    if(headerDropShadow){
+        headerText.style.textShadow = headerDropShadow.hShift +' '+ headerDropShadow.vShift +' '+headerDropShadow.blur +' '+ headerDropShadow.color;
+    }
 
     //CREATE SUB TEXT
     var subText = document.createElement('p');
@@ -65,6 +67,10 @@ function heroBanner (parent, header, text, alignment, image){
     subText.style.margin = '-14px 0px 0px 0px';
     subText.style.padding = '0px';
     subText.classList.add('hero-subtext');
+
+    if(subDropShadow){
+        subText.style.textShadow = subDropShadow.hShift +' '+ subDropShadow.vShift +' '+ subDropShadow.blur +' '+ subDropShadow.color;
+    }
 
     //APPEND TEXT CONTAINER TO BANNER ELEMENT
     banner.appendChild(textContainer);
@@ -83,9 +89,9 @@ function heroBanner (parent, header, text, alignment, image){
         var banner = document.querySelector('.ge-hero-banner');
         var screenWidth = window.innerWidth;
         
-        if(window.matchMedia("(min-width: 1920px)").matches){
+        if(window.matchMedia("(min-width: 1930px)").matches){
             banner.style.width = '1920px';
-        }else if(window.matchMedia("(min-width: 1919px)").matches){
+        }else if(window.matchMedia("(min-width: 1920px)").matches){
             banner.style.width = '100%';
         }else if(window.matchMedia("(min-width: 1200px)").matches){
             banner.style.height = '150px';
@@ -107,8 +113,11 @@ function heroBanner (parent, header, text, alignment, image){
             //banner.style.backgroundPositionX = '0px';
             headerText.style.fontSize = '46px';
             subText.style.fontSize = '44px';
+        }else if(window.matchMedia("(min-width: 300px)").matches){
+            headerText.style.fontSize = '36px';
+            subText.style.fontSize = '34px';
         }
-
+ 
         if(image.length === 2){
             if(screenWidth >= 750){
                 banner.style.backgroundImage = 'url('+image[0]+')';
