@@ -1,15 +1,5 @@
 window.addEventListener('load', function(){
 
-    document.getElementById('button').addEventListener('click', function(){
-        var nights = document.querySelector('.itinerary-card-component').children[0].children[1].children[0];
-
-        if(nights.innerText === '6 Nights'){
-            nights.innerText = '3 Nights';
-        }else{
-            nights.innerText = '6 Nights';
-        }
-    });
-
 
     pills({
         pillDetails: {
@@ -21,12 +11,8 @@ window.addEventListener('load', function(){
             shipCodes: ['NV', 'OA', 'MJ'],
             promoDates: [
                 {
-                    startDate: 'Sep 18 2019', 
-                    endDate: 'Oct 22 2019' 
-                },
-                {
-                    startDate: 'Oct 24 2019',
-                    endDate: 'Nov 05 2019'
+                    startDate: 'Oct 22 2019', 
+                    endDate: 'Nov 22 2019' 
                 }
             ],
             sailingDates: [
@@ -40,11 +26,11 @@ window.addEventListener('load', function(){
                 }
             ],
             numberOfNights: [0, 9],
-            departurePorts: ['Fort Lauderdale', 'Miami'],
+            departurePorts: ['Miami'],
         },
         pillExclusions: {
-            shipCodes: ['NV'],
-            numberOfNights: [6, 9],
+            //shipCodes: ['NV'],
+            ///numberOfNights: [6, 9],
             // departurePorts: ['Miami', 'Fort Lauderdale'],
             // destinationPorts: ['Nassau'],
             // departureDates: [
@@ -588,11 +574,16 @@ function pills(data){
         var prevPage = document.querySelector('.mat-paginator-navigation-previous');
         var nightsFilter = document.querySelectorAll('.mat-button-toggle-label');
 
-        nightsFilter.forEach(function(btn){
-            btn.addEventListener('click', function(){
+        for(var i = 0; i < nightsFilter.length; i++){
+            nightsFilter[i].addEventListener('click', function(){
                 domObserver(data, true);
             });
-        });
+        }
+        // nightsFilter.forEach(function(btn){
+        //     btn.addEventListener('click', function(){
+        //         domObserver(data, true);
+        //     });
+        // });
 
         nextPage.addEventListener('click', function(){
             domObserver(data, true);

@@ -573,11 +573,16 @@ function pills(data){
         var prevPage = document.querySelector('.mat-paginator-navigation-previous');
         var nightsFilter = document.querySelectorAll('.mat-button-toggle-label');
 
-        nightsFilter.forEach(function(btn){
-            btn.addEventListener('click', function(){
+        for(var i = 0; i < nightsFilter.length; i++){
+            nightsFilter[i].addEventListener('click', function(){
                 domObserver(data, true);
             });
-        });
+        }
+        // nightsFilter.forEach(function(btn){
+        //     btn.addEventListener('click', function(){
+        //         domObserver(data, true);
+        //     });
+        // });
 
         nextPage.addEventListener('click', function(){
             domObserver(data, true);
