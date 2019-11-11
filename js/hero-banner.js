@@ -6,7 +6,7 @@ function heroBanner (parent, header, text, alignment, image, headerDropShadow, s
 
     //CREATE HERO BANNER ELEMENT
     var banner = document.createElement('div');
-    banner.classList.add('ge-hero-banner');
+    banner.className = 'ge-hero-banner';
     banner.style.backgroundImage = 'url('+image[0]+')';
     banner.style.width = '100%';
     banner.style.height = '200px';
@@ -54,7 +54,7 @@ function heroBanner (parent, header, text, alignment, image, headerDropShadow, s
     headerText.style.fontWeight = '400';
     subText.style.margin = '-14px 0px 0px 0px';
     subText.style.padding = '0px';
-    subText.classList.add('hero-subtext');
+    subText.className = 'hero-subtext';
 
     if(subDropShadow){
         subText.style.textShadow = subDropShadow.hShift +' '+ subDropShadow.vShift +' '+ subDropShadow.blur +' '+ subDropShadow.color;

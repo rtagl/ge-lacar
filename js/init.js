@@ -30,11 +30,11 @@ function init(parent, callback){
 
 window.addEventListener('load', function(){
     init('.fluggen', function(){
-        console.log(`I'm a pickle Morty, PICKLE RICK!!!!`);
+        console.log("I'm a pickle Morty, PICKLE RICK!!!!");
     });
 
     setTimeout(function(){
-        document.querySelector('.overlay').innerHTML = `<div class='fluggen'></div>`;
+        document.querySelector('.overlay').innerHTML = "<div class='fluggen'></div>";
     },3000)
 
 });
