@@ -311,18 +311,20 @@ function peopleWatching(props){
 
     //RENDER THE COMPONENT 
     function renderComponent(truthyURL, component, target){
-
         if(truthyURL.page === 'cruiseSearch'){
-            document.querySelector('.itinerary-panel-details').style.paddingTop = '30px';
-            target = cruiseSearchTarget;
-        }
+            var timer = setInterval(function(){
+                if(document.querySelector('.itinerary-panel-details')){
+                    document.querySelector('.itinerary-panel-details').style.paddingTop = '30px';
+                    target = cruiseSearchTarget;
+                    clearInterval(timer);
+                }
 
-        if(truthyURL.valid === true && target !== null){
-            target.insertBefore(component, target.children[0]);
-        }else{
-            console.log('page not relevant');
-        }
+                if(truthyURL.valid === true && target !== null){
+                    target.insertBefore(component, target.children[0]);
+                }
 
+            }, 10);
+        }
     }
 
     //SET THE NUMBER OF PEOPLE WATCHING

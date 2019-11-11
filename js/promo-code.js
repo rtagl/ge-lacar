@@ -51,7 +51,7 @@ window.addEventListener('load', function(){
 function promoCode(props){
 
     var pageURL = window.location.href;
-    var page = digestURL(pageURL).page;
+    var page = digestURL(pageURL).page
 
     function digestURL(url){
         var page = url.split('?')[0];
