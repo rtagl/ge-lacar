@@ -38,6 +38,73 @@ function peopleWatching(props){
     //var pageURL = 'https://www.royalcaribbean.com/lac/es/cruises/?itineraryPanel=AL6CU002-2019-11-30';
     //var pageURL = 'https://www.royalcaribbean.com/lac/es/cruises/itinerary/6-night-caribbean-from-fort-lauderdale-on-majesty/AL4CU002?sail-date=2019-11-30&country=ARG&currency=USD'
 
+    function markCurrentItineraries(itineraries){
+        itineraries.forEach(function(itinerary){
+            itinerary.className += ' ge_current-mark';
+        });
+    }
+
+    //HANDLES PAGINATION CLICKS    
+    function paginationClicks(compareCallback){
+        var counter = 0;
+        var timer = setInterval(function(){
+            if( document.querySelector('.mat-paginator-navigation-next') &&
+                document.querySelector('.mat-paginator-navigation-previous') &&
+                document.querySelectorAll('.mat-button-toggle') &&
+                document.querySelectorAll('.mat-button') 
+            ){
+                counter++;
+                addClicks();
+            }else if(counter === 10){
+                clearInterval(timer);
+            }
+        }, 100);
+
+        function addClicks(){
+            var nextPage = document.querySelector('.mat-paginator-navigation-next');
+            var prevPage = document.querySelector('.mat-paginator-navigation-previous');
+            var nightsFilter = document.querySelectorAll('.mat-button-toggle');
+            var applyButton = document.querySelectorAll('.mat-button');
+
+            for(var i = 0; i < nightsFilter.length; i++){
+                nightsFilter[i].addEventListener('click', function(){
+                    compareCallback();
+                });
+            }
+
+            for(var j = 0; j < applyButton.length; j++){
+                applyButton[j].addEventListener('click', function(){
+                    compareCallback();
+                });
+            }
+
+            nextPage.addEventListener('click', function(){
+                compareCallback();
+            });
+
+            prevPage.addEventListener('click', function(){
+                compareCallback();
+            });
+        }
+
+    }
+
+    //COMPAREA OLD ITINERARIES WITH NEW ONE
+    function compare(){
+        var timer = setInterval(function(){
+            if(document.querySelectorAll('.itinerary-card-component').length !== 0){
+                document.querySelectorAll('.itinerary-card-component').forEach(function(card){
+                    if(card.getAttribute('class').indexOf('ge_current-mark') === -1){
+                        clearInterval(timer);
+                        itineraries = document.querySelectorAll('.itinerary-card-component');
+                        markCurrentItineraries(itineraries);
+                        itinerariesClickEvents(itineraries);
+                    }
+                });
+            } 
+        }, 500); 
+    }
+
     //ITINERARIES CLICK EVENTS
     function itinerariesClickEvents(itineraries){
         if(itineraries.length !== 0){
@@ -49,7 +116,7 @@ function peopleWatching(props){
                         checkURL(window.location.href), 
                         peopleWatchingComponent(
                             props, 
-                            setPeopleNumber(checkCriteria(props.data, processItineraryCriterea(checkURL(window.location.href))))
+                            setPeopleNumber(checkCriteria(props.data, processItineraryCriteria(checkURL(window.location.href))))
                         ),
                         cruiseSearchTarget
                     );
@@ -158,7 +225,7 @@ function peopleWatching(props){
     }
 
     //PROCESS THE ITINERARY CRITERIA FROM URL
-    function processItineraryCriterea(data){
+    function processItineraryCriteria(data){
         
         function productViewStrategy(){
             var urlSplit = data.url.split('?');
@@ -319,7 +386,11 @@ function peopleWatching(props){
                     target.insertBefore(component, target.children[0]);
                 }
 
-            }, 10);
+            }, 100);
+        }else if(truthyURL.page === 'productView'){
+            if(truthyURL.valid === true && target !== null){
+                target.insertBefore(component, target.children[0]);
+            }
         }
     }
 
@@ -389,14 +460,21 @@ function peopleWatching(props){
     //RENDER THE COMPONENT
     renderComponent(
         checkURL(pageURL), 
-        peopleWatchingComponent(props, setPeopleNumber(checkCriteria(props.data, processItineraryCriterea(checkURL(pageURL))))), 
+        peopleWatchingComponent(props, setPeopleNumber(checkCriteria(props.data, processItineraryCriteria(checkURL(pageURL))))), 
         target
     );
 
     //DELETE COMPONENT ON OVERLAY CLICK
     deleteComponentOnOverlayClick(overlays);
-
++
     //CREATE COMPONENT ON ITINERARY CLICK
     itinerariesClickEvents(itineraries);
 
+    //ADD CLASS TO ALL CURRENT ITINERARIES
+    markCurrentItineraries(itineraries);
+
+    //ADD CLICK EVENT TO PAGINATION BUTTONS
+    paginationClicks(compare);
+
 }
+

@@ -571,7 +571,7 @@ function pills(data){
     function paginationClicks(){
         var nextPage = document.querySelector('.mat-paginator-navigation-next');
         var prevPage = document.querySelector('.mat-paginator-navigation-previous');
-        var nightsFilter = document.querySelectorAll('.mat-button-toggle-label');
+        var nightsFilter = document.querySelectorAll('.mat-button-toggle');
 
         for(var i = 0; i < nightsFilter.length; i++){
             nightsFilter[i].addEventListener('click', function(){
