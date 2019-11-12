@@ -41,11 +41,31 @@ window.addEventListener('load', function(){
 
 function exitPopUp(props){
 
+    //POLYFILL FOR .remove 
+    (function (arr) {
+        for(var i = 0; i < arr.length; i++){
+            if(arr[i].hasOwnProperty('remove')){
+                return;
+            }
+            Object.defineProperty(arr[i], 'remove', {
+                configurable: true,
+                enumerable: true,
+                writable: true,
+                value: function remove() {
+                    if (this.parentNode === null) {
+                        return;
+                    }
+                    this.parentNode.removeChild(this);
+                }
+            });
+        }
+    })([Element.prototype, CharacterData.prototype, DocumentType.prototype]);
+
     let countryInUrl = '';
 
     let parentElement = document.querySelectorAll('.reveal-overlay')[document.querySelectorAll('.reveal-overlay').length-1];
 
-    //document.getElementById('module-modal').remove();
+    document.getElementById('module-modal').remove();
 
     let popup = document.createElement('div');
     popup.style.background = props.bannerDetails.backgroundColor;

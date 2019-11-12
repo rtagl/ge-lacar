@@ -1,13 +1,25 @@
 // HERO BANNER COMPONENT
 heroBanner(
-    '.hero-image-container',
-    'FINO A 150€ DI SCONTO',
-    'SOLO FINO AL 29 OTTOBRE', 
+    '.parent',
+    'ninos gratis',
+    'Ahorra hasta 150$ USD', 
     'center',
     [
-    'http://sb.monetate.net/img/1/388/2428142.jpg',
-    'http://sb.monetate.net/img/1/388/2428145.jpg'
-    ]
+        'http://sb.monetate.net/img/1/388/2344664.jpg',
+        'http://sb.monetate.net/img/1/388/2344663.jpg'
+    ],
+    {
+        hShift: '4px',
+        vShift: '4px',
+        blur: '5px',
+        color: 'rgba(0, 0, 135, 0.75)',
+    },
+    {
+        hShift: '4px',
+        vShift: '4px',
+        blur: '5px',
+        color: 'rgba(0, 0, 135, 0.75)',
+    }
 );
 
 function heroBanner (parent, header, text, alignment, image, headerDropShadow, subDropShadow){

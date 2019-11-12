@@ -164,16 +164,18 @@ function promoCode(props){
         };
     }
 
+    //CREATE APPLY POP UP BLURB TEXT
     function createPromoCodeBlurb(parent, text){
-        //CREATE APPLY POP UP BLURB TEXT
         var blurb = document.createElement('p');
-        blurb.style.background = 'red';
-        blurb.style.width = '100%';
+        //blurb.style.background = 'red';
+        blurb.style.width = '95%';
         blurb.style.height ='auto';
+        blurb.style.margin = '30px auto 0px auto'
         blurb.style.fontFamily = 'proxima, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif';
         blurb.style.fontSize = '16px';
         blurb.style.fontWeight = '400';
         blurb.innerText = text;
+        blurb.style.textAlign = 'left';
 
         //GET BLURB TARGET ELEMENT
         var blurbTarget = document.querySelector(parent);

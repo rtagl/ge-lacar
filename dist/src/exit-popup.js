@@ -38,7 +38,7 @@ function exitPopUp(props){
 
     let parentElement = document.querySelectorAll('.reveal-overlay')[document.querySelectorAll('.reveal-overlay').length-1];
 
-    //document.getElementById('module-modal').remove();
+    document.getElementById('module-modal').remove();
 
     let popup = document.createElement('div');
     popup.style.background = props.bannerDetails.backgroundColor;
