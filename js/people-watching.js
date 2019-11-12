@@ -14,22 +14,22 @@ function peopleWatching(props){
 
     //POLYFILL FOR .remove 
     (function (arr) {
-        arr.forEach(function (item) {
-          if (item.hasOwnProperty('remove')) {
-            return;
-          }
-          Object.defineProperty(item, 'remove', {
-            configurable: true,
-            enumerable: true,
-            writable: true,
-            value: function remove() {
-              if (this.parentNode === null) {
+        for(var i = 0; i < arr.length; i++){
+            if(arr[i].hasOwnProperty('remove')){
                 return;
-              }
-              this.parentNode.removeChild(this);
             }
-          });
-        });
+            Object.defineProperty(arr[i], 'remove', {
+                configurable: true,
+                enumerable: true,
+                writable: true,
+                value: function remove() {
+                    if (this.parentNode === null) {
+                        return;
+                    }
+                    this.parentNode.removeChild(this);
+                }
+            });
+        }
     })([Element.prototype, CharacterData.prototype, DocumentType.prototype]);
 
     var pageURL = window.location.href;
@@ -43,9 +43,9 @@ function peopleWatching(props){
     //var pageURL = 'https://www.royalcaribbean.com/lac/es/cruises/itinerary/6-night-caribbean-from-fort-lauderdale-on-majesty/AL4CU002?sail-date=2019-11-30&country=ARG&currency=USD'
 
     function markCurrentItineraries(itineraries){
-        itineraries.forEach(function(itinerary){
-            itinerary.className += ' ge_current-mark';
-        });
+        for(var i = 0; i < itineraries.length; i++){
+            itineraries[i].className += ' ge_current-mark';
+        }
     }
 
     //HANDLES PAGINATION CLICKS    
@@ -97,14 +97,15 @@ function peopleWatching(props){
     function compare(){
         var timer = setInterval(function(){
             if(document.querySelectorAll('.itinerary-card-component').length !== 0){
-                document.querySelectorAll('.itinerary-card-component').forEach(function(card){
-                    if(card.getAttribute('class').indexOf('ge_current-mark') === -1){
+                var cards = document.querySelectorAll('.itinerary-card-component');
+                for(var i = 0; i < cards.length; i++){
+                    if(cards[i].getAttribute('class').indexOf('ge_current-mark') === -1){
                         clearInterval(timer);
                         itineraries = document.querySelectorAll('.itinerary-card-component');
                         markCurrentItineraries(itineraries);
                         itinerariesClickEvents(itineraries);
                     }
-                });
+                }
             } 
         }, 500); 
     }
@@ -112,9 +113,8 @@ function peopleWatching(props){
     //ITINERARIES CLICK EVENTS
     function itinerariesClickEvents(itineraries){
         if(itineraries.length !== 0){
-
-            itineraries.forEach(function(itinerary){
-                itinerary.addEventListener('click', function(){
+            for(var i = 0; i < itineraries.length; i++){
+                itineraries[i].addEventListener('click', function(){
                     removeDuplicates();
                     renderComponent(
                         checkURL(window.location.href), 
@@ -125,19 +125,18 @@ function peopleWatching(props){
                         cruiseSearchTarget
                     );
                 });
-            });
-
+            }
         }
     }
 
     //OVERLAYS CLICK EVENTS
     function deleteComponentOnOverlayClick(overlays){
         if(overlays.length !== 0){{
-            overlays.forEach(function(ol){
-                ol.addEventListener('click', function(){
+            for(var i = 0; i < overlays.length; i++){
+                overlays[i].addEventListener('click', function(){
                     document.getElementById('ge_people-watching').remove();
-                })
-            });
+                });
+            }
         }}
     }
 
@@ -243,10 +242,10 @@ function peopleWatching(props){
             var itineraryDataSplit = itineraryData[0].split('-');
 
             var queryDataSplit = [];
-            queryData.forEach(function(data){
-                queryDataSplit.push(data.split('=')[0]);
-                queryDataSplit.push(data.split('=')[1]);
-            });
+            for(var i = 0; i < queryData.length; i++){
+                queryDataSplit.push(queryData[i].split('=')[0]);
+                queryDataSplit.push(queryData[i].split('=')[1]);
+            }
 
             var dataObject = {};
             for(var i = 0; i < queryDataSplit.length; i+=2){
@@ -326,26 +325,25 @@ function peopleWatching(props){
         });
 
         var numberOfPeople = '';
-        data.forEach(function(d, i){
-
+        for(var i = 0; i < data.length; i++){
             var checkedCriteria = [];
 
             //CHECK SHIP-CODES 
-            if(d.criteria.ships === undefined || criteria.shipCode === undefined || d.criteria.ships.indexOf(criteria.shipCode) !== -1){
+            if(data[i].criteria.ships === undefined || criteria.shipCode === undefined || data[i].criteria.ships.indexOf(criteria.shipCode) !== -1){
                 checkedCriteria.push(true);
             }else{
                 checkedCriteria.push(false);
             }
 
             //CHECK DEPARTURES 
-            if(d.criteria.departures === undefined || criteria.departure === undefined || d.criteria.departures.join('').split(' ').join('').toLowerCase().indexOf(criteria.departure.split(' ').join('')) !== -1){
+            if(data[i].criteria.departures === undefined || criteria.departure === undefined || data[i].criteria.departures.join('').split(' ').join('').toLowerCase().indexOf(criteria.departure.split(' ').join('')) !== -1){
                 checkedCriteria.push(true);
             }else{
                 checkedCriteria.push(false);
             }
 
             //CHECK ITINERARY
-            if(d.criteria.itinerary === undefined || criteria.itinerary === undefined || d.criteria.itinerary.join('').split(' ').join('').toLowerCase().indexOf(criteria.itinerary.split(' ').join('')) !== -1){
+            if(data[i].criteria.itinerary === undefined || criteria.itinerary === undefined || data[i].criteria.itinerary.join('').split(' ').join('').toLowerCase().indexOf(criteria.itinerary.split(' ').join('')) !== -1){
                 checkedCriteria.push(true);
             }else{
                 checkedCriteria.push(false);
@@ -365,12 +363,11 @@ function peopleWatching(props){
 
             //CHECK THAT ALL CRITERIA IS TRUE
             if(checkedCriteria.indexOf(false) === -1){
-                numberOfPeople = d.views;
+                numberOfPeople = data[i].views;
             }else{
                 numberOfPeople = {am:[10, 20], business:[75, 150], pm:[150, 250]};
             }
-
-        });
+        }
 
         return numberOfPeople;
 
