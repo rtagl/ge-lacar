@@ -1,4 +1,4 @@
-function countDown(parent, startDate, endDate, offer, countries, last, days, dst){
+function countDown(parent, startDate, endDate, offer, countries, last, days, dst, offerOverCountdown){
 
     //COMPONENT CONTAINER
     var parentElement = document.querySelector(parent);
@@ -301,6 +301,11 @@ function countDown(parent, startDate, endDate, offer, countries, last, days, dst
 
     //SET MOBILE LAYOUT
     function mobileLayout(){
+      
+        var stackSetting = offerOverCountdown;
+      	
+      if (stackSetting === true) {
+        console.log('offer over countdown');
         countDownContainer.style.height = '136px';
         countDownContainer.style.flexDirection = 'column';
         countDownContainer.style.alignItems = 'center';
@@ -313,6 +318,24 @@ function countDown(parent, startDate, endDate, offer, countries, last, days, dst
         offerTextContainer.style.transform = 'skewX(0deg)';
         clockContainer.style.width = '220px';
         clockFace.style.justifyContent = 'center';
+      
+      } else {
+      	console.log('offer under countdown');
+        countDownContainer.style.height = '136px';
+        countDownContainer.style.flexDirection = 'column-reverse';
+        countDownContainer.style.alignItems = 'center';
+
+        offerContainer.style.width = '100%';
+        offerContainer.style.height = '68px';
+        offerContainer.style.transform = 'skewX(0deg)';
+        offerContainer.style.margin = '0px';
+
+        offerTextContainer.style.transform = 'skewX(0deg)';
+        clockContainer.style.width = '220px';
+        clockFace.style.justifyContent = 'center';
+      }
+      
+
     }
 
     //SET DESKTOP LAYOUT;
@@ -478,7 +501,6 @@ function countDown(parent, startDate, endDate, offer, countries, last, days, dst
         }
       
         if (beginDate > currentDate) {
-           
            document.querySelector('.countdown-container').style.display = 'none';
         }
       
@@ -510,7 +532,9 @@ window.addEventListener('load', function(){
         },
         ['lac', 'deu'],
         'ultimos',
-        'dias'
+        'dias',
+        false,
+        true
     );
 })
 
