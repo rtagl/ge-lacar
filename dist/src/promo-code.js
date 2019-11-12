@@ -41,12 +41,16 @@ var props = {
             ],
         },
     ],
+    promoBlurb:{
+        parent: '.innerPanel',
+        text: 'Apply your code now to get your offer discounted, woohoo!!! Saving money!!! GET IT!'
+    }
 }
 
 function promoCode(props){
 
     var pageURL = window.location.href;
-    var page = digestURL(pageURL).page;
+    var page = digestURL(pageURL).page
 
     function digestURL(url){
         var page = url.split('?')[0];
@@ -153,6 +157,24 @@ function promoCode(props){
             promoBannerBoxText: promoBannerBoxText,
             promoBannerBoxTextSpan: promoBannerBoxTextSpan
         };
+    }
+
+    function createPromoCodeBlurb(parent, text){
+        //CREATE APPLY POP UP BLURB TEXT
+        var blurb = document.createElement('p');
+        blurb.style.background = 'red';
+        blurb.style.width = '100%';
+        blurb.style.height ='auto';
+        blurb.style.fontFamily = 'proxima, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif';
+        blurb.style.fontSize = '16px';
+        blurb.style.fontWeight = '400';
+        blurb.innerText = text;
+
+        //GET BLURB TARGET ELEMENT
+        var blurbTarget = document.querySelector(parent);
+
+        //APPEND BLURB TO TARGET
+        blurbTarget.appendChild(blurb);
     }
 
     function promoBannerMobileLayout(promoBanner){
@@ -480,6 +502,7 @@ function promoCode(props){
                     window.addEventListener('resize', function(){
                         setLayout(promoBanner, applyPromoCodeButton);
                     });
+                    createPromoCodeBlurb(props.promoBlurb.parent, props.promoBlurb.text);
                     clearInterval(timer);
                 }
             }, 10);
