@@ -174,8 +174,13 @@ function peopleWatching(props){
         numberSpan.style.margin = '0px 5px 0px 5px';
         numberSpan.style.padding = '0px';
         numberSpan.style.color = details.textColor;
-        numberSpan.innerText = numberOfPeople;
         numberSpan.style.cssFloat = 'left';
+
+        if(numberOfPeople === undefined || numberOfPeople === null){
+            numberSpan.innerText = Math.floor(Math.random()*250+1)+80;
+        }else{
+            numberSpan.innerText = numberOfPeople;
+        }
 
         var peopleSpan = document.createElement('span');
         peopleSpan.style.width = 'auto';
@@ -320,7 +325,7 @@ function peopleWatching(props){
             return {operator: operator, value: value}
         });
 
-        var numberOfPeople = '';
+        var numberOfPeople = {am:[10, 20], business:[75, 150], pm:[150, 250]};
         for(var i = 0; i < data.length; i++){
             var checkedCriteria = [];
 
@@ -360,8 +365,6 @@ function peopleWatching(props){
             //CHECK THAT ALL CRITERIA IS TRUE
             if(checkedCriteria.indexOf(false) === -1){
                 numberOfPeople = data[i].views;
-            }else{
-                numberOfPeople = {am:[10, 20], business:[75, 150], pm:[150, 250]};
             }
         }
 
