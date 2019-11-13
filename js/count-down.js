@@ -1,4 +1,4 @@
-function countDown(parent, startDate, endDate, offer, countries, last, days, dst, offerOverCountdown, applyBlurbText){
+function countDown(parent, startDate, endDate, offer, countries, last, days, dst, offerOverCountdown){
 
     //COMPONENT CONTAINER
     var parentElement = document.querySelector(parent);
@@ -536,6 +536,6 @@ window.addEventListener('load', function(){
         false,
         true
     );
-})
+});
 
 
