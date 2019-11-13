@@ -59,7 +59,7 @@ function countDown(parent, startDate, endDate, offer, countries, last, days, dst
     //offerText.style.background = 'blue';
     offerText.style.width = 'auto';
     offerText.style.height = 'auto';
-    offerText.style.fontFamily = 'kapra, Helvetica';
+    offerText.style.fontFamily = 'kapra, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif';
     offerText.style.fontWeight = '400';
     offerText.style.fontSize = '40px';
     offerText.style.textAlign = 'center';
@@ -79,7 +79,7 @@ function countDown(parent, startDate, endDate, offer, countries, last, days, dst
     //offerSubText.style.background = 'purple';
     offerSubText.style.width = 'auto';
     offerSubText.style.height = 'auto';
-    offerSubText.style.fontFamily = 'kapra, Helvetica';
+    offerSubText.style.fontFamily = 'kapra, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif';
     offerSubText.style.fontWeight = '400';
     offerSubText.style.fontSize = '28px';
     offerSubText.style.textAlign = 'center';
@@ -92,7 +92,7 @@ function countDown(parent, startDate, endDate, offer, countries, last, days, dst
     //offerSubTextSmall.style.background = 'pink';
     offerSubTextSmall.style.width = 'auto';
     offerSubTextSmall.style.height = 'auto';
-    offerSubTextSmall.style.fontFamily = 'ProximaNova-Light';
+    offerSubTextSmall.style.fontFamily = 'ProximaNova-Light, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif';
     offerSubTextSmall.style.fontWeight = '200';
     offerSubTextSmall.style.fontSize = '16px';
     offerSubTextSmall.style.textAlign = 'center';
@@ -129,11 +129,12 @@ function countDown(parent, startDate, endDate, offer, countries, last, days, dst
 
     //CREA CLOCK TEXT 
     var clockText = document.createElement('div');
+    clockText.classList.add('ge_cd-clock-text');
     clockText.innerText = offer.timerText.toUpperCase();
     //clockText.style.background = 'magenta';
     clockText.style.width = 'auto';
     clockText.style.height = 'auto';
-    clockText.style.fontFamily = 'kapra, Helvetica';
+    clockText.style.fontFamily = 'kapra, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif';
     clockText.style.fontSize = '14px';
     clockText.style.textAlign = 'right';
     clockText.style.letterSpacing = '2px';
@@ -154,7 +155,7 @@ function countDown(parent, startDate, endDate, offer, countries, last, days, dst
     //hours.style.background = 'pink';
     hours.style.width = '30px';
     hours.style.height = '40px';
-    hours.style.fontFamily = 'kapra, Helvetica';
+    hours.style.fontFamily = 'kapra, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif';
     hours.style.fontSize = '40px';
     hours.style.textAlign = 'center';
     hours.style.letterSpacing = '2px';
@@ -165,7 +166,7 @@ function countDown(parent, startDate, endDate, offer, countries, last, days, dst
     //minutes.style.background = 'pink';
     minutes.style.width = '30px';
     minutes.style.height = '40px';
-    minutes.style.fontFamily = 'kapra, Helvetica';
+    minutes.style.fontFamily = 'kapra, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif';
     minutes.style.fontSize = '40px';
     minutes.style.textAlign = 'center';
     minutes.style.letterSpacing = '2px';
@@ -176,17 +177,18 @@ function countDown(parent, startDate, endDate, offer, countries, last, days, dst
     //seconds.style.background = 'pink';
     seconds.style.width = '30px';
     seconds.style.height = '40px';
-    seconds.style.fontFamily = 'kapra, Helvetica';
+    seconds.style.fontFamily = 'kapra, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif';
     seconds.style.fontSize = '40px';
     seconds.style.textAlign = 'center';
     seconds.style.letterSpacing = '2px';
 
     //CREATE DIGITAL TIME COLON 
     var colon = document.createElement('div');
+    colon.classList.add('ge_cd-colon');
     //colon.style.background = 'pink';
     colon.style.width = '20px';
     colon.style.height = '40px';
-    colon.style.fontFamily = 'kapra, Helvetica';
+    colon.style.fontFamily = 'kapra, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif';
     colon.style.fontSize = '40px';
     colon.style.textAlign = 'center';
     colon.style.letterSpacing = '2px';
@@ -221,7 +223,7 @@ function countDown(parent, startDate, endDate, offer, countries, last, days, dst
     if(last !== undefined){
         var daysLeftText = document.createElement('p');
         daysLeftText.innerText = last.toUpperCase();
-        daysLeftText.style.fontFamily = 'kapra';
+        daysLeftText.style.fontFamily = 'kapra, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif';
         daysLeftText.style.fontSize = '40px';
         daysLeftText.style.color = '#000';
         daysLeftText.style.letterSpacing = '2px';
@@ -233,7 +235,7 @@ function countDown(parent, startDate, endDate, offer, countries, last, days, dst
     //CREATE DAYS LEFT NUMER TEXT
     var daysLeftNumberText = document.createElement('p');
     daysLeftNumberText.innerText = '0';
-    daysLeftNumberText.style.fontFamily = 'kapra';
+    daysLeftNumberText.style.fontFamily = 'kapra, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif';
     daysLeftNumberText.style.fontSize = '40px';
     daysLeftNumberText.style.color = '#000';
     daysLeftNumberText.style.letterSpacing = '2px';
@@ -242,7 +244,7 @@ function countDown(parent, startDate, endDate, offer, countries, last, days, dst
     if(days !== undefined){
         var daysLeftDayText = document.createElement('p');
         daysLeftDayText.innerText = days.toUpperCase();
-        daysLeftDayText.style.fontFamily = 'kapra';
+        daysLeftDayText.style.fontFamily = 'kapra, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif';
         daysLeftDayText.style.fontSize = '40px';
         daysLeftDayText.style.color = '#000';
         daysLeftDayText.style.letterSpacing = '2px';
@@ -497,9 +499,16 @@ function countDown(parent, startDate, endDate, offer, countries, last, days, dst
         }else{
             counterClear();
             counterHours();
-            hours.innerText = timerHours;
-            minutes.innerText = timerMinutes;
-            seconds.innerText = timerSeconds;
+            document.querySelector('.ge_cd-hours').innerText = timerHours;
+            document.querySelector('.ge_cd-minutes').innerText = timerMinutes;
+            document.querySelector('.ge_cd-seconds').innerText = timerSeconds;
+
+            var colons = document.querySelectorAll('.ge_cd-colon');
+            for(var i = 0; i < colons.length; i++){
+                colons[i].innerText = ':'
+            }
+
+            document.querySelector('.ge_cd-clock-text').innerText = offer.timerText.toUpperCase();
         }
 
         if(timerHours <= 0 && timerMinutes <= 0  && timerSeconds <= 0){
@@ -507,14 +516,21 @@ function countDown(parent, startDate, endDate, offer, countries, last, days, dst
         }
         if (beginDate < currentDate && heroSubText) {
            heroSubText.style.display = 'none';
-
         }
 
         if(beginDate > stopDate || currentDate > stopDate){
             stopTimer();
-            hours.innerText = '00';
-            minutes.innerText = '00';
-            seconds.innerText = '00';
+            document.querySelector('.ge_cd-hours').innerText = '00';
+            document.querySelector('.ge_cd-minutes').innerText = '00';
+            document.querySelector('.ge_cd-seconds').innerText = '00';
+
+            var colons = document.querySelectorAll('.ge_cd-colon');
+            for(var i = 0; i < colons.length; i++){
+                colons[i].innerText = ':'
+            }
+
+            document.querySelector('.ge_cd-clock-text').innerText = offer.timerText.toUpperCase();
+
             console.log('The start date for this coutdown is greater than the stop date');
         }
       
