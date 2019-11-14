@@ -536,6 +536,7 @@ function countDown(parent, startDate, endDate, offer, countries, last, days, dst
 }
 
 window.addEventListener('load', function(){
+
     countDown(
         '.parent',
         'Sep 18 2019 10:00:00', // month-day-year-hours-minutes-seconds
@@ -553,5 +554,7 @@ window.addEventListener('load', function(){
         true
     );
 });
+
+
 
 
