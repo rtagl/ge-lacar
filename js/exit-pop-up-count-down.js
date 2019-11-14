@@ -36,30 +36,10 @@ window.addEventListener('load', function(){
         countries:[
             'lac'
         ]
-    });
+    }, false);
 });
 
-function exitPopUp(props){
-
-    //POLYFILL FOR .remove 
-    (function (arr) {
-        for(var i = 0; i < arr.length; i++){
-            if(arr[i].hasOwnProperty('remove')){
-                return;
-            }
-            Object.defineProperty(arr[i], 'remove', {
-                configurable: true,
-                enumerable: true,
-                writable: true,
-                value: function remove() {
-                    if (this.parentNode === null) {
-                        return;
-                    }
-                    this.parentNode.removeChild(this);
-                }
-            });
-        }
-    })([Element.prototype, CharacterData.prototype, DocumentType.prototype]);
+function exitPopUp(props, dst){
 
     let countryInUrl = '';
 
@@ -358,23 +338,35 @@ function exitPopUp(props){
     }
 
     //SET COUNTDOWN DIGITS TO MATCH CALCULATED TIME
-    function setTimeDigits(country){
-
+    function setTimeDigits(country, dst){
+	   var daylightSavings = dst
         var timeZone = '';
 
         switch(country){
             case 'lac':
-                timeZone = 'GMT-0300';
+                if (daylightSavings === true) {
+                  timeZone = 'GMT-0300';
+                } else {
+                  timeZone = 'GMT-0400';
+                }
             break;
             case 'deu':
             case 'esp':
             case 'ita':
             case 'nor':
             case 'swe':
-                timeZone = 'GMT+0200';
+                if (daylightSavings === true) {
+                  timeZone = 'GMT+0200';
+                } else {
+                  timeZone = 'GMT+0100';
+                }
             break;
             case 'mex':
-                timeZone = 'GMT-0500';
+                if (daylightSavings === true) {
+                  timeZone = 'GMT-0500';
+                } else {
+                  timeZone = 'GMT-0600';
+                }
             break;
         }
 
