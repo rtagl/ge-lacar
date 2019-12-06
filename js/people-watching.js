@@ -93,7 +93,7 @@ function peopleWatching(props){
 
     }
 
-    //COMPAREA OLD ITINERARIES WITH NEW ONE
+    //COMPARE OLD ITINERARIES WITH NEW ONE
     function compare(){
         var timer = setInterval(function(){
             if(document.querySelectorAll('.itinerary-card-component').length !== 0){
