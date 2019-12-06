@@ -175,7 +175,7 @@ function peopleWatching(props){
         numberSpan.style.textAlign = 'center';
         numberSpan.style.fontFamily = 'ProximaNova-Bold, Helvetica';
         numberSpan.style.fontSize = '18px';
-        numberSpan.style.margin = '0px 5px 0px 5px';
+        numberSpan.style.margin = '0px 3px 0px 3px';
         numberSpan.style.padding = '0px';
         numberSpan.style.color = details.textColor;
         numberSpan.style.cssFloat = 'left';
@@ -192,7 +192,7 @@ function peopleWatching(props){
         peopleSpan.style.textAlign = 'center';
         peopleSpan.style.fontFamily = 'ProximaNova-Bold, Helvetica';
         peopleSpan.style.fontSize = '18px';
-        peopleSpan.style.margin = '0px 5px 0px 5px';
+        peopleSpan.style.margin = '0px 3px 0px 3px';
         peopleSpan.style.color = details.textColor;
         peopleSpan.innerText = details.people;
         peopleSpan.style.cssFloat = 'left';
@@ -203,7 +203,7 @@ function peopleWatching(props){
         watchingSpan.style.textAlign = 'center';
         watchingSpan.style.fontFamily = 'ProximaNova-Regular, Helvetica';
         watchingSpan.style.fontSize = '18px';
-        watchingSpan.style.margin = '0px 5px 0px 5px';
+        watchingSpan.style.margin = '0px 3px 0px 3px';
         watchingSpan.style.color = details.textColor;
         watchingSpan.innerText = details.watching;
         watchingSpan.style.cssFloat = 'left';
