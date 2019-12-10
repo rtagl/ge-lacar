@@ -343,16 +343,11 @@ function exitPopUp(props, dst, showDays){
         clockTextIndicators.innerHTML = '';
     }
 
-    function addHoursLeft(text){
+    function addDaysOrHoursLeft(text){
         daysLeftText.innerText = text + ' ' + props.clock.hoursOrDaysLeft;
         popupClockContainer.appendChild(daysLeftText);
     }
   
-    function addDaysLeft(text) {
-        daysLeftText.innerText = text + ' ' + props.clock.hoursOrDaysLeft;
-        popupClockContainer.appendChild(daysLeftText);
-    }
-
     //SET COUNTDOWN DIGITS TO MATCH CALCULATED TIME
     function setTimeDigits(country, dst){
 	   var daylightSavings = dst
@@ -419,10 +414,10 @@ function exitPopUp(props, dst, showDays){
         if(timerHours >= 72){
           if (showDays === false)  {
             clearClock();
-            addHoursLeft(timerHours);
+            addDaysOrHoursLeft(timerHours);
           } else if (showDays === true) {
           	clearClock();
-             addDaysLeft(timerDays);
+             addDaysOrHoursLeft(timerDays);
           }
 
         }else{
