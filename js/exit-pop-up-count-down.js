@@ -31,7 +31,7 @@ window.addEventListener('load', function(){
         },
         countDown:{
             start:'Oct 10 2019 10:00:00',
-            end: 'Oct 27 2019 16:00:00',
+            end: 'Dec 12 2019 16:00:00',
         },
         countries:[
             'lac'
