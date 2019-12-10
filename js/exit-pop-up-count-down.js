@@ -55,6 +55,8 @@ function exitPopUp(props, dst){
     popup.style.display = 'flex';
     popup.style.justifyContent = 'center';
     popup.style.alignItems = 'center';
+    popup.style.webkitJustifyContent = 'center';
+    popup.style.webkitAlignItems = 'center';
     popup.style.zIndex = '999';
     
     let windowWidth = (window.innerWidth / 2) - (parseInt(popup.style.width) / 2) + 'px';
@@ -65,11 +67,13 @@ function exitPopUp(props, dst){
     let container = document.createElement('div');
     //container.style.background = 'red';
     container.style.width = '500px';
-    container.style.height = '225px';
+    container.style.height = 'auto';
     container.style.margin = '10px';
     container.style.display = 'flex';
     container.style.justifyContent = 'center';
     container.style.alignItems = 'center';
+    container.style.webkitJustifyContent = 'center';
+    container.style.webkitAlignItems = 'center';
     container.style.flexDirection = 'column';
 
     let popupOfferText =  document.createElement('h2');
@@ -159,9 +163,11 @@ function exitPopUp(props, dst){
     //clockTextIndicators.style.background = 'magenta';
     clockTextIndicators.style.width = '100%';
     clockTextIndicators.style.height = 'auto';
-    clockTextIndicators.style.padding = '10px 0px 15px 0px'
+    clockTextIndicators.style.padding = '0px 0px 0px 0px'
     clockTextIndicators.style.display = 'flex';
+    clockTextIndicators.style.display = '-webkit-flex';
     clockTextIndicators.style.justifyContent = 'center';
+    clockTextIndicators.style.webkitJustifyContent = 'center';
 
     let hoursIndicator = document.createElement('p');
     //hoursIndicator.style.background = 'cyan';
@@ -205,15 +211,17 @@ function exitPopUp(props, dst){
     let popupButtonContainer = document.createElement('div');
     //popupButtonContainer.style.background = 'yellow';
     popupButtonContainer.style.width = '100%';
-    popupButtonContainer.style.height = 'auto';
+    popupButtonContainer.style.height = '60px';
     popupButtonContainer.style.display = 'flex';
     popupButtonContainer.style.justifyContent = 'space-between';
+    popupButtonContainer.style.alignItems = 'space-evenly';
+    popupButtonContainer.style.webkitJustifyContent = 'space-between';
 
     let continueBtn = document.createElement('button');
     continueBtn.style.background = props.continueBtn.backgroundColor;
     continueBtn.style.width = '240px';
-    continueBtn.style.height = 'auto';
-    continueBtn.style.padding = '12px 0px 12px 0px';
+    continueBtn.style.height = '40px';
+    continueBtn.style.padding = '0px 0px 0px 0px';
     continueBtn.style.color = props.continueBtn.textColor;
     continueBtn.style.fontFamily = 'proxima, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif';
     continueBtn.style.fontSize = '16px';
@@ -277,6 +285,7 @@ function exitPopUp(props, dst){
         popupButtonContainer.style.flexDirection = 'row';
         popupButtonContainer.style.justifyContent = 'space-between';
         popupButtonContainer.style.alignItems = 'center';
+        popupButtonContainer.style.height = '60px';
 
         continueBtn.style.width = '240px';
         continueBtn.style.marginBottom = '0px';
@@ -292,7 +301,7 @@ function exitPopUp(props, dst){
 
         popupButtonContainer.style.flexDirection = 'column';
         popupButtonContainer.style.justifyContent = 'center';
-        popupButtonContainer.style.alignItems = 'center';
+        popupButtonContainer.style.height = '120px';
 
         continueBtn.style.width = '100%';
         continueBtn.style.marginBottom = '20px';
