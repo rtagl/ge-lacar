@@ -1,38 +1,45 @@
-exitPopUp({
-    bannerDetails:{
-        backgroundColor: '#ffffff',
-        offerText: '30% off this great offer',
-        offerSubText: 'kids eat free',
-        textColor: '#ce0f69',
-    },
-    continueBtn:{
-        text: 'continue',
-        textColor: '#000000',
-        backgroundColor: '#febd11',
-    },
-    cancelBtn:{
-        text: 'cancel',
-        textColor: '#000000',
-        backgroundColor: '#ffffff',
-        borderColor: '#000000'
-    },
-    clock:{
-        hours:'HOURS',
-        minutes: 'MINUTES',
-        seconds: 'SECONDS',
-        hoursLeft: 'hours left',
-        textColor: '#ce0f69'
-    },
-    countDown:{
-        start:'Oct 10 2019 10:00:00',
-        end: 'Oct 27 2019 16:00:00',
-    },
-    countries:[
-        'lac'
-    ]
+window.addEventListener('load', function(){
+
+    //TEST COOKIE
+    document.cookie = "wuc=DEU";
+    document.cookie = "wul=de";
+
+    exitPopUp({
+        bannerDetails:{
+            backgroundColor: '#ffffff',
+            offerText: '30% off this great offer',
+            offerSubText: 'kids eat free',
+            textColor: '#ce0f69',
+        },
+        continueBtn:{
+            text: 'continue',
+            textColor: '#000000',
+            backgroundColor: '#febd11',
+        },
+        cancelBtn:{
+            text: 'cancel',
+            textColor: '#000000',
+            backgroundColor: '#ffffff',
+            borderColor: '#000000'
+        },
+        clock:{
+            hours:'HOURS',
+            minutes: 'MINUTES',
+            seconds: 'SECONDS',
+            hoursLeft: 'hours left',
+            textColor: '#ce0f69'
+        },
+        countDown:{
+            start:'Oct 10 2019 10:00:00',
+            end: 'Dec 12 2019 16:00:00',
+        },
+        countries:[
+            'lac'
+        ]
+    }, false, true);
 });
 
-function exitPopUp(props, dst){
+function exitPopUp(props, dst, showDays){
 
     let countryInUrl = '';
 
@@ -96,9 +103,10 @@ function exitPopUp(props, dst){
     let popupClockContainer = document.createElement('div');
     //popupClockContainer.style.background = 'pink';
     popupClockContainer.style.width = '100%';
-    popupClockContainer.style.height = 'auto';
+    popupClockContainer.style.height = '60px';
     popupClockContainer.style.display = 'flex';
     popupClockContainer.style.justifyContent = 'center';
+
 
     let clockHours = document.createElement('div');
     //clockHours.style.background = 'green';
@@ -209,6 +217,7 @@ function exitPopUp(props, dst){
     popupButtonContainer.style.justifyContent = 'space-between';
     popupButtonContainer.style.alignItems = 'space-evenly';
     popupButtonContainer.style.webkitJustifyContent = 'space-between';
+    popupButtonContainer.style.marginTop = '25px';
 
     let continueBtn = document.createElement('button');
     continueBtn.style.background = props.continueBtn.backgroundColor;
@@ -334,11 +343,11 @@ function exitPopUp(props, dst){
         clockTextIndicators.innerHTML = '';
     }
 
-    function addHoursLeft(text){
-        daysLeftText.innerText = text + ' ' + props.clock.hoursLeft;
+    function addDaysOrHoursLeft(text){
+        daysLeftText.innerText = text + ' ' + props.clock.hoursOrDaysLeft;
         popupClockContainer.appendChild(daysLeftText);
     }
-
+  
     //SET COUNTDOWN DIGITS TO MATCH CALCULATED TIME
     function setTimeDigits(country, dst){
 	   var daylightSavings = dst
@@ -351,6 +360,14 @@ function exitPopUp(props, dst){
                 } else {
                   timeZone = 'GMT-0400';
                 }
+            break;
+            case 'gbr':
+            case 'irl':
+                if (daylightSavings === true) {
+                    timeZone = 'GMT+0100';
+                    } else {
+                    timeZone = 'GMT-0000';
+                    }
             break;
             case 'deu':
             case 'esp':
@@ -380,6 +397,7 @@ function exitPopUp(props, dst){
         var timerSeconds = Math.floor(totalSeconds % 60);
         var timerMinutes = Math.floor(totalSeconds % 3600 / 60);
         var timerHours = Math.floor(totalSeconds/3600);
+        var timerDays = Math.floor(timerHours/24);
         
         //ADD AN EXTRA ZERO TO ANY DIGIT BELOW 10 
         if(timerHours < 10){
@@ -394,8 +412,14 @@ function exitPopUp(props, dst){
 
         //CHANGE CLOCK FACE TO SHOW TIME REMAINING
         if(timerHours >= 72){
+          if (showDays === false)  {
             clearClock();
-            addHoursLeft(timerHours);
+            addDaysOrHoursLeft(timerHours);
+          } else if (showDays === true) {
+          	clearClock();
+             addDaysOrHoursLeft(timerDays);
+          }
+
         }else{
             clockHours.innerText = timerHours;
             clockMinutes.innerText = timerMinutes;
@@ -475,6 +499,10 @@ function exitPopUp(props, dst){
             case 'PAN':
                 url = 'lac/es?country='+cookieData.country;
                 break;
+            case 'GBR':
+            case 'IRL':
+                url = 'gbr/en?country='+cookieData.country;
+                break;
             case 'DEU':
             case 'ESP':  
             case 'ITA': 
@@ -486,7 +514,6 @@ function exitPopUp(props, dst){
             default:
                 url = '?country=USA';
         }
-
         return 'https://www.royalcaribbean.com/' + url;
     }
 }
