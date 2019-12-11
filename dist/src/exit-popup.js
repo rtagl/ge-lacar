@@ -1,43 +1,36 @@
-window.addEventListener('load', function(){
-
-    //TEST COOKIE
-    document.cookie = "wuc=DEU";
-    document.cookie = "wul=de";
-
-    exitPopUp({
-        bannerDetails:{
-            backgroundColor: '#ffffff',
-            offerText: '30% off this great offer',
-            offerSubText: 'kids eat free',
-            textColor: '#ce0f69',
-        },
-        continueBtn:{
-            text: 'continue',
-            textColor: '#000000',
-            backgroundColor: '#febd11',
-        },
-        cancelBtn:{
-            text: 'cancel',
-            textColor: '#000000',
-            backgroundColor: '#ffffff',
-            borderColor: '#000000'
-        },
-        clock:{
-            hours:'HOURS',
-            minutes: 'MINUTES',
-            seconds: 'SECONDS',
-            hoursLeft: 'hours left',
-            textColor: '#ce0f69'
-        },
-        countDown:{
-            start:'Oct 10 2019 10:00:00',
-            end: 'Dec 12 2019 16:00:00',
-        },
-        countries:[
-            'lac'
-        ]
-    }, false, true);
-});
+exitPopUp({
+    bannerDetails:{
+        backgroundColor: '#ffffff',
+        offerText: '30% off this great offer',
+        offerSubText: 'kids eat free',
+        textColor: '#ce0f69',
+    },
+    continueBtn:{
+        text: 'continue',
+        textColor: '#000000',
+        backgroundColor: '#febd11',
+    },
+    cancelBtn:{
+        text: 'cancel',
+        textColor: '#000000',
+        backgroundColor: '#ffffff',
+        borderColor: '#000000'
+    },
+    clock:{
+        hours:'HOURS',
+        minutes: 'MINUTES',
+        seconds: 'SECONDS',
+        hoursLeft: 'hours left',
+        textColor: '#ce0f69'
+    },
+    countDown:{
+        start:'Oct 10 2019 10:00:00',
+        end: 'Dec 12 2019 16:00:00',
+    },
+    countries:[
+        'lac'
+    ]
+}, false, true);
 
 function exitPopUp(props, dst, showDays){
 
