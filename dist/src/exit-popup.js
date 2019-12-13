@@ -322,7 +322,7 @@ function exitPopUp(props, dst, showDays){
 
      //CREATE INTERVAL THAT UPDATES COUNTDOWN CLOCK
      var checkTimeInterval = setInterval(function(){ 
-        setTimeDigits(countryInUrl);
+        setTimeDigits(countryInUrl, dst);
     }, 1000);
     
     //THIS CLEARS THE TIMER ONCE THE COUNTDOWN REACHES 0
@@ -405,14 +405,13 @@ function exitPopUp(props, dst, showDays){
 
         //CHANGE CLOCK FACE TO SHOW TIME REMAINING
         if(timerHours >= 72){
-          if (showDays === false)  {
+          if(showDays === false){
             clearClock();
             addDaysOrHoursLeft(timerHours);
-          } else if (showDays === true) {
+          }else if(showDays === true){
           	clearClock();
-             addDaysOrHoursLeft(timerDays);
+            addDaysOrHoursLeft(timerDays);
           }
-
         }else{
             clockHours.innerText = timerHours;
             clockMinutes.innerText = timerMinutes;
@@ -439,7 +438,7 @@ function exitPopUp(props, dst, showDays){
 
     props.countries.forEach(function(country){
         if(url.indexOf(country) !== -1){
-            setTimeDigits(country);
+            setTimeDigits(country, dst);
             countryInUrl = country;
         }
     });

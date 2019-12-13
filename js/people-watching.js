@@ -471,7 +471,7 @@ function peopleWatching(props){
     //DELETE COMPONENT ON OVERLAY CLICK
     deleteComponentOnOverlayClick(overlays);
 +
-    //CREATE COMPONENT ON ITINERARY CLICK
+    //ADD CLICK EVENTS TO ITINERARIES
     itinerariesClickEvents(itineraries);
 
     //ADD CLASS TO ALL CURRENT ITINERARIES
