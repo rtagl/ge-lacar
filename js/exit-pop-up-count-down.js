@@ -27,6 +27,7 @@ window.addEventListener('load', function(){
             minutes: 'MINUTES',
             seconds: 'SECONDS',
             hoursLeft: 'hours left',
+            daysLeft: 'days left',
             textColor: '#ce0f69'
         },
         countDown:{
@@ -343,8 +344,13 @@ function exitPopUp(props, dst, showDays){
         clockTextIndicators.innerHTML = '';
     }
 
-    function addDaysOrHoursLeft(text){
-        daysLeftText.innerText = text + ' ' + props.clock.hoursOrDaysLeft;
+    function addDaysLeft(text){
+        daysLeftText.innerText = text + ' ' + props.clock.daysLeft;
+        popupClockContainer.appendChild(daysLeftText);
+    }
+
+    function addHoursLeft(text){
+        daysLeftText.innerText = text + ' ' + props.clock.hoursLeft;
         popupClockContainer.appendChild(daysLeftText);
     }
   
@@ -414,10 +420,10 @@ function exitPopUp(props, dst, showDays){
         if(timerHours >= 72){
           if(showDays === false){
             clearClock();
-            addDaysOrHoursLeft(timerHours);
+            addHoursLeft(timerHours);
           }else if(showDays === true){
           	clearClock();
-            addDaysOrHoursLeft(timerDays);
+            addDaysLeft(timerDays);
           }
         }else{
             clockHours.innerText = timerHours;
