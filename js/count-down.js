@@ -25,62 +25,238 @@ function countDown(parent, startDate, endDate, offer, countries, last, days, dst
     offerContainer.style.justifyContent = 'center';
     offerContainer.style.alignItems = 'center';
 
-    //CREATE OFFER TEXT CONTAINER
-    var offerTextContainer = document.createElement('div');
-    //offerTextContainer.style.background = 'red';
-    offerTextContainer.style.width = '100%';
-    offerTextContainer.style.height = '54px';
-    offerTextContainer.style.transform = 'skewX(28deg)';
-    offerTextContainer.style.display = 'flex';
-    offerTextContainer.style.justifyContent = 'center';
-    offerTextContainer.style.alignItems = 'center';
+    ////
+    function standardOffer(){
+        //CREATE OFFER TEXT CONTAINER
+        var offerTextContainer = document.createElement('div');
+        //offerTextContainer.style.background = 'red';
+        offerTextContainer.style.width = '100%';
+        offerTextContainer.style.height = '54px';
+        offerTextContainer.style.transform = 'skewX(28deg)';
+        offerTextContainer.style.display = 'flex';
+        offerTextContainer.style.justifyContent = 'center';
+        offerTextContainer.style.alignItems = 'center';
 
-    //CREATE OFFER TEXT SUB CONTAINER
-    var offerText = document.createElement('h2');
-    offerText.innerText = offer.offer.toUpperCase();
-    //offerText.style.background = 'blue';
-    offerText.style.width = 'auto';
-    offerText.style.height = 'auto';
-    offerText.style.fontFamily = 'kapra, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif';
-    offerText.style.fontWeight = '400';
-    offerText.style.fontSize = '40px';
-    offerText.style.textAlign = 'center';
-    offerText.style.letterSpacing = '2px';
-    offerText.style.color = '#fff';
-    offerText.style.padding = '0px 20px 0px 0px';
+        //CREATE OFFER TEXT SUB CONTAINER
+        var offerText = document.createElement('h2');
+        offerText.innerText = offer.standardOffer.offer.toUpperCase();
+        //offerText.style.background = 'blue';
+        offerText.style.width = 'auto';
+        offerText.style.height = 'auto';
+        offerText.style.fontFamily = 'kapra, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif';
+        offerText.style.fontWeight = '400';
+        offerText.style.fontSize = '40px';
+        offerText.style.textAlign = 'center';
+        offerText.style.letterSpacing = '2px';
+        offerText.style.color = '#fff';
+        offerText.style.padding = '0px 20px 0px 0px';
+        offerText.classList.add('offerText');
 
-    //CREATE SUB TEXT CONTAINER
-    var offerSubTextContainer = document.createElement('div');
-    //offerSubTextContainer.style.background = 'yellow';
-    offerSubTextContainer.style.width = 'auto';
-    offerSubTextContainer.style.height = 'auto';
+        //CREATE SUB TEXT CONTAINER
+        var offerSubTextContainer = document.createElement('div');
+        //offerSubTextContainer.style.background = 'yellow';
+        offerSubTextContainer.style.width = 'auto';
+        offerSubTextContainer.style.height = 'auto';
 
-    //CREATE SUB TEXT
-    var offerSubText = document.createElement('div');
-    offerSubText.innerText = offer.text.toUpperCase();
-    //offerSubText.style.background = 'purple';
-    offerSubText.style.width = 'auto';
-    offerSubText.style.height = 'auto';
-    offerSubText.style.fontFamily = 'kapra, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif';
-    offerSubText.style.fontWeight = '400';
-    offerSubText.style.fontSize = '28px';
-    offerSubText.style.textAlign = 'center';
-    offerSubText.style.letterSpacing = '2px';
-    offerSubText.style.color = '#fff';
+        //CREATE SUB TEXT
+        var offerSubText = document.createElement('div');
+        offerSubText.innerText = offer.standardOffer.text.toUpperCase();
+        //offerSubText.style.background = 'purple';
+        offerSubText.style.width = 'auto';
+        offerSubText.style.height = 'auto';
+        offerSubText.style.fontFamily = 'kapra, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif';
+        offerSubText.style.fontWeight = '400';
+        offerSubText.style.fontSize = '28px';
+        offerSubText.style.textAlign = 'center';
+        offerSubText.style.letterSpacing = '2px';
+        offerSubText.style.color = '#fff';
+        offerSubText.classList.add('offerSubText');
 
-    //CREATE SUB TEXT
-    var offerSubTextSmall = document.createElement('div');
-    offerSubTextSmall.innerText = offer.subText.toUpperCase();
-    //offerSubTextSmall.style.background = 'pink';
-    offerSubTextSmall.style.width = 'auto';
-    offerSubTextSmall.style.height = 'auto';
-    offerSubTextSmall.style.fontFamily = 'ProximaNova-Light, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif';
-    offerSubTextSmall.style.fontWeight = '200';
-    offerSubTextSmall.style.fontSize = '16px';
-    offerSubTextSmall.style.textAlign = 'center';
-    offerSubTextSmall.style.letterSpacing = '2px';
-    offerSubTextSmall.style.color = '#fff';
-    offerSubTextSmall.style.margin = '-7px 0px 0px 0px';
+        //CREATE SUB TEXT
+        var offerSubTextSmall = document.createElement('div');
+        offerSubTextSmall.innerText = offer.standardOffer.subText.toUpperCase();
+        //offerSubTextSmall.style.background = 'pink';
+        offerSubTextSmall.style.width = 'auto';
+        offerSubTextSmall.style.height = 'auto';
+        offerSubTextSmall.style.fontFamily = 'ProximaNova-Light, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif';
+        offerSubTextSmall.style.fontWeight = '200';
+        offerSubTextSmall.style.fontSize = '16px';
+        offerSubTextSmall.style.textAlign = 'center';
+        offerSubTextSmall.style.letterSpacing = '2px';
+        offerSubTextSmall.style.color = '#fff';
+        offerSubTextSmall.style.margin = '-7px 0px 0px 0px';
+        offerSubTextSmall.classList.add('offerSubTextSmall');
+
+        offerTextContainer.appendChild(offerText);
+        offerSubTextContainer.appendChild(offerSubText);
+        offerSubTextContainer.appendChild(offerSubTextSmall);
+        offerTextContainer.appendChild(offerSubTextContainer);
+
+        return offerTextContainer;
+    }
+
+    function doubleOffer(){
+        //CREATE OFFER TEXT CONTAINER
+        var offerTextContainer = document.createElement('div');
+        //offerTextContainer.style.background = 'red';
+        offerTextContainer.style.width = '100%';
+        offerTextContainer.style.height = '54px';
+        offerTextContainer.style.transform = 'skewX(28deg)';
+        offerTextContainer.style.display = 'flex';
+        offerTextContainer.style.justifyContent = 'center';
+        offerTextContainer.style.alignItems = 'center';
+
+        //CREATE SUB TEXT CONTAINER
+        var offerSubTextContainer = document.createElement('div');
+        //offerSubTextContainer.style.background = 'yellow';
+        offerSubTextContainer.style.width = 'auto';
+        offerSubTextContainer.style.height = 'auto';
+
+        var offerSubTextContainerClone = offerSubTextContainer.cloneNode();
+
+        //CREATE SUB TEXT
+        var offerSubText = document.createElement('div');
+        offerSubText.innerText = offer.doubleOffer.offerOne.text.toUpperCase();
+        //offerSubText.style.background = 'purple';
+        offerSubText.style.width = 'auto';
+        offerSubText.style.height = 'auto';
+        offerSubText.style.fontFamily = 'kapra, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif';
+        offerSubText.style.fontWeight = '400';
+        offerSubText.style.fontSize = '28px';
+        offerSubText.style.textAlign = 'center';
+        offerSubText.style.letterSpacing = '2px';
+        offerSubText.style.color = '#fff';
+        offerSubText.classList.add('offerSubText');
+
+        var offerSubTextClone = offerSubText.cloneNode();
+        offerSubTextClone.innerText = offer.doubleOffer.offerTwo.text.toUpperCase();
+
+        //CREATE SUB TEXT
+        var offerSubTextSmall = document.createElement('div');
+        offerSubTextSmall.innerText = offer.doubleOffer.offerOne.subText.toUpperCase();
+        //offerSubTextSmall.style.background = 'pink';
+        offerSubTextSmall.style.width = 'auto';
+        offerSubTextSmall.style.height = 'auto';
+        offerSubTextSmall.style.fontFamily = 'ProximaNova-Light, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif';
+        offerSubTextSmall.style.fontWeight = '200';
+        offerSubTextSmall.style.fontSize = '16px';
+        offerSubTextSmall.style.textAlign = 'center';
+        offerSubTextSmall.style.letterSpacing = '2px';
+        offerSubTextSmall.style.color = '#fff';
+        offerSubTextSmall.style.margin = '-7px 0px 0px 0px';
+        offerSubTextSmall.classList.add('offerSubTextSmall');
+
+        var offerSubTextSmallClone = offerSubTextSmall.cloneNode();
+        offerSubTextSmallClone.innerText = offer.doubleOffer.offerTwo.subText.toUpperCase();
+
+        //APPEND ALL CHILDREN
+        offerSubTextContainer.appendChild(offerSubText);
+        offerSubTextContainer.appendChild(offerSubTextSmall);
+
+        offerSubTextContainerClone.appendChild(offerSubTextClone);
+        offerSubTextContainerClone.appendChild(offerSubTextSmallClone);
+
+        offerTextContainer.appendChild(offerSubTextContainer);
+        offerTextContainer.appendChild(offerSubTextContainerClone);
+
+        return offerTextContainer;
+    }
+
+    function tripleOffer(){
+        //CREATE OFFER TEXT CONTAINER
+        var offerTextContainer = document.createElement('div');
+        //offerTextContainer.style.background = 'red';
+        offerTextContainer.style.width = '100%';
+        offerTextContainer.style.height = '54px';
+        offerTextContainer.style.transform = 'skewX(28deg)';
+        offerTextContainer.style.display = 'flex';
+        offerTextContainer.style.justifyContent = 'center';
+        offerTextContainer.style.alignItems = 'center';
+
+        //CREATE SUB TEXT CONTAINER
+        var offerSubTextContainer = document.createElement('div');
+        //offerSubTextContainer.style.background = 'yellow';
+        offerSubTextContainer.style.width = 'auto';
+        offerSubTextContainer.style.height = 'auto';
+        offerSubTextContainer.style.margin = '0px 3px 0px 5px';
+
+        var offerSubTextContainerCloneOne = offerSubTextContainer.cloneNode();
+        var offerSubTextContainerCloneTwo = offerSubTextContainer.cloneNode();
+
+        //CREATE SUB TEXT
+        var offerSubText = document.createElement('div');
+        offerSubText.innerText = offer.tripleOffer.offerOne.text.toUpperCase();
+        //offerSubText.style.background = 'purple';
+        offerSubText.style.width = 'auto';
+        offerSubText.style.height = 'auto';
+        offerSubText.style.fontFamily = 'kapra, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif';
+        offerSubText.style.fontWeight = '400';
+        offerSubText.style.fontSize = '28px';
+        offerSubText.style.textAlign = 'center';
+        offerSubText.style.letterSpacing = '2px';
+        offerSubText.style.color = '#fff';
+        offerSubText.classList.add('offerSubText');
+
+        var offerSubTextCloneOne = offerSubText.cloneNode();
+        offerSubTextCloneOne.innerText = offer.tripleOffer.offerTwo.text.toUpperCase();
+        offerSubTextCloneOne.classList.add('offerSubText');
+
+        var offerSubTextCloneTwo = offerSubText.cloneNode();
+        offerSubTextCloneTwo.innerText = offer.tripleOffer.offerThree.text.toUpperCase();
+        offerSubTextCloneTwo.classList.add('offerSubText');
+
+        //CREATE SMALL SUB TEXT
+        var offerSubTextSmall = document.createElement('div');
+        offerSubTextSmall.innerText = offer.tripleOffer.offerOne.subText.toUpperCase();
+        //offerSubTextSmall.style.background = 'pink';
+        offerSubTextSmall.style.width = 'auto';
+        offerSubTextSmall.style.height = 'auto';
+        offerSubTextSmall.style.fontFamily = 'ProximaNova-Light, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif';
+        offerSubTextSmall.style.fontWeight = '200';
+        offerSubTextSmall.style.fontSize = '16px';
+        offerSubTextSmall.style.textAlign = 'center';
+        offerSubTextSmall.style.letterSpacing = '2px';
+        offerSubTextSmall.style.color = '#fff';
+        offerSubTextSmall.style.margin = '-7px 0px 0px 0px';
+        offerSubTextSmall.classList.add('offerSubTextSmall');
+
+        var offerSubTextSmallCloneOne = offerSubTextSmall.cloneNode();
+        offerSubTextSmallCloneOne.innerText = offer.tripleOffer.offerTwo.subText.toUpperCase();
+        offerSubTextSmallCloneOne.classList.add('offerSubTextSmall');
+
+        var offerSubTextSmallCloneTwo = offerSubTextSmall.cloneNode();
+        offerSubTextSmallCloneTwo.innerText = offer.tripleOffer.offerThree.subText.toUpperCase();
+        offerSubTextSmallCloneTwo.classList.add('offerSubTextSmall');
+
+        //APPEND ALL CHILDREN
+        offerSubTextContainer.appendChild(offerSubText);
+        offerSubTextContainerCloneOne.appendChild(offerSubTextCloneOne);
+        offerSubTextContainerCloneTwo.appendChild(offerSubTextCloneTwo);
+
+        offerSubTextContainer.appendChild(offerSubTextSmall);
+        offerSubTextContainerCloneOne.appendChild(offerSubTextSmallCloneOne);
+        offerSubTextContainerCloneTwo.appendChild(offerSubTextSmallCloneTwo);
+
+        offerTextContainer.appendChild(offerSubTextContainer);
+        offerTextContainer.appendChild(offerSubTextContainerCloneOne);
+        offerTextContainer.appendChild(offerSubTextContainerCloneTwo);
+
+        return offerTextContainer;
+    }
+
+    //CHECK TO SEE WHICH OFFER LAYOUT TO USE
+    function getOfferType(){
+        if(offer.standardOffer){
+            return standardOffer();
+        }else if(offer.doubleOffer){
+            console.log('hellow');
+            return doubleOffer();
+        }else if(offer.tripleOffer){
+            return tripleOffer();
+        }
+    }
+
+    var offerTextContainerReady = getOfferType();
 
     //CREATE CLOCK CONTAINER
     var clockContainer = document.createElement('div');
@@ -242,15 +418,8 @@ function countDown(parent, startDate, endDate, offer, countries, last, days, dst
     countDownContainer.appendChild(clockContainer);
 
     //APPEND OFFER TEXT CONTAINER TO OFFER CONTAINER
-    offerContainer.appendChild(offerTextContainer);
-
-    //APPEND TEXT TO OFFER TEXT CONTAINER
-    offerTextContainer.appendChild(offerText);
-    offerTextContainer.appendChild(offerSubTextContainer);
-
-    //APPEND CHILD NODES TO SUB TEXT CONTAINER
-    offerSubTextContainer.appendChild(offerSubText);
-    offerSubTextContainer.appendChild(offerSubTextSmall);
+    console.log(offerTextContainerReady);
+    offerContainer.appendChild(offerTextContainerReady);
 
     //APPEND COUNTDOWN TO PARENT ELEMENT 
     parentElement.appendChild(countDownContainer);
@@ -317,7 +486,7 @@ function countDown(parent, startDate, endDate, offer, countries, last, days, dst
         offerContainer.style.transform = 'skewX(0deg)';
         offerContainer.style.margin = '0px';
 
-        offerTextContainer.style.transform = 'skewX(0deg)';
+        offerTextContainerReady.style.transform = 'skewX(0deg)';
         clockContainer.style.width = '220px';
         clockFace.style.justifyContent = 'center';
       
@@ -332,12 +501,11 @@ function countDown(parent, startDate, endDate, offer, countries, last, days, dst
         offerContainer.style.transform = 'skewX(0deg)';
         offerContainer.style.margin = '0px';
 
-        offerTextContainer.style.transform = 'skewX(0deg)';
+        offerTextContainerReady.style.transform = 'skewX(0deg)';
         clockContainer.style.width = '220px';
         clockFace.style.justifyContent = 'center';
       }
       
-
     }
 
     //SET DESKTOP LAYOUT;
@@ -353,7 +521,7 @@ function countDown(parent, startDate, endDate, offer, countries, last, days, dst
         offerContainer.style.justifyContent = 'center';
         offerContainer.style.alignItems = 'center';
 
-        offerTextContainer.style.transform = 'skewX(28deg)';
+        offerTextContainerReady.style.transform = 'skewX(28deg)';
         clockContainer.style.width = '35%';
         //clockFace.style.justifyContent = 'flex-start';
 
@@ -362,25 +530,75 @@ function countDown(parent, startDate, endDate, offer, countries, last, days, dst
     //SET FONT SIZE RESPONSIVENESS
     function setFontSize(){
         if(window.matchMedia("(min-width: 990px)").matches){
-            offerText.style.fontSize = '40px';
-            offerSubText.style.fontSize = '28px';
-            offerSubTextSmall.style.fontSize = '16px';
+
+            if(document.querySelector('.offerText')){
+                document.querySelector('.offerText').style.fontSize = '40px'; 
+            }
+
+            var offerSubText = document.querySelectorAll('.offerSubText');
+            var offerSubTextSmall = document.querySelectorAll('.offerSubTextSmall');
+
+            for(var i = 0; i < offerSubText.length; i++){
+                offerSubText[i].style.fontSize = '28px';
+                offerSubTextSmall[i].style.fontSize = '16px';
+            }
+
         }else if(window.matchMedia("(min-width: 920px)").matches){ 
-            offerText.style.fontSize = '30px';
-            offerSubText.style.fontSize = '22px';
-            offerSubTextSmall.style.fontSize = '14px';
+
+            if(document.querySelector('.offerText')){
+                document.querySelector('.offerText').style.fontSize = '30px'; 
+            }
+
+            var offerSubText = document.querySelectorAll('.offerSubText');
+            var offerSubTextSmall = document.querySelectorAll('.offerSubTextSmall');
+
+            for(var i = 0; i < offerSubText.length; i++){
+                offerSubText[i].style.fontSize = '22px';
+                offerSubTextSmall[i].style.fontSize = '14px';
+            }
+
         }else if(window.matchMedia("(min-width: 810px)").matches){ 
-            offerText.style.fontSize = '28px';
-            offerSubText.style.fontSize = '18px';
-            offerSubTextSmall.style.fontSize = '14px';
+
+            if(document.querySelector('.offerText')){
+                document.querySelector('.offerText').style.fontSize = '28px'; 
+            }
+
+            var offerSubText = document.querySelectorAll('.offerSubText');
+            var offerSubTextSmall = document.querySelectorAll('.offerSubTextSmall');
+
+            for(var i = 0; i < offerSubText.length; i++){
+                offerSubText[i].style.fontSize = '18px';
+                offerSubTextSmall[i].style.fontSize = '14px';
+            }
+
         }else if(window.matchMedia("(min-width: 450px)").matches){
-            offerText.style.fontSize = '26px';
-            offerSubText.style.fontSize = '18px';
-            offerSubTextSmall.style.fontSize = '14px';
+
+            if(document.querySelector('.offerText')){
+                document.querySelector('.offerText').style.fontSize = '26px'; 
+            }
+
+            var offerSubText = document.querySelectorAll('.offerSubText');
+            var offerSubTextSmall = document.querySelectorAll('.offerSubTextSmall');
+
+            for(var i = 0; i < offerSubText.length; i++){
+                offerSubText[i].style.fontSize = '18px';
+                offerSubTextSmall[i].style.fontSize = '14px';
+            }
+
         }else if(window.matchMedia("(min-width: 330px)").matches){
-            offerText.style.fontSize = '22px';
-            offerSubText.style.fontSize = '16px';
-            offerSubTextSmall.style.fontSize = '14px';
+
+            if(document.querySelector('.offerText')){
+                document.querySelector('.offerText').style.fontSize = '22px'; 
+            }
+
+            var offerSubText = document.querySelectorAll('.offerSubText');
+            var offerSubTextSmall = document.querySelectorAll('.offerSubTextSmall');
+
+            for(var i = 0; i < offerSubText.length; i++){
+                offerSubText[i].style.fontSize = '16px';
+                offerSubTextSmall[i].style.fontSize = '14px';
+            }
+
         }
     }
 
@@ -542,10 +760,36 @@ window.addEventListener('load', function(){
         'Sep 18 2019 10:00:00', // month-day-year-hours-minutes-seconds
         'Nov 13 2019 12:46:00', // month-day-year-hours-minutes-seconds
         {
-            offer:     'INOLTRE: FINO A 35% DI SCONTO',
-            text:      '+ PREZZI SPECIALI',
-            subText:   'FAMIGLIA',
-            timerText: 'oferta termina in:'
+            // standardOffer: {
+            //     offer:     'INOLTRE: FINO A 35% DI SCONTO',
+            //     text:      '+ PREZZI SPECIALI',
+            //     subText:   'FAMIGLIA'
+            // },
+            // doubleOffer: {
+            //     offerOne:{
+            //         text:      '+ PREZZI SPECIALI',
+            //         subText:   'FAMIGLIA'
+            //     },
+            //     offerTwo:{
+            //         text:      '+ PREZZI SPECIALI',
+            //         subText:   'FAMIGLIA'
+            //     }
+            // },
+            tripleOffer: {
+                offerOne:{
+                    text:      '+ PREZZI SPECIALI',
+                    subText:   'FAMIGLIA'
+                },
+                offerTwo:{
+                    text:      '+ PREZZI SPECIALI',
+                    subText:   'FAMIGLIA'
+                },
+                offerThree:{
+                    text:      '+ PREZZI SPECIALI',
+                    subText:   'FAMIGLIA'
+                }
+            },
+            timerText: 'oferta termina in:',
         },
         ['lac', 'deu'],
         'ultimos',
