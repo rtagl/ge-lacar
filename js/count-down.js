@@ -39,7 +39,7 @@ function countDown(parent, startDate, endDate, offer, countries, last, days, dst
 
         //CREATE OFFER TEXT SUB CONTAINER
         var offerText = document.createElement('h2');
-        offerText.innerText = offer.standardOffer.toUpperCase();
+        offerText.innerText = offer.standardOffer.offer.toUpperCase();
         //offerText.style.background = 'blue';
         offerText.style.width = 'auto';
         offerText.style.height = 'auto';
@@ -418,7 +418,6 @@ function countDown(parent, startDate, endDate, offer, countries, last, days, dst
     countDownContainer.appendChild(clockContainer);
 
     //APPEND OFFER TEXT CONTAINER TO OFFER CONTAINER
-    console.log(offerTextContainerReady);
     offerContainer.appendChild(offerTextContainerReady);
 
     //APPEND COUNTDOWN TO PARENT ELEMENT 
@@ -760,11 +759,11 @@ window.addEventListener('load', function(){
         'Sep 18 2019 10:00:00', // month-day-year-hours-minutes-seconds
         'Nov 13 2019 12:46:00', // month-day-year-hours-minutes-seconds
         {
-            // standardOffer: {
-            //     offer:     'INOLTRE: FINO A 35% DI SCONTO',
-            //     text:      '+ PREZZI SPECIALI',
-            //     subText:   'FAMIGLIA'
-            // },
+            standardOffer: {
+                offer:     'INOLTRE: FINO A 35% DI SCONTO',
+                text:      '+ PREZZI SPECIALI',
+                subText:   'FAMIGLIA'
+            },
             // doubleOffer: {
             //     offerOne:{
             //         text:      '+ PREZZI SPECIALI',
@@ -775,20 +774,20 @@ window.addEventListener('load', function(){
             //         subText:   'FAMIGLIA'
             //     }
             // },
-            tripleOffer: {
-                offerOne:{
-                    text:      '+ PREZZI SPECIALI',
-                    subText:   'FAMIGLIA'
-                },
-                offerTwo:{
-                    text:      '+ PREZZI SPECIALI',
-                    subText:   'FAMIGLIA'
-                },
-                offerThree:{
-                    text:      '+ PREZZI SPECIALI',
-                    subText:   'FAMIGLIA'
-                }
-            },
+            // tripleOffer: {
+            //     offerOne:{
+            //         text:      '+ PREZZI SPECIALI',
+            //         subText:   'FAMIGLIA'
+            //     },
+            //     offerTwo:{
+            //         text:      '+ PREZZI SPECIALI',
+            //         subText:   'FAMIGLIA'
+            //     },
+            //     offerThree:{
+            //         text:      '+ PREZZI SPECIALI',
+            //         subText:   'FAMIGLIA'
+            //     }
+            // },
             timerText: 'oferta termina in:',
         },
         ['lac', 'deu'],

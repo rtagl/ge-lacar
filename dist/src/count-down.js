@@ -83,7 +83,7 @@ function countDown(parent, startDate, endDate, offer, countries, last, days, dst
 
         //CREATE OFFER TEXT SUB CONTAINER
         var offerText = document.createElement('h2');
-        offerText.innerText = offer.standardOffer.toUpperCase();
+        offerText.innerText = offer.standardOffer.offer.toUpperCase();
         //offerText.style.background = 'blue';
         offerText.style.width = 'auto';
         offerText.style.height = 'auto';
@@ -462,7 +462,6 @@ function countDown(parent, startDate, endDate, offer, countries, last, days, dst
     countDownContainer.appendChild(clockContainer);
 
     //APPEND OFFER TEXT CONTAINER TO OFFER CONTAINER
-    console.log(offerTextContainerReady);
     offerContainer.appendChild(offerTextContainerReady);
 
     //APPEND COUNTDOWN TO PARENT ELEMENT 
