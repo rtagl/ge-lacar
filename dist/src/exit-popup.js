@@ -20,17 +20,18 @@ exitPopUp({
         hours:'HOURS',
         minutes: 'MINUTES',
         seconds: 'SECONDS',
-        hoursLeft: 'hours left',
+        hoursLeft: 'HOURS LEFT',
+        daysLeft: 'DAYS LEFT',
         textColor: '#ce0f69'
     },
     countDown:{
-        start:'Oct 10 2019 10:00:00',
-        end: 'Dec 12 2019 16:00:00',
+        start:'Dec 23 2019 10:00:00',
+        end: 'Dec 26 2019 16:00:00',
     },
     countries:[
         'lac'
     ]
-}, false, true);
+}, false, false);
 
 function exitPopUp(props, dst, showDays){
 
@@ -38,7 +39,9 @@ function exitPopUp(props, dst, showDays){
 
     let parentElement = document.querySelectorAll('.reveal-overlay')[document.querySelectorAll('.reveal-overlay').length-1];
 
-    document.getElementById('module-modal').remove();
+    if(document.getElementById('module-modal')){
+        document.getElementById('module-modal').remove();
+    }
 
     let popup = document.createElement('div');
     popup.style.background = props.bannerDetails.backgroundColor;
@@ -231,14 +234,19 @@ function exitPopUp(props, dst, showDays){
     cancelBtn.style.color = props.cancelBtn.textColor;
     cancelBtn.style.border = 'solid 1px #000000';
 
-    let daysLeftText = document.createElement('h2');
-    //daysLeftText.style.background = 'red';
-    daysLeftText.style.width = '100%';
-    daysLeftText.style.height = 'auto';
-    daysLeftText.style.fontFamily = 'proxima, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif';
-    daysLeftText.style.fontSize = '38px';
-    daysLeftText.style.color = props.bannerDetails.textColor;
-    daysLeftText.style.textAlign = 'center';
+    let timeLeft = document.createElement('h2');
+    //timeLeft.style.background = 'red';
+    timeLeft.style.width = '100%';
+    timeLeft.style.height = 'auto';
+    timeLeft.style.fontFamily = 'proxima, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif';
+    timeLeft.style.fontSize = '38px';
+    timeLeft.style.padding = '0px';
+    timeLeft.style.margin = '0px';
+    timeLeft.style.color = props.bannerDetails.textColor;
+    timeLeft.style.textAlign = 'center';
+    timeLeft.style.display = 'flex';
+    timeLeft.style.justifyContent = 'center';
+    timeLeft.style.alignItems = 'center';
 
     popup.appendChild(container);
 
@@ -336,9 +344,14 @@ function exitPopUp(props, dst, showDays){
         clockTextIndicators.innerHTML = '';
     }
 
-    function addDaysOrHoursLeft(text){
-        daysLeftText.innerText = text + ' ' + props.clock.hoursOrDaysLeft;
-        popupClockContainer.appendChild(daysLeftText);
+    function hoursLeft(hours){
+        timeLeft.innerText = hours + ' ' + props.clock.hoursLeft;
+        popupClockContainer.appendChild(timeLeft);
+    }
+    
+    function daysLeft(days){
+        timeLeft.innerText = days + ' ' + props.clock.daysLeft;
+        popupClockContainer.appendChild(timeLeft);
     }
   
     //SET COUNTDOWN DIGITS TO MATCH CALCULATED TIME
@@ -407,10 +420,10 @@ function exitPopUp(props, dst, showDays){
         if(timerHours >= 72){
           if(showDays === false){
             clearClock();
-            addDaysOrHoursLeft(timerHours);
+            hoursLeft(timerHours);
           }else if(showDays === true){
           	clearClock();
-            addDaysOrHoursLeft(timerDays);
+            daysLeft(timerDays);
           }
         }else{
             clockHours.innerText = timerHours;
