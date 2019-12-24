@@ -249,7 +249,6 @@ function countDown(parent, startDate, endDate, offer, countries, last, days, dst
         if(offer.standardOffer){
             return standardOffer();
         }else if(offer.doubleOffer){
-            console.log('hellow');
             return doubleOffer();
         }else if(offer.tripleOffer){
             return tripleOffer();
@@ -522,8 +521,6 @@ function countDown(parent, startDate, endDate, offer, countries, last, days, dst
 
         offerTextContainerReady.style.transform = 'skewX(28deg)';
         clockContainer.style.width = '35%';
-        //clockFace.style.justifyContent = 'flex-start';
-
     }
 
     //SET FONT SIZE RESPONSIVENESS
@@ -729,6 +726,19 @@ function countDown(parent, startDate, endDate, offer, countries, last, days, dst
             }
 
             document.querySelector('.ge_cd-clock-text').innerText = offer.timerText.toUpperCase();
+
+            //code for hide count-down numbers
+            clockContainer.style.display = 'none';
+            offerContainer.style.background = '#15264C';
+            offerContainer.style.width = '100%';
+            offerContainer.style.height = '68px';
+            //offerContainer.style.transform = 'skewX(0deg)';
+            offerContainer.style.margin = '0px';
+            offerContainer.style.display = 'flex';
+            offerContainer.style.justifyContent = 'center';
+            offerContainer.style.alignItems = 'center';
+            //offerTextContainer.style.transform = 'skewX(0deg)';
+            //countDownExpired = true;
 
             console.log('The start date for this coutdown is greater than the stop date');
         }

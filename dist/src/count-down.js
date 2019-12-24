@@ -293,7 +293,6 @@ function countDown(parent, startDate, endDate, offer, countries, last, days, dst
         if(offer.standardOffer){
             return standardOffer();
         }else if(offer.doubleOffer){
-            console.log('hellow');
             return doubleOffer();
         }else if(offer.tripleOffer){
             return tripleOffer();
