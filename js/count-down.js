@@ -111,6 +111,7 @@ function countDown(parent, startDate, endDate, offer, countries, last, days, dst
         //offerSubTextContainer.style.background = 'yellow';
         offerSubTextContainer.style.width = 'auto';
         offerSubTextContainer.style.height = 'auto';
+        offerSubTextContainer.style.margin = '0px 0px 0px 8px';
 
         var offerSubTextContainerClone = offerSubTextContainer.cloneNode();
 
@@ -444,7 +445,7 @@ function countDown(parent, startDate, endDate, offer, countries, last, days, dst
         clockDigits.appendChild(seconds);
     }
 
-    function  counterDays(){
+    function counterDays(){
         //APPEND DAYS LEFT CONTAINER TO CLOCK CONTAINER
         clockContainer.appendChild(daysLeftContainer);
 
@@ -474,7 +475,6 @@ function countDown(parent, startDate, endDate, offer, countries, last, days, dst
         var stackSetting = offerOverCountdown;
       	
       if (stackSetting === true) {
-        console.log('offer over countdown');
         countDownContainer.style.height = '136px';
         countDownContainer.style.flexDirection = 'column';
         countDownContainer.style.alignItems = 'center';
@@ -489,7 +489,6 @@ function countDown(parent, startDate, endDate, offer, countries, last, days, dst
         clockFace.style.justifyContent = 'center';
       
       } else {
-      	console.log('offer under countdown');
         countDownContainer.style.height = '136px';
         countDownContainer.style.flexDirection = 'column-reverse';
         countDownContainer.style.alignItems = 'center';
@@ -727,19 +726,6 @@ function countDown(parent, startDate, endDate, offer, countries, last, days, dst
 
             document.querySelector('.ge_cd-clock-text').innerText = offer.timerText.toUpperCase();
 
-            //code for hide count-down numbers
-            clockContainer.style.display = 'none';
-            offerContainer.style.background = '#15264C';
-            offerContainer.style.width = '100%';
-            offerContainer.style.height = '68px';
-            //offerContainer.style.transform = 'skewX(0deg)';
-            offerContainer.style.margin = '0px';
-            offerContainer.style.display = 'flex';
-            offerContainer.style.justifyContent = 'center';
-            offerContainer.style.alignItems = 'center';
-            //offerTextContainer.style.transform = 'skewX(0deg)';
-            //countDownExpired = true;
-
             console.log('The start date for this coutdown is greater than the stop date');
         }
       
@@ -769,21 +755,21 @@ window.addEventListener('load', function(){
         'Sep 18 2019 10:00:00', // month-day-year-hours-minutes-seconds
         'Nov 13 2019 12:46:00', // month-day-year-hours-minutes-seconds
         {
-            standardOffer: {
-                offer:     'INOLTRE: FINO A 35% DI SCONTO',
-                text:      '+ PREZZI SPECIALI',
-                subText:   'FAMIGLIA'
-            },
-            // doubleOffer: {
-            //     offerOne:{
-            //         text:      '+ PREZZI SPECIALI',
-            //         subText:   'FAMIGLIA'
-            //     },
-            //     offerTwo:{
-            //         text:      '+ PREZZI SPECIALI',
-            //         subText:   'FAMIGLIA'
-            //     }
+            // standardOffer: {
+            //     offer:     'INOLTRE: FINO A 35% DI SCONTO',
+            //     text:      '+ PREZZI SPECIALI',
+            //     subText:   'FAMIGLIA'
             // },
+            doubleOffer: {
+                offerOne:{
+                    text:      'plus: PREZZI SPECIALI',
+                    subText:   'FAMIGLIA'
+                },
+                offerTwo:{
+                    text:      '+ PREZZI SPECIALI',
+                    subText:   'FAMIGLIA'
+                }
+            },
             // tripleOffer: {
             //     offerOne:{
             //         text:      '+ PREZZI SPECIALI',

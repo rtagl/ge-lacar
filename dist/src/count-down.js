@@ -1,8 +1,8 @@
 // Countdown Banner Component
 countDown(
     '.parent',
-    'Sep 18 2019 10:00:00', // month-day-year-hours-minutes-seconds
-    'Nov 13 2019 12:46:00', // month-day-year-hours-minutes-seconds
+    'Dec 24 2019 11:59:00', // month-day-year-hours-minutes-seconds
+    'Dec 27 2019 11:59:00', // month-day-year-hours-minutes-seconds
     {
         standardOffer: {
             offer:     'INOLTRE: FINO A 35% DI SCONTO',
