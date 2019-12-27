@@ -82,7 +82,7 @@ function countDownBanner(props){
             textFieldContainer.style.padding = '0px';
 
             if(textField.text){
-               // text.style.background = 'green';
+                //text.style.background = 'green';
                 text.style.width = '100%';
                 text.style.height = 'auto';
                 text.style.padding = '0px';
@@ -125,35 +125,42 @@ function countDownBanner(props){
             bannerContent.appendChild(textField);
         });
 
-        function setFontSizes(load){
-            //RECODE 
-            if(window.innerWidth >= 300 && window.innerWidth <= 1400){
+        function loopAndSetFontSizes(props){
+            if(window.innerWidth >= props.widths.bottom && window.innerWidth <= props.widths.top){
                 textNodes.forEach(function(node, i){
-                    node.style.fontSize = Math.round(window.innerWidth / 100) + (parseInt(textFontSize[i]) / 2) + 'px';
+                    node.style.fontSize = (parseInt(textFontSize[i]) / props.fontRatios.textRatio) + (window.innerWidth / props.windowRatios.textRatio) + 'px';
                 });
     
                 subTextNodes.forEach(function(node, i){
-                    node.style.fontSize = Math.round(window.innerWidth / 250) + (parseInt(subTextFontSize[i]) / 2) + 'px';
-                });
-            }else if(window.innerWidth >= 1401){
-                textNodes.forEach(function(node, i){
-                    node.style.fontSize = textFontSize[i];
-                });
-    
-                subTextNodes.forEach(function(node, i){
-                    node.style.fontSize = subTextFontSize[i];
+                    node.style.fontSize = (parseInt(subTextFontSize[i]) / props.fontRatios.subRatio) + (window.innerWidth / props.windowRatios.subRatio) + 'px';
                 });
             }
+        }
 
-            if(load === true && window.innerWidth <= 414){
-                textNodes.forEach(function(node, i){
-                    node.style.fontSize = Math.round(414 / 100) + (parseInt(textFontSize[i]) / 2) + 'px';
-                });
-    
-                subTextNodes.forEach(function(node, i){
-                    node.style.fontSize = Math.round(300 / 250) + (parseInt(subTextFontSize[i]) / 2) + 'px';
-                });
-            }
+        function setFontSizes(){
+
+            loopAndSetFontSizes(
+                {
+                    widths:{ bottom: 850, top: 1920}, 
+                    fontRatios:{ textRatio: 2, subRatio: 2}, 
+                    windowRatios:{ textRatio: 160, subRatio: 200}
+                }
+            );
+            loopAndSetFontSizes(
+                {
+                    widths:{ bottom: 414, top: 849}, 
+                    fontRatios:{ textRatio: 2.75, subRatio: 2.75}, 
+                    windowRatios:{ textRatio: 200, subRatio: 240}
+                }
+            );
+            loopAndSetFontSizes(
+                {
+                    widths:{ bottom: 280, top: 413}, 
+                    fontRatios:{ textRatio: 3.25, subRatio: 1.75}, 
+                    windowRatios:{ textRatio: 200, subRatio: 240}
+                }
+            );
+
         }
 
         function setBannerLayout(){
@@ -171,11 +178,12 @@ function countDownBanner(props){
         }
 
         window.addEventListener('resize', function(){
+            document.querySelector('.parent-el').innerText = window.innerWidth;
             setFontSizes();
             setBannerLayout();
         });
         
-        setFontSizes(true);
+        setFontSizes();
         setBannerLayout();
         
         banner.appendChild(bannerContent);
@@ -218,21 +226,7 @@ document.addEventListener('DOMContentLoaded', function(){
             {
                 text:{
                     text: 'hello world',
-                    textSize: '48px',
-                    textAlign: 'center',
-                }
-            },
-            {
-                text:{
-                    text: '+',
-                    textSize: '48px',
-                    textAlign: 'center',
-                }
-            },
-            {
-                text:{
-                    text: 'hello world',
-                    textSize: '28px',
+                    textSize: '32px',
                     textAlign: 'center',
                 },
                 subtext: {
@@ -251,15 +245,35 @@ document.addEventListener('DOMContentLoaded', function(){
             {
                 text:{
                     text: 'hello world',
-                    textSize: '28px',
+                    textSize: '32px',
                     textAlign: 'center',
                 },
                 subtext: {
                     text: 'I\'m subtext',
-                    textSize: '12px',
+                    textSize: '14px',
                     textAlign: 'center',
                 }
             },
+            {
+                text:{
+                    text: '+',
+                    textSize: '48px',
+                    textAlign: 'center',
+                }
+            },
+            {
+                text:{
+                    text: 'hello world',
+                    textSize: '32px',
+                    textAlign: 'center',
+                },
+                subtext: {
+                    text: 'I\'m subtext',
+                    textSize: '14px',
+                    textAlign: 'center',
+                }
+            },
+            
         ],
     });
 
