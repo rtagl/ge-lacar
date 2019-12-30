@@ -1,5 +1,9 @@
 function countDownBanner(props){
 
+    var state = {
+        timerExpired: false,
+    }
+
     function parent(parentElement){
         return document.querySelector(parentElement);
     }
@@ -526,7 +530,7 @@ function countDownBanner(props){
         var countryInUrl = '';
         var checkTimeInterval = setInterval(function(){
             setTimeDigits(countryInUrl);
-        }, 1000);
+        }, 10);
         
         //THIS CLEARS THE TIMER ONCE THE COUNTDOWN REACHES 0
         function stopTimer(){
@@ -575,6 +579,9 @@ function countDownBanner(props){
             var timerMinutes = Math.floor(totalSeconds % 3600 / 60);
             var timerHours = Math.floor(totalSeconds/3600);
             
+            var daysLeft = daysLeftComponent(Math.floor(timerHours / 24));
+            var clock = clockComponent();
+
             //ADD AN EXTRA ZERO TO ANY DIGIT BELOW 10 
             if(timerHours < 10){
                 timerHours = '0' + timerHours;
@@ -588,33 +595,26 @@ function countDownBanner(props){
 
             //CHANGE CLOCK FACE TO SHOW HOURS OR DAYS
             if(timerHours >= data.clock.showDays.number * 24){
-                var daysLeft = daysLeftComponent(Math.floor(timerHours / 24));
                 clockWrapper.innerHTML = '';
                 clockWrapper.appendChild(daysLeft.daysLeftContainer);
+            }else if(timerHours <= 0 && timerMinutes <= 0  && timerSeconds <= 0){
+                clockWrapper.innerHTML = '';
+                clockWrapper.style.display = 'none';
+                stopTimer();
+                state.timerExpired = true;
+            }else if(beginDate > stopDate || currentDate > stopDate){
+                clockWrapper.innerHTML = '';
+                clockWrapper.style.display = 'none';
+                stopTimer();
+                state.timerExpired = true;
+                console.log('The start date for this coutdown is greater than the stop date');
             }else{
-                var clock = clockComponent();
                 clockWrapper.innerHTML = '';
                 clockWrapper.appendChild(clock.clockFace);
                 
                 clock.hours.innerText = timerHours;
                 clock.minutes.innerText = timerMinutes;
                 clock.seconds.innerText = timerSeconds;
-            }
-
-            if(timerHours <= 0 && timerMinutes <= 0  && timerSeconds <= 0){
-                stopTimer();
-            };
-
-            if(beginDate > stopDate || currentDate > stopDate){
-                stopTimer();
-                clock.hours.innerText = '00';
-                clock.minutes.innerText = '00';
-                clock.seconds.innerText = '00';
-                console.log('The start date for this coutdown is greater than the stop date');
-            }
-            
-            if (beginDate > currentDate) {
-                clockWrapper.style.display = 'none';
             }
         
         }
@@ -637,7 +637,7 @@ function countDownBanner(props){
         var parentElement = parent(props.parent);
 
         var containerComponent = function(){
-            if(props.timer){
+            if(props.timer && state.timerExpired === false){
                 return container(true, props.timer.reverseLayout);
             }else{
                 return container(false, false);
@@ -645,7 +645,7 @@ function countDownBanner(props){
         };
 
         var bannerComponent = function(){
-            if(props.timer){
+            if(props.timer && state.timerExpired === false){
                 return bannerWithCountDown(props.textFields);
             }else{
                 return  bannerNoCountDown(props.textFields);
@@ -665,6 +665,17 @@ function countDownBanner(props){
             comp.appendChild(bannerComponent());
             comp.appendChild(clockComponent());
             parentElement.appendChild(comp);
+
+            var timer = setInterval(function(){
+                if(state.timerExpired === true){
+                    parentElement.innerHTML = '';
+                    var comp = containerComponent();
+                    comp.appendChild(bannerComponent());
+                    comp.appendChild(clockComponent());
+                    parentElement.appendChild(comp);
+                    clearInterval(timer);
+                }
+            }, 10);
         }
 
         countDownBanner();
@@ -681,14 +692,14 @@ document.addEventListener('DOMContentLoaded', function(){
         timer:{
             text: 'OFERTA TERMINA IN:',
             start: 'Dec 30 2019 11:30:00',
-            end: 'Jan 01 2020 14:34:00',
+            end: 'Dec 30 2019 16:01:00',
             dst: false,
             showDays: {
                 last: 'LAST',
                 number: 2,
                 days: 'DAYS'
             },
-            reverseLayout: false,
+            reverseLayout: true,
         },
         countries: ['lac'],
         textFields:[
