@@ -692,7 +692,7 @@ document.addEventListener('DOMContentLoaded', function(){
         timer:{
             text: 'OFERTA TERMINA IN:',
             start: 'Dec 30 2019 11:30:00',
-            end: 'Dec 30 2019 16:01:00',
+            end: 'Jan 01 2020 16:11:00',
             dst: false,
             showDays: {
                 last: 'LAST',
