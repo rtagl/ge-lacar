@@ -752,8 +752,8 @@ window.addEventListener('load', function(){
 
     countDown(
         '.parent',
-        'Sep 18 2019 10:00:00', // month-day-year-hours-minutes-seconds
-        'Nov 13 2019 12:46:00', // month-day-year-hours-minutes-seconds
+        'Dec 30 2019 11:25:00', // month-day-year-hours-minutes-seconds
+        'Dec 30 2019 11:30:00', // month-day-year-hours-minutes-seconds
         {
             // standardOffer: {
             //     offer:     'INOLTRE: FINO A 35% DI SCONTO',
