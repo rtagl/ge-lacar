@@ -1,24 +1,23 @@
-// Countdown Banner Component
 countDown(
     '.parent',
-    'Dec 24 2019 11:59:00', // month-day-year-hours-minutes-seconds
-    'Dec 27 2019 11:59:00', // month-day-year-hours-minutes-seconds
+    'Dec 30 2019 11:25:00', // month-day-year-hours-minutes-seconds
+    'Dec 30 2019 11:30:00', // month-day-year-hours-minutes-seconds
     {
-        standardOffer: {
-            offer:     'INOLTRE: FINO A 35% DI SCONTO',
-            text:      '+ PREZZI SPECIALI',
-            subText:   'FAMIGLIA'
-        },
-        // doubleOffer: {
-        //     offerOne:{
-        //         text:      '+ PREZZI SPECIALI',
-        //         subText:   'FAMIGLIA'
-        //     },
-        //     offerTwo:{
-        //         text:      '+ PREZZI SPECIALI',
-        //         subText:   'FAMIGLIA'
-        //     }
+        // standardOffer: {
+        //     offer:     'INOLTRE: FINO A 35% DI SCONTO',
+        //     text:      '+ PREZZI SPECIALI',
+        //     subText:   'FAMIGLIA'
         // },
+        doubleOffer: {
+            offerOne:{
+                text:      'plus: PREZZI SPECIALI',
+                subText:   'FAMIGLIA'
+            },
+            offerTwo:{
+                text:      '+ PREZZI SPECIALI',
+                subText:   'FAMIGLIA'
+            }
+        },
         // tripleOffer: {
         //     offerOne:{
         //         text:      '+ PREZZI SPECIALI',
@@ -155,6 +154,7 @@ function countDown(parent, startDate, endDate, offer, countries, last, days, dst
         //offerSubTextContainer.style.background = 'yellow';
         offerSubTextContainer.style.width = 'auto';
         offerSubTextContainer.style.height = 'auto';
+        offerSubTextContainer.style.margin = '0px 0px 0px 8px';
 
         var offerSubTextContainerClone = offerSubTextContainer.cloneNode();
 
@@ -488,7 +488,7 @@ function countDown(parent, startDate, endDate, offer, countries, last, days, dst
         clockDigits.appendChild(seconds);
     }
 
-    function  counterDays(){
+    function counterDays(){
         //APPEND DAYS LEFT CONTAINER TO CLOCK CONTAINER
         clockContainer.appendChild(daysLeftContainer);
 
@@ -518,7 +518,6 @@ function countDown(parent, startDate, endDate, offer, countries, last, days, dst
         var stackSetting = offerOverCountdown;
       	
       if (stackSetting === true) {
-        console.log('offer over countdown');
         countDownContainer.style.height = '136px';
         countDownContainer.style.flexDirection = 'column';
         countDownContainer.style.alignItems = 'center';
@@ -533,7 +532,6 @@ function countDown(parent, startDate, endDate, offer, countries, last, days, dst
         clockFace.style.justifyContent = 'center';
       
       } else {
-      	console.log('offer under countdown');
         countDownContainer.style.height = '136px';
         countDownContainer.style.flexDirection = 'column-reverse';
         countDownContainer.style.alignItems = 'center';
@@ -565,8 +563,6 @@ function countDown(parent, startDate, endDate, offer, countries, last, days, dst
 
         offerTextContainerReady.style.transform = 'skewX(28deg)';
         clockContainer.style.width = '35%';
-        //clockFace.style.justifyContent = 'flex-start';
-
     }
 
     //SET FONT SIZE RESPONSIVENESS
