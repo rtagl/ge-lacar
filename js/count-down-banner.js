@@ -4,7 +4,7 @@ function countDownBanner(props){
         return document.querySelector(parentElement);
     }
 
-    function container(countDownActive){
+    function container(countDownActive, reverse){
         //creates and controls the banner and clock container
         var container = document.createElement('div');
         container.style.background = '#ffffff';
@@ -24,7 +24,7 @@ function countDownBanner(props){
     
                 if(window.innerWidth <= 768){
                     container.style.height = '136px';
-                    container.style.flexDirection = 'column';
+                    container.style.flexDirection = reverse ? 'column-reverse' : 'column';
                     container.style.justifyContent = 'center';
                     container.style.alignItems = 'center';
                 }else if(window.innerWidth >= 769){
@@ -33,6 +33,7 @@ function countDownBanner(props){
                     container.style.justifyContent = 'flex-start';
                     container.style.alignItems = 'flex-start';
                 }
+
             }
         }
 
@@ -334,20 +335,19 @@ function countDownBanner(props){
 
     function clock(data){
         
-        //creates and controls the clock
+        //CLOCK WRAPPER ELEMENT
         var clockWrapper = document.createElement('div');
-        clockWrapper.style.background = 'blue';
+        //clockWrapper.style.background = 'blue';
         clockWrapper.style.width = '35%';
         clockWrapper.style.height = '68px';
         clockWrapper.style.display = 'flex';
         clockWrapper.style.justifyContent = 'center';
         clockWrapper.style.alignItems = 'center';
-        clockWrapper.classList.add('countdown-container');
 
         function clockComponent(){
             //CREATE COUNTDOWN CLOCK CONTAINER
             var clockFace = document.createElement('div');
-            clockFace.style.background = 'yellow';
+            //clockFace.style.background = 'yellow';
             clockFace.style.width = '100%';
             clockFace.style.height = '65%';
             clockFace.style.display = 'flex';
@@ -459,63 +459,53 @@ function countDownBanner(props){
                 colon: colon
             }
         }
-        var clock = clockComponent();
 
         function daysLeftComponent(numberOfDays){
             //CREATE DAYS LEFT CONTAINER
             var daysLeftContainer = document.createElement('div');
-            daysLeftContainer.style.background = 'red';
+            //daysLeftContainer.style.background = 'red';
             daysLeftContainer.style.width = 'auto';
-            daysLeftContainer.style.height = '40px';
+            daysLeftContainer.style.height = 'auto';
             daysLeftContainer.style.display = 'flex';
             daysLeftContainer.style.justifyContent = 'center';
             daysLeftContainer.style.alignItems = 'center';
 
-            //CREATE DAYS LEFT NUMBER CONTAINER
-            var daysLeftNumberContainer = document.createElement('div');
-            daysLeftNumberContainer.style.background = 'blue';
-            daysLeftNumberContainer.style.width = 'auto';
-            daysLeftNumberContainer.style.height = 'auto';
-            daysLeftNumberContainer.style.padding = '0px 10px';
+            //CREATE LAST TEXT
+            var last = document.createElement('p');
+            last.innerText = data.clock.showDays.last ? data.clock.showDays.last.toUpperCase() : '' ;
+            last.style.fontFamily = 'kapra, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif';
+            last.style.fontSize = '40px';
+            last.style.color = '#15264C';
+            last.style.letterSpacing = '2px';
 
-            //CREATE DAYS LEFT TEXT CONTAINER
-            var daysLeftDaysContainer = document.createElement('div');
-            daysLeftDaysContainer.style.background = 'green';
-            daysLeftDaysContainer.style.width = 'auto';
-            daysLeftDaysContainer.style.height = 'auto';
+            //CREATE DAYS TEXT
+            var days = document.createElement('p');
+            days.innerText = data.clock.showDays.days ? data.clock.showDays.days.toUpperCase() : '' ;
+            days.style.fontFamily = 'kapra, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif';
+            days.style.fontSize = '40px';
+            days.style.color = '#15264C';
+            days.style.letterSpacing = '2px';
 
-            //CREATE DAYS LEFT TEXT
-            var daysLeftText = document.createElement('p');
-            daysLeftText.innerText = data.clock.showDays.last.toUpperCase();
-            daysLeftText.style.fontFamily = 'kapra, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif';
-            daysLeftText.style.fontSize = '40px';
-            daysLeftText.style.color = '#000';
-            daysLeftText.style.letterSpacing = '2px';
+            //CREATE DAYS TEXT
+            var daysLeftNumber = document.createElement('p');
+            daysLeftNumber.innerText = numberOfDays;
+            daysLeftNumber.style.fontFamily = 'kapra, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif';
+            daysLeftNumber.style.fontSize = '40px';
+            daysLeftNumber.style.color = '#15264C';
+            daysLeftNumber.style.letterSpacing = '2px';
+            daysLeftNumber.style.margin = '0px 10px';
 
-            //CREATE DAYS LEFT NUMER TEXT
-            var daysLeftNumberText = document.createElement('p');
-            daysLeftNumberText.style.background = 'orange';
-            daysLeftNumberText.innerText = numberOfDays;
-            daysLeftNumberText.style.fontFamily = 'kapra, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif';
-            daysLeftNumberText.style.fontSize = '40px';
-            daysLeftNumberText.style.color = '#000';
-            daysLeftNumberText.style.letterSpacing = '2px';
-
-            daysLeftContainer.appendChild(daysLeftNumberContainer);
-
-            //APPEND LAST TEXT TO DAYS LEFT CONTAINER
-            daysLeftContainer.appendChild(daysLeftText);
+            daysLeftContainer.appendChild(last);
+            daysLeftContainer.appendChild(daysLeftNumber);
+            daysLeftContainer.appendChild(days);
 
             return {
                 daysLeftContainer: daysLeftContainer,
-                daysLeftNumberContainer: daysLeftNumberContainer,
-                daysLeftDaysContainer: daysLeftDaysContainer,
-                daysLeftText: daysLeftText,
-                daysLeftNumberText: daysLeftNumberText
+                last: last,
+                daysLeftNumber: daysLeftNumber,
+                days: days
             }
         }
-
-        clockWrapper.appendChild(clock.clockFace);
 
         function setClockLayout(){
             if(window.innerWidth <= 768){
@@ -524,16 +514,13 @@ function countDownBanner(props){
             if(window.innerWidth >= 768){
                 clockWrapper.style.width = '35%';
             }
-            window.addEventListener('resize', function(){
-                setClockLayout();
-            });
         }
-        
+
         setClockLayout();
-    
-        function counterClear(){
-            clockWrapper.innerHTML = '';
-        }
+
+        window.addEventListener('resize', function(){
+            setClockLayout();
+        });
 
         //CREATE INTERVAL THAT UPDATES COUNTDOWN CLOCK
         var countryInUrl = '';
@@ -599,26 +586,19 @@ function countDownBanner(props){
                 timerSeconds = '0' + timerSeconds;
             }
 
-            clock.hours.innerText = timerHours;
-            clock.minutes.innerText = timerMinutes;
-            clock.seconds.innerText = timerSeconds;
-
             //CHANGE CLOCK FACE TO SHOW HOURS OR DAYS
-            if(timerHours >= 72){
+            if(timerHours >= data.clock.showDays.number * 24){
                 var daysLeft = daysLeftComponent(Math.floor(timerHours / 24));
                 clockWrapper.innerHTML = '';
                 clockWrapper.appendChild(daysLeft.daysLeftContainer);
             }else{
-                document.querySelector('.ge_cd-hours').innerText = timerHours;
-                document.querySelector('.ge_cd-minutes').innerText = timerMinutes;
-                document.querySelector('.ge_cd-seconds').innerText = timerSeconds;
-
-                var colons = document.querySelectorAll('.ge_cd-colon');
-                for(var i = 0; i < colons.length; i++){
-                    colons[i].innerText = ':'
-                }
-
-                document.querySelector('.ge_cd-clock-text').innerText = data.clock.text.toUpperCase();
+                var clock = clockComponent();
+                clockWrapper.innerHTML = '';
+                clockWrapper.appendChild(clock.clockFace);
+                
+                clock.hours.innerText = timerHours;
+                clock.minutes.innerText = timerMinutes;
+                clock.seconds.innerText = timerSeconds;
             }
 
             if(timerHours <= 0 && timerMinutes <= 0  && timerSeconds <= 0){
@@ -655,11 +635,17 @@ function countDownBanner(props){
 
     function initializeCountDown(props){
         var parentElement = parent(props.parent);
-        var containerComponent = container(false);
+
+        var containerComponent = function(){
+            if(props.timer){
+                return container(true, props.timer.reverseLayout);
+            }else{
+                return container(false, false);
+            }
+        };
 
         var bannerComponent = function(){
-
-            if(props.timer.start && props.timer.end){
+            if(props.timer){
                 return bannerWithCountDown(props.textFields);
             }else{
                 return  bannerNoCountDown(props.textFields);
@@ -667,17 +653,21 @@ function countDownBanner(props){
         };
 
         var clockComponent = function(){
-            if(props.timer.start && props.timer.end){
+            if(props.timer){
                 return clock({clock: props.timer, countries: props.countries});
             }else{
                 return document.createElement('div');
             }
         };
 
-        containerComponent.appendChild(bannerComponent());
-        containerComponent.appendChild(clockComponent());
+        var countDownBanner = function(){
+            var comp = containerComponent();
+            comp.appendChild(bannerComponent());
+            comp.appendChild(clockComponent());
+            parentElement.appendChild(comp);
+        }
 
-        parentElement.appendChild(containerComponent);
+        countDownBanner();
     }
 
     initializeCountDown(props);
@@ -691,13 +681,14 @@ document.addEventListener('DOMContentLoaded', function(){
         timer:{
             text: 'OFERTA TERMINA IN:',
             start: 'Dec 30 2019 11:30:00',
-            end: 'Jan 04 2020 11:34:00',
+            end: 'Jan 01 2020 14:34:00',
             dst: false,
             showDays: {
-                set: false,
                 last: 'LAST',
+                number: 2,
                 days: 'DAYS'
-            }
+            },
+            reverseLayout: false,
         },
         countries: ['lac'],
         textFields:[
