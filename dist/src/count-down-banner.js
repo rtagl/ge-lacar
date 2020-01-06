@@ -544,9 +544,16 @@ function countDownBanner(props){
             switch(country){
                 case 'lac':
                     if (data.clock.dst === true) {
-                    timeZone = 'GMT-0300';
+                        timeZone = 'GMT-0300';
                     } else {
-                    timeZone = 'GMT-0400';
+                        timeZone = 'GMT-0400';
+                    }
+                break;
+                case 'gbr':
+                    if (data.clock.dst === true) {
+                        timeZone = 'GMT-0100';
+                    } else {
+                        timeZone = 'GMT-0000';
                     }
                 break;
                 case 'deu':
@@ -555,9 +562,9 @@ function countDownBanner(props){
                 case 'nor':
                 case 'swe':
                     if (data.clock.dst === true) {
-                    timeZone = 'GMT+0200';
+                        timeZone = 'GMT+0200';
                     } else {
-                    timeZone = 'GMT+0100';
+                        timeZone = 'GMT+0100';
                     }
                 break;
                 case 'mex':

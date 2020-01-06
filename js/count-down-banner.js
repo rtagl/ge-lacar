@@ -544,9 +544,16 @@ function countDownBanner(props){
             switch(country){
                 case 'lac':
                     if (data.clock.dst === true) {
-                    timeZone = 'GMT-0300';
+                        timeZone = 'GMT-0300';
                     } else {
-                    timeZone = 'GMT-0400';
+                        timeZone = 'GMT-0400';
+                    }
+                break;
+                case 'gbr':
+                    if (data.clock.dst === true) {
+                        timeZone = 'GMT-0100';
+                    } else {
+                        timeZone = 'GMT-0000';
                     }
                 break;
                 case 'deu':
@@ -555,9 +562,9 @@ function countDownBanner(props){
                 case 'nor':
                 case 'swe':
                     if (data.clock.dst === true) {
-                    timeZone = 'GMT+0200';
+                        timeZone = 'GMT+0200';
                     } else {
-                    timeZone = 'GMT+0100';
+                        timeZone = 'GMT+0100';
                     }
                 break;
                 case 'mex':
@@ -692,26 +699,21 @@ document.addEventListener('DOMContentLoaded', function(){
         timer:{
             text: 'OFERTA TERMINA IN:',
             start: 'Dec 30 2019 11:30:00',
-            end: 'Jan 01 2020 16:11:00',
+            end: 'Jan 6 2020 11:41:00',
             dst: false,
             showDays: {
                 last: 'LAST',
                 number: 2,
                 days: 'DAYS'
             },
-            reverseLayout: true,
+            reverseLayout: false,
         },
         countries: ['lac'],
         textFields:[
             {
                 text:{
                     text: 'hello world',
-                    textSize: '32px',
-                    textAlign: 'center',
-                },
-                subtext: {
-                    text: 'I\'m subtext',
-                    textSize: '12px',
+                    textSize: '58px',
                     textAlign: 'center',
                 }
             },
