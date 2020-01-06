@@ -15,6 +15,7 @@ function countDownBanner(props){
         container.style.width = '100%';
         container.style.height = '68px';
         container.style.overflow = 'hidden';
+        container.style.margin = '0px auto';
         container.style.display = 'flex';
         container.style.justifyContent = 'flex-start';
 
@@ -324,7 +325,6 @@ function countDownBanner(props){
         }
 
         window.addEventListener('resize', function(){
-            document.querySelector('.parent-el').innerText = window.innerWidth;
             setFontSizes();
             setBannerLayout();
         });
