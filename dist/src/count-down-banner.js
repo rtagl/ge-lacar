@@ -360,18 +360,18 @@ function countDownBanner(props){
             //CREATE CLOCK TEXT CONTAINER
             var clockTextContainer = document.createElement('div');
             //clockTextContainer.style.background = 'blue';
-            clockTextContainer.style.width = '100px';
+            clockTextContainer.style.width = '60px';
             clockTextContainer.style.height = '100%';
             clockTextContainer.style.display = 'flex';
             clockTextContainer.style.justifyContent = 'flex-end';
             clockTextContainer.style.alignItems = 'center';
 
-            //CREA CLOCK TEXT 
+            //CREATE CLOCK TEXT 
             var clockText = document.createElement('div');
             clockText.classList.add('ge_cd-clock-text');
             clockText.innerText = data.clock.text.toUpperCase();
             //clockText.style.background = 'magenta';
-            clockText.style.width = 'auto';
+            clockText.style.width = '60px';
             clockText.style.height = 'auto';
             clockText.style.fontFamily = 'kapra, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif';
             clockText.style.fontSize = '14px';
