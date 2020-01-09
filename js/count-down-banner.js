@@ -114,7 +114,7 @@ function countDownBanner(props){
                 subtext.style.width = '100%';
                 subtext.style.height = 'auto';
                 subtext.style.padding = '0px';
-                subtext.style.margin = '-6px 0px 0px 0px';
+                subtext.style.margin = '-3px 0px 0px 0px';
                 subtext.innerText = textField.subtext.text.toUpperCase();
                 subtext.style.fontSize = textField.subtext.textSize;
                 subtext.style.textAlign = textField.subtext.textAlign;
@@ -251,7 +251,7 @@ function countDownBanner(props){
                 subtext.style.width = '100%';
                 subtext.style.height = 'auto';
                 subtext.style.padding = '0px';
-                subtext.style.margin = '-6px 0px 0px 0px';
+                subtext.style.margin = '-3px 0px 0px 0px';
                 subtext.innerText = textField.subtext.text.toUpperCase();
                 subtext.style.fontSize = textField.subtext.textSize;
                 subtext.style.textAlign = textField.subtext.textAlign;
