@@ -88,7 +88,7 @@ function countDownBanner(props){
             textFieldContainer.style.flexDirection = 'column';
             textFieldContainer.style.justifyContent = 'center';
             textFieldContainer.style.alignItems = 'center';
-            textFieldContainer.style.margin = '0px 2px';
+            textFieldContainer.style.margin = '0px 4px';
             textFieldContainer.style.padding = '0px';
 
             if(textField.text){
@@ -224,7 +224,7 @@ function countDownBanner(props){
             textFieldContainer.style.flexDirection = 'column';
             textFieldContainer.style.justifyContent = 'center';
             textFieldContainer.style.alignItems = 'center';
-            textFieldContainer.style.margin = '0px 2px';
+            textFieldContainer.style.margin = '0px 4px';
             textFieldContainer.style.padding = '0px';
 
             if(textField.text){
