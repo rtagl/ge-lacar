@@ -88,7 +88,7 @@ function countDownBanner(props){
             textFieldContainer.style.flexDirection = 'column';
             textFieldContainer.style.justifyContent = 'center';
             textFieldContainer.style.alignItems = 'center';
-            textFieldContainer.style.margin = '0px 5px';
+            textFieldContainer.style.margin = '0px 2px';
             textFieldContainer.style.padding = '0px';
 
             if(textField.text){
@@ -148,7 +148,6 @@ function countDownBanner(props){
         }
 
         function setFontSizes(){
-
             loopAndSetFontSizes(
                 {
                     widths:{ bottom: 850, top: 1920}, 
@@ -159,18 +158,18 @@ function countDownBanner(props){
             loopAndSetFontSizes(
                 {
                     widths:{ bottom: 414, top: 849}, 
-                    fontRatios:{ textRatio: 2.75, subRatio: 2.75}, 
+                    fontRatios:{ textRatio: 2.80, subRatio: 1.50}, 
                     windowRatios:{ textRatio: 200, subRatio: 240}
                 }
             );
-            loopAndSetFontSizes(
+  
+          loopAndSetFontSizes(
                 {
                     widths:{ bottom: 280, top: 413}, 
-                    fontRatios:{ textRatio: 3.25, subRatio: 1.75}, 
+                    fontRatios:{ textRatio: 2.90, subRatio: 1.60}, 
                     windowRatios:{ textRatio: 200, subRatio: 240}
                 }
             );
-
         }
 
         window.addEventListener('resize', function(){
@@ -225,7 +224,7 @@ function countDownBanner(props){
             textFieldContainer.style.flexDirection = 'column';
             textFieldContainer.style.justifyContent = 'center';
             textFieldContainer.style.alignItems = 'center';
-            textFieldContainer.style.margin = '0px 5px';
+            textFieldContainer.style.margin = '0px 2px';
             textFieldContainer.style.padding = '0px';
 
             if(textField.text){
@@ -285,7 +284,6 @@ function countDownBanner(props){
         }
 
         function setFontSizes(){
-
             loopAndSetFontSizes(
                 {
                     widths:{ bottom: 850, top: 1920}, 
@@ -296,18 +294,18 @@ function countDownBanner(props){
             loopAndSetFontSizes(
                 {
                     widths:{ bottom: 414, top: 849}, 
-                    fontRatios:{ textRatio: 2.75, subRatio: 2.75}, 
+                    fontRatios:{ textRatio: 2.80, subRatio: 1.50}, 
                     windowRatios:{ textRatio: 200, subRatio: 240}
                 }
             );
-            loopAndSetFontSizes(
+  
+          loopAndSetFontSizes(
                 {
                     widths:{ bottom: 280, top: 413}, 
-                    fontRatios:{ textRatio: 3.25, subRatio: 1.75}, 
+                    fontRatios:{ textRatio: 2.90, subRatio: 1.60}, 
                     windowRatios:{ textRatio: 200, subRatio: 240}
                 }
             );
-
         }
 
         function setBannerLayout(){
