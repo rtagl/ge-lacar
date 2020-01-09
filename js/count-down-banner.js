@@ -20,13 +20,13 @@ function countDownBanner(props){
         container.style.justifyContent = 'flex-start';
 
         function setContainerLayout(){
+            if(window.innerWidth >= 1920){
+                container.style.width = '1920px';
+            }else if(window.innerWidth <= 1919){
+                container.style.width = '100%';
+            }
+
             if(countDownActive === true){
-                if(window.innerWidth >= 1920){
-                    container.style.width = '1920px';
-                }else if(window.innerWidth <= 1919){
-                    container.style.width = '100%';
-                }
-    
                 if(window.innerWidth <= 768){
                     container.style.height = '136px';
                     container.style.flexDirection = reverse ? 'column-reverse' : 'column';
@@ -38,7 +38,6 @@ function countDownBanner(props){
                     container.style.justifyContent = 'flex-start';
                     container.style.alignItems = 'flex-start';
                 }
-
             }
         }
 
