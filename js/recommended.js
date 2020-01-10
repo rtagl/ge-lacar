@@ -104,7 +104,7 @@ function recommended(props){
         var results = [];
     
         criteria.forEach(function(c, i){
-            c.destination === sailingDetails.destinationCode ? results.push(true) : results.push(false);
+            c.destination.indexOf(sailingDetails.destinationCode) !== -1 ? results.push(true) : results.push(false);
             c.ships.indexOf(sailingDetails.shipCode) !== -1 ? results.push(true) : results.push(false);
 
             new Date(sailingDetails.sailDate) >= new Date(c.sailDate.start) && 
@@ -121,7 +121,7 @@ function recommended(props){
 
     var main = function(){
         var sailingDetails = processURL(window.location.href);
-        //var sailingDetails = processURL('https://www.royalcaribbean.com/gbr/en/booking/superCategory?accessCabin=false&connectedRooms=false&destinationCode=EUROP&packageCode=AN05Q021&roomIndex=1&sailDate=2020-10-27&selectedCurrencyCode=GBP&shipCode=AN')
+        //var sailingDetails = processURL('https://www.royalcaribbean.com/gbr/en/booking/superCategory?accessCabin=false&connectedRooms=false&destinationCode=T.ATL&packageCode=AN12T040&roomIndex=1&sailDate=2020-11-01&selectedCurrencyCode=GBP&shipCode=AN')
         var result = processCriteria(props.criteria, sailingDetails);
         var ribbon = createRibbon(props.text);
         var parents = getParent(props.roomType);
@@ -155,7 +155,7 @@ window.addEventListener('DOMContentLoaded', ()=>{
         text: 'recomendado',
         criteria: [
             {
-                destination: 'EUROP',
+                destination: ['EUROP', 'T.ATL'],
                 ships: ['AN'],
                 sailDate: {
                     start: 'Jan 01 2020',
