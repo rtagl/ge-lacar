@@ -111,19 +111,17 @@ function recommended(props){
 
 }
 
-window.addEventListener('DOMContentLoaded', ()=>{
-    recommended({
-        roomType: ['interior'],
-        text: 'recomendado',
-        criteria: [
-            {
-                destination: 'EUROP',
-                ships: ['AN'],
-                sailDate: {
-                    start: 'Jan 01 2020',
-                    end: 'Dec 31 2020'
-                }
+recommended({
+    roomType: ['interior'],
+    text: 'recomendado',
+    criteria: [
+        {
+            destination: 'EUROP',
+            ships: ['AN'],
+            sailDate: {
+                start: 'Jan 01 2020',
+                end: 'Dec 31 2020'
             }
-        ]
-    });
+        }
+    ]
 });
