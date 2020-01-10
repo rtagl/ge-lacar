@@ -1,13 +1,34 @@
 function recommended(props){
 
+    //remove polyfill
+    (function (arr) {
+        arr.forEach(function (item) {
+          if (item.hasOwnProperty('remove')) {
+            return;
+          }
+          Object.defineProperty(item, 'remove', {
+            configurable: true,
+            enumerable: true,
+            writable: true,
+            value: function remove() {
+              if (this.parentNode === null) {
+                return;
+              }
+              this.parentNode.removeChild(this);
+            }
+          });
+        });
+      })([Element.prototype, CharacterData.prototype, DocumentType.prototype]);
+
     var createRibbon = function(text){
 
         var ribbon = document.createElement('div');
+        ribbon.classList.add('ge_recommended-ribbon');
         ribbon.innerText = text;
         ribbon.style.background = '#e43';
         ribbon.style.width = '200px';
         ribbon.style.color = '#ffffff';
-        ribbon.style.fontSize =  '1rem';
+        ribbon.style.fontSize =  '12px';
         ribbon.style.fontFamily = 'proxima-nova, helvetica, arial'
         ribbon.style.lineHeight = '40px';
         ribbon.style.position = 'absolute';
@@ -49,6 +70,7 @@ function recommended(props){
 
         for(var i = 0; i  < parentElements.length; i++){
             parentElements[i].style.overflow = 'hidden';
+            parentElements[i].parentNode.style.overflow = 'hidden';
         }
 
         return parentElements;
@@ -93,8 +115,13 @@ function recommended(props){
         return results.indexOf(false) === -1 ? true : false;
     }
 
+    var observer = function(){
+
+    }
+
     var main = function(){
-        var sailingDetails = processURL('https://www.royalcaribbean.com/gbr/en/booking/superCategory?accessCabin=false&connectedRooms=false&destinationCode=EUROP&packageCode=AN05Q021&roomIndex=1&sailDate=2020-10-27&selectedCurrencyCode=GBP&shipCode=AN')
+        var sailingDetails = processURL(window.location.href);
+        //var sailingDetails = processURL('https://www.royalcaribbean.com/gbr/en/booking/superCategory?accessCabin=false&connectedRooms=false&destinationCode=EUROP&packageCode=AN05Q021&roomIndex=1&sailDate=2020-10-27&selectedCurrencyCode=GBP&shipCode=AN')
         var result = processCriteria(props.criteria, sailingDetails);
         var ribbon = createRibbon(props.text);
         var parents = getParent(props.roomType);
@@ -103,11 +130,22 @@ function recommended(props){
             parents.forEach(function(parent){
                 parent.appendChild(ribbon);
             })
-        }   
+        }
 
     }
 
-    main();
+    var timer = setInterval(function(){
+        var sailingDetails = processURL(window.location.href);
+        
+        if(document.querySelector('.ge_recommended-ribbon')){
+            document.querySelector('.ge_recommended-ribbon').remove();
+        }
+
+        if(sailingDetails.page.indexOf('superCategory') !== -1){
+            main();
+            clearInterval(timer);
+        }
+    }, 1000);
 
 }
 
