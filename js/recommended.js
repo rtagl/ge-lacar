@@ -143,7 +143,7 @@ function recommended(props){
 
         if(sailingDetails.page.indexOf('superCategory') !== -1){
             main();
-            clearInterval(timer);
+            //clearInterval(timer);
         }
     }, 1000);
 
