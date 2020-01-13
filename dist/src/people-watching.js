@@ -482,3 +482,19 @@ function peopleWatching(props){
 
 }
 
+// function peopleWatching(props){
+
+//     var getItineraries = function(){
+        
+//         var itinerariesCards = document.querySelectorAll('li.collapsable');
+//         var itineraries = [];
+
+//         itinerariesCards.forEach(function(card, i){
+
+//         });
+
+
+//     }
+
+// }
+
