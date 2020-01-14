@@ -38,7 +38,7 @@ function heroBannerIo(props){
     textFieldsWrapper.style.width = 'auto';
     textFieldsWrapper.style.display = 'flex';
     textFieldsWrapper.style.flexDirection = 'column';
-    textFieldsWrapper.style.justifyContent = 'space-between';
+    textFieldsWrapper.style.justifyContent = 'center';
     textFieldsWrapper.style.alignItems = 'center';
 
     var contentTextWrapper = document.createElement('div');
@@ -103,18 +103,21 @@ function heroBannerIo(props){
 
     function setLayout(){
 
+        //ADJUST CONTAINER WIDTH BASED ON SCREEN WIDTH
         if(window.innerWidth >= 1920){
             container.style.width = '1920px';
         }else if(window.innerWidth <= 1919){
             container.style.width = '100%';
         }
 
+        //SWAP IMAGES DEPENDING ON SCREEN WIDHT
         if(window.innerWidth >= 768){
             heroImage.src = props.desktop;
         }else{
             heroImage.src = props.mobile;
         }
 
+        //RESIZE THE TEXT CONTAINER TO MATCH THE CURRENT IMAGE ON THE PAGE
         if(window.innerWidth >= 768 && window.innerWidth <= 1920){
             container.style.height = Math.floor((200 / 1920) * window.innerWidth) - 2 + 'px';
             textContainer.style.height = Math.floor((200 / 1920) * window.innerWidth) - 2 + 'px';
@@ -127,10 +130,13 @@ function heroBannerIo(props){
             textFieldsWrapper.style.height = Math.floor((280 / 750) * window.innerWidth) - 20 + 'px';
         }
 
-        if(window.innerWidth >= 770 && window.innerWidth <= 900){
-            textFieldsWrapper.style.justifyContent = 'center';
-        }else{
-            textFieldsWrapper.style.justifyContent = 'space-between';
+        //REPOSITIONS THE TEXT FIELDS IF THERE IS A DISCLAIMER
+        if(props.disclaimer){
+            if(window.innerWidth >= 770 && window.innerWidth <= 900){
+                textFieldsWrapper.style.justifyContent = 'center';
+            }else{
+                textFieldsWrapper.style.justifyContent = 'space-between';
+            }
         }
 
     }
@@ -174,12 +180,12 @@ document.addEventListener('DOMContentLoaded', function(){
             textAlign: 'center',
             textColor: '#fff'
         },
-        disclaimer: {
-            text: 'pickles are great but they are not incuded for free.',
-            textSize: '12px',
-            textAlign: 'center',
-            textColor: '#fff'
-        },
-        textFieldAlign: 'center'
+        // disclaimer: {
+        //     text: 'pickles are great but they are not incuded for free.',
+        //     textSize: '12px',
+        //     textAlign: 'center',
+        //     textColor: '#fff'
+        // },
+        // textFieldAlign: 'left'
     });
 });
