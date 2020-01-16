@@ -1,11 +1,8 @@
 function peopleWatching(props){
 
     var state = {
-        clicks:[]
-    }
-
-    var getItineraries = function(){
-        return document.querySelectorAll('li.collapsable');
+        clicks:[],
+        itineraries: []
     }
 
     var createPeopleWatchingComponent = function(){
@@ -111,12 +108,36 @@ function peopleWatching(props){
         element.style.margin = '-130px 0px 0px 0px';
     }
 
-    var handlePaginationsClicks = function(){
-        //code
-        // .mat-button.active
-        // .mat-button-toggle-label-content
-        // .mat-paginator-navigation-next
-        // .mat-paginator-navigation-previous
+    var getItineraries = function(){
+        if(state.itineraries.length === 0){
+
+            document.querySelectorAll('li.collapsable').forEach(function(itinerary){
+                state.itineraries.push(itinerary.attributes.id.value);
+            });
+
+        }else if(state.itineraries.length !== 0){
+            
+            var itineraries = [];
+            document.querySelectorAll('li.collapsable').forEach(function(itinerary){
+                itineraries.push(itinerary.attributes.id.value);
+            });
+            
+            console.log(itineraries.join());
+            console.log(state,itineraries.join());
+            
+            itineraries.join() !== state.itineraries.join() ? state.itineraries = itineraries : null ;
+
+        }
+        return document.querySelectorAll('li.collapsable');
+    }
+
+    var addClickEventsToItinerary = function(cbUpdateClicks, cbUpdateNumberOfPeople){
+        state.itineraries.forEach(function(itinerary){
+            document.getElementById(itinerary).addEventListener('click', function(){
+                cbUpdateClicks(itinerary);
+                cbUpdateNumberOfPeople(itinerary);
+            })
+        });
     }
 
     var updateItinerearyClicks = function(id){
@@ -140,6 +161,47 @@ function peopleWatching(props){
         }
     }
 
+    var handlePaginationsClicks = function(){
+        document.onclick = function(e){
+            if( e.target.dataset.selector === 'search-apply-button' ||
+                e.target.innerText === 'apply' ||
+                e.target.innerText === 'add' ||
+                e.target.innerText === 'clear' ||
+                e.target.dataset.selector === 'search-2to5-nights' ||
+                e.target.dataset.selector === 'search-6to8-nights' ||
+                e.target.dataset.selector === 'search-9to11-nights' ||
+                e.target.dataset.selector === 'search-12plus-nights' ||
+                e.target.classList.value.indexOf('mat-button-toggle-label-content') !== -1 ||
+                e.target.classList.value.indexOf('mat-paginator-decrement') !== -1 ||
+                e.target.classList.value.indexOf('mat-paginator-increment') !== -1 ||
+                e.target.classList.value.indexOf('mat-paginator-navigation-next') !== -1 ||
+                e.target.classList.value.indexOf('mat-paginator-navigation-previous') !== -1
+            ){  
+                console.log('NAV LINK FOR PAGINATION CLICKED!!!!!!!!');
+                return true;
+            }
+        }
+    }
+
+    // var updateItineraries = function(){
+
+    //     var itineraries = document.querySelectorAll('li.collapsable');
+
+    //     var itineraryIDs = [];
+    //     itineraries.forEach(function(itinerary){
+    //         itineraryIDs.push(itinerary.attributes.id.value);
+    //     });
+
+    //     console.log(state.itineraries);
+
+    //     if(state.itineraries.length !== 0 && itineraryIDs.join() === state.itineraries.join()){
+    //         return false;
+    //     }else{
+    //         return true;
+    //     }
+
+    // }
+
     var getSidePanel = function(){
         return document.querySelector('.itinerary-panel-sidenav');
     }
@@ -152,7 +214,7 @@ function peopleWatching(props){
         return click.peopleWatching;
     }
 
-    var check = function(cbShow, cbHide, element){
+    var checkURL = function(cbShow, cbHide, element){
 
         var lis = document.querySelectorAll('li.collapsable');
         var ids = [];
@@ -160,8 +222,8 @@ function peopleWatching(props){
         lis.forEach(function(li){
             ids.push(li.id);
         });
-    
-        document.onclick = function(e){
+
+        document.addEventListener('click', function(){
             for(var i = 0; i < ids.length; i++){
                 if(window.location.href.indexOf(ids[i]) !== -1){
                     cbShow(element);
@@ -171,29 +233,42 @@ function peopleWatching(props){
                     cbHide(element);
                 }
             }
-        }
+        });
     
     }
 
     function main(){
+
+        // check page is cruises
+            // get itineraries off page
+            // add clicks to itineraries
+            // listen to clicks on pagination and filter buttons
+                // get itineraries off page
+                // check if itineraries are different from stored itineraries
+                // update stored itineraries
+                // add clicks to new itineraries
+            // add component to sidepanel
+            // update people watching number
+
+
         if(window.location.href.indexOf('cruises') !== -1){
 
             var itineraries = getItineraries();
             var peopleWatchingComponent = createPeopleWatchingComponent();
             var sidePanel = getSidePanel();
 
+            var pageClicks = handlePaginationsClicks();
+
+            console.log('kjadvklja,kjnadsdiuhqglkjndfgad', pageClicks);
+
+            if(pageClicks === true){
+                getItineraries();
+                addClickEventsToItinerary();
+            }
+
             sidePanel.appendChild(peopleWatchingComponent.component);
+            checkURL(show, hide, peopleWatchingComponent.component);
 
-            itineraries.forEach(function(itinerary){
-                itinerary.addEventListener('click', function(){
-                    updateItinerearyClicks(itinerary.attributes.id.value);
-                    adjustSidePanelElements();
-                    peopleWatchingComponent.numberSpan.innerText = updatePeopleWatchingNumber(itinerary.attributes.id.value);
-                });
-            });
-
-            //adjustSidePanelElements();
-            check(show, hide, peopleWatchingComponent.component);
         }
     }
 
