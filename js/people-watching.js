@@ -152,10 +152,9 @@ function peopleWatching(props){
             return {status: false}
         }
     }
-    
-    function main(){
-        document.onclick = function(){
-            var check  = checkUrl();
+
+    function initPeopleWatching(){
+        var check  = checkUrl();
 
             if(check.status === true){
                 //update number of clicks
@@ -171,6 +170,12 @@ function peopleWatching(props){
             }else{
                 hide(state.components.component)
             }
+    }
+    
+    function main(){
+        initPeopleWatching();
+        document.onclick = function(){
+            initPeopleWatching();
         }
     }
     
