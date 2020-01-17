@@ -1,20 +1,19 @@
 function peopleWatching(props){
 
     var state = {
-        clicks:[]
+        clicks:[],
+        itineraries: [],
+        components: createPeopleWatchingComponent(),
+        sidePanel: getSidePanel()
     }
 
-    var getItineraries = function(){
-        return document.querySelectorAll('li.collapsable');
-    }
-
-    var createPeopleWatchingComponent = function(){
+    function createPeopleWatchingComponent(){
         var component = document.createElement('div');
         component.style.background = '#ff6a6f';
         component.style.width = '100%';
         component.style.height = '18px';
         component.style.padding = '7px 0px';
-        component.style.margin = '-142px 0px 0px 0px';
+        component.style.margin = '-162px 0px 0px 0px';
         component.style.zIndex = 999;
         component.style.display = 'flex';
         component.style.justifyContent = 'center';
@@ -78,14 +77,30 @@ function peopleWatching(props){
         }
     }
 
-    var show = function(element){
-        if(element.style.marginTop === '-110px'){
-            element.style.marginTop = '-142px'
+    function getSidePanel (){
+        return document.querySelector('.itinerary-panel-sidenav');
+    }
+
+    function adjustSidePanelElements(){
+        document.querySelectorAll('.itinerary-panel-section').forEach(function(section){
+            section.style.marginTop = '20px';
+        });
+
+        document.querySelectorAll('.itinerary-panel-details-section').forEach(function(detail){
+            detail.style.marginTop = '20px';
+        });
+
+        document.querySelectorAll('.mat-button-wrapper')[1].style.marginTop = '20px';
+    }
+
+    function show(element){
+        if(element.style.marginTop === '-130px'){
+            element.style.marginTop = '-162px'
         }
-        if(element.style.marginTop === '-142px'){
+        if(element.style.marginTop === '-162px'){
             setTimeout(function(){
                 var timer = setInterval(function(){
-                    if(element.style.marginTop === '-110px'){
+                    if(element.style.marginTop === '-130px'){
                         clearInterval(timer);
                     }else{
                         element.style.marginTop = parseInt(element.style.marginTop) + 16 + 'px';
@@ -95,15 +110,19 @@ function peopleWatching(props){
         }
     }
 
-    var hide = function(element){
-        element.style.margin = '-110px 0px 0px 0px';
+    function hide(element){
+        element.style.margin = '-130px 0px 0px 0px';
     }
 
-    var handlePaginationsClicks = function(){
-        //code
+    function updatePeopleWatchingNumber(id){
+        var click = state.clicks.find(function(click){
+            return click.id === id;
+        });
+
+        state.components.numberSpan.innerText = click.peopleWatching;
     }
 
-    var updateItinerearyClicks = function(id){
+    function updateItinerearyClicks(id){
         var click = state.clicks.find(function(click){
             return click.id === id;
         });
@@ -124,61 +143,37 @@ function peopleWatching(props){
         }
     }
 
-    var getSidePanel = function(){
-        return document.querySelector('.itinerary-panel-sidenav');
+    function checkUrl(){
+        var url = window.location.href
+        if(url.indexOf('itineraryPanel') !== -1){
+            console.log(url.substr(url.indexOf('itineraryPanel')+'itineraryPanel'.length + 1, url.length - 1));
+            return {status: true, id: url.substr(url.indexOf('itineraryPanel')+'itineraryPanel'.length + 1, url.length - 1)}
+        }else{
+            return {status: false}
+        }
     }
-
-    var updatePeopleWatchingNumber = function(id){
-        var click = state.clicks.find(function(click){
-            return click.id === id;
-        });
-
-        return click.peopleWatching;
-    }
-
-    var check = function(cbShow, cbHide, element){
-
-        var lis = document.querySelectorAll('li.collapsable');
-        var ids = [];
     
-        lis.forEach(function(li){
-            ids.push(li.id);
-        });
-    
-        document.onclick = function(e){
-            for(var i = 0; i < ids.length; i++){
-                if(window.location.href.indexOf(ids[i]) !== -1){
-                    cbShow(element);
-                    break;
-                }
-                if(window.location.href.indexOf(ids[i]) === -1){
-                    cbHide(element);
-                }
+    function main(){
+        document.onclick = function(){
+            var check  = checkUrl();
+
+            if(check.status === true){
+                //update number of clicks
+                updateItinerearyClicks(check.id);
+                //add component to panel
+                state.sidePanel.appendChild(state.components.component);
+                //adjust side panel elements
+                adjustSidePanelElements();
+                //show component
+                show(state.components.component);
+                //update numner of people
+                updatePeopleWatchingNumber(check.id);
+            }else{
+                hide(state.components.component)
             }
         }
+    }
     
-    }
-
-    function main(){
-        if(window.location.href.indexOf('cruises') !== -1){
-
-            var itineraries = getItineraries();
-            var peopleWatchingComponent = createPeopleWatchingComponent();
-            var sidePanel = getSidePanel();
-
-            sidePanel.appendChild(peopleWatchingComponent.component);
-
-            itineraries.forEach(function(itinerary){
-                itinerary.addEventListener('click', function(){
-                    updateItinerearyClicks(itinerary.attributes.id.value);
-                    peopleWatchingComponent.numberSpan.innerText = updatePeopleWatchingNumber(itinerary.attributes.id.value);
-                });
-            });
-
-            check(show, hide, peopleWatchingComponent.component);
-        }
-    }
-
     main();
 
 }
