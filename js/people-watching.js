@@ -2,9 +2,9 @@ function peopleWatching(props){
 
     var state = {
         clicks:[],
-        itineraries: [],
         components: createPeopleWatchingComponent(),
-        sidePanel: getSidePanel()
+        sidePanel: getSidePanel(),
+        history: ''
     }
 
     function createPeopleWatchingComponent(){
@@ -13,11 +13,12 @@ function peopleWatching(props){
         component.style.width = '100%';
         component.style.height = '18px';
         component.style.padding = '7px 0px';
-        component.style.margin = '-162px 0px 0px 0px';
+        component.style.top = '-32px';
         component.style.zIndex = 999;
         component.style.display = 'flex';
         component.style.justifyContent = 'center';
         component.style.alignItems = 'center';
+        component.style.position = 'absolute';
         component.setAttribute('id', 'ge_people-watching');
 
         var eyeSpan = document.createElement('img');
@@ -79,6 +80,7 @@ function peopleWatching(props){
 
     function getSidePanel (){
         return document.querySelector('.itinerary-panel-sidenav');
+        //return document.querySelector('.ng-tns-c0-0');
     }
 
     function adjustSidePanelElements(){
@@ -94,16 +96,16 @@ function peopleWatching(props){
     }
 
     function show(element){
-        if(element.style.marginTop === '-130px'){
-            element.style.marginTop = '-162px'
+        if(element.style.top === '0px'){
+            element.style.top = '-32px'
         }
-        if(element.style.marginTop === '-162px'){
+        if(element.style.top === '-32px'){
             setTimeout(function(){
                 var timer = setInterval(function(){
-                    if(element.style.marginTop === '-130px'){
+                    if(element.style.top === '0px'){
                         clearInterval(timer);
                     }else{
-                        element.style.marginTop = parseInt(element.style.marginTop) + 16 + 'px';
+                        element.style.top = parseInt(element.style.top) + 8 + 'px';
                     }
                 }, 50);
             }, 300);
@@ -111,7 +113,7 @@ function peopleWatching(props){
     }
 
     function hide(element){
-        element.style.margin = '-130px 0px 0px 0px';
+        element.style.top = '-32px';
     }
 
     function updatePeopleWatchingNumber(id){
@@ -146,36 +148,37 @@ function peopleWatching(props){
     function checkUrl(){
         var url = window.location.href
         if(url.indexOf('itineraryPanel') !== -1){
-            console.log(url.substr(url.indexOf('itineraryPanel')+'itineraryPanel'.length + 1, url.length - 1));
+            state.history = url;
             return {status: true, id: url.substr(url.indexOf('itineraryPanel')+'itineraryPanel'.length + 1, url.length - 1)}
         }else{
+            state.history = url;
             return {status: false}
         }
     }
 
-    function initPeopleWatching(){
-        var check  = checkUrl();
-
-            if(check.status === true){
-                //update number of clicks
-                updateItinerearyClicks(check.id);
-                //add component to panel
-                state.sidePanel.appendChild(state.components.component);
-                //adjust side panel elements
-                adjustSidePanelElements();
-                //show component
-                show(state.components.component);
-                //update numner of people
-                updatePeopleWatchingNumber(check.id);
-            }else{
-                hide(state.components.component)
-            }
+    function initPeopleWatching(check){
+        if(check.status === true){
+            //update number of clicks
+            updateItinerearyClicks(check.id);
+            //add component to panel
+            state.sidePanel.appendChild(state.components.component);
+            //adjust side panel elements
+            adjustSidePanelElements();
+            //show component
+            show(state.components.component);
+            //update number of people
+            updatePeopleWatchingNumber(check.id);
+        }else{
+            hide(state.components.component);
+        }
     }
     
     function main(){
-        initPeopleWatching();
+        initPeopleWatching(checkUrl());
         document.onclick = function(){
-            initPeopleWatching();
+            if(state.history.indexOf('itineraryPanel') === -1 || state.history !== window.location.href){
+                initPeopleWatching(checkUrl());
+            }
         }
     }
     
@@ -187,3 +190,4 @@ peopleWatching({
     people: 'people',
     watching: 'watching'
 });
+
