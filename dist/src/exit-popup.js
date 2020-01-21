@@ -25,8 +25,8 @@ exitPopUp({
         textColor: '#ce0f69'
     },
     countDown:{
-        start:'Dec 23 2019 10:00:00',
-        end: 'Dec 26 2019 16:00:00',
+        start:'Jan 01 2020 10:00:00',
+        end: 'Dec 31 2020 10:00:00',
     },
     countries:[
         'lac'
@@ -328,8 +328,8 @@ function exitPopUp(props, dst, showDays){
 
     setLayout(window.innerWidth);
 
-     //CREATE INTERVAL THAT UPDATES COUNTDOWN CLOCK
-     var checkTimeInterval = setInterval(function(){ 
+    //CREATE INTERVAL THAT UPDATES COUNTDOWN CLOCK
+    var checkTimeInterval = setInterval(function(){ 
         setTimeDigits(countryInUrl, dst);
     }, 1000);
     
