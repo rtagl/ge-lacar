@@ -41,7 +41,7 @@ function iobd(props){
 
     function iobdComponent(details, target){
 
-        var iobd = document.createElement('li');
+        var iobd = document.createElement('div');
         //iobd.style.background = 'red';
         iobd.style.width = '100%';
         iobd.style.height = 'auto';
@@ -277,15 +277,15 @@ function iobd(props){
                 if(i === 0 || i === 1){
                     var propDetails = props.details;
                     propDetails.text = props.details.offerText.B;
-                    iobdComponent(propDetails, t.children[0]);
+                    iobdComponent(propDetails, t);
                 }else if(i === 2){
                     var propDetails = props.details;
                     propDetails.text = props.details.offerText.A;
-                    iobdComponent(propDetails, t.children[0]);
+                    iobdComponent(propDetails, t);
                 }else{
                     var propDetails = props.details;
                     propDetails.text = props.details.offerText.AA;
-                    iobdComponent(propDetails, t.children[0]);
+                    iobdComponent(propDetails, t);
                 }
             });
 
@@ -308,4 +308,3 @@ function iobd(props){
     renderComponents(validatCriteria());
 
 }
-
