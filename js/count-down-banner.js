@@ -51,9 +51,10 @@ function countDownBanner(props){
     }
 
     function bannerNoCountDown(data){
+        console.log(data);
         //creates and controls the banner
         var banner = document.createElement('div');
-        banner.style.background = '#15264C';
+        banner.style.background = props.bannerColor ? props.bannerColor : '#15264C';
         banner.style.width = '100%';
         banner.style.height = '68px';
         banner.style.display = 'flex';
@@ -186,7 +187,7 @@ function countDownBanner(props){
 
         //creates and controls the banner
         var banner = document.createElement('div');
-        banner.style.background = '#15264C';
+        banner.style.background = props.bannerColor ? props.bannerColor : '#15264C';
         banner.style.width = '65%';
         banner.style.height = '68px';
         banner.style.display = 'flex';
@@ -692,10 +693,12 @@ function countDownBanner(props){
 
 }
 
+
 document.addEventListener('DOMContentLoaded', function(){
 
     countDownBanner({
         parent: '.parent',
+        // bannerColor: '#ff0000',
         timer:{
             text: 'OFERTA TERMINA IN:',
             start: 'Jan 8 2020 11:30:00',
