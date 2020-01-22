@@ -50,7 +50,7 @@ function iobd(props){
         iobd.style.fontWeight = '400';
         iobd.style.textAlign = 'center';
         iobd.style.padding = '0px';
-        iobd.style.color = window.innerWidth >= 640 && window.innerWidth <= 1199 ? iobd.style.color = 'rgb(74, 74 ,74)' : iobd.style.color = details.textColor ;
+        iobd.style.margin = '0px auto';
         iobd.style.listStyle = 'none';
         iobd.classList.add('ge_iobd-offer');
         iobd.style.display = 'flex';
@@ -62,23 +62,44 @@ function iobd(props){
         i.style.height = 'auto';
         i.style.marginRight = '5px';
         i.innerText = 'done';
+        i.style.color = window.innerWidth >= 640 && window.innerWidth <= 1199 ? 'rgb(74, 74 ,74)' : details.textColor ;
         i.classList.add('material-icons');
         i.classList.add('done-icon');
         i.classList.add('small-hdr-6');
+        i.classList.add('ge_iobd-offer-i');
 
         var p = document.createElement('p');
         p.style.width = 'auto';
         p.style.height = 'auto';
-        p.style.textTransform = 'uppercase';
+        p.style.textTransform = 'capitalize';
+        p.style.color = window.innerWidth >= 640 && window.innerWidth <= 1199 ? 'rgb(74, 74 ,74)' : details.textColor ;
         p.innerText = details.text;
+        p.classList.add('ge_iobd-offer-p');
 
         iobd.appendChild(i);
         iobd.appendChild(p);
 
+        target.style.display = 'flex';
+        target.style.flexDirection = 'column';
+        target.style.justifyContent = 'center';
         target.appendChild(iobd);
 
-        window.onresixe = function(){
-            window.innerWidth >= 640 && window.innerWidth <= 1199 ? iobd.style.color = 'rgb(74, 74 ,74)' : iobd.style.color = details.textColor ;
+        window.onresize = function(){
+            if(window.innerWidth >= 640 && window.innerWidth <= 1199){
+                document.querySelectorAll('.ge_iobd-offer-p').forEach(function(el){
+                    el.style.color = 'rgb(74, 74 ,74)';
+                });
+                document.querySelectorAll('.ge_iobd-offer-i').forEach(function(el){
+                    el.style.color = 'rgb(74, 74 ,74)';
+                });
+            }else{
+                document.querySelectorAll('.ge_iobd-offer-p').forEach(function(el){
+                    el.style.color = details.textColor;
+                });
+                document.querySelectorAll('.ge_iobd-offer-i').forEach(function(el){
+                    el.style.color = details.textColor;
+                });
+            }   
         };
 
     }
