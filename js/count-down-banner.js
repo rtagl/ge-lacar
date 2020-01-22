@@ -571,6 +571,9 @@ function countDownBanner(props){
                     timeZone = 'GMT-0600';
                     }
                 break;
+                case 'sgp':
+                    timeZone = 'GMT+0800';
+                break;
             }
 
             var beginDate = new Date(data.clock.start+' '+timeZone);

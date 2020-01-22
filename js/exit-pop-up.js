@@ -335,8 +335,8 @@ function exitPopUp(props, dst, showDays){
 
     setLayout(window.innerWidth);
 
-     //CREATE INTERVAL THAT UPDATES COUNTDOWN CLOCK
-     var checkTimeInterval = setInterval(function(){ 
+    //CREATE INTERVAL THAT UPDATES COUNTDOWN CLOCK
+    var checkTimeInterval = setInterval(function(){ 
         setTimeDigits(countryInUrl, dst);
     }, 1000);
     
@@ -399,6 +399,9 @@ function exitPopUp(props, dst, showDays){
                 } else {
                   timeZone = 'GMT-0600';
                 }
+            break;
+            case 'sgp': 
+                timeZone = 'GMT+0800';
             break;
         }
 

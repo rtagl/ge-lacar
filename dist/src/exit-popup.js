@@ -393,6 +393,9 @@ function exitPopUp(props, dst, showDays){
                   timeZone = 'GMT-0600';
                 }
             break;
+            case 'sgp': 
+                timeZone = 'GMT+0800';
+            break;
         }
 
         var beginDate = new Date(props.countDown.start+' '+timeZone);
