@@ -377,7 +377,7 @@ function countDownBanner(props){
             clockText.style.letterSpacing = '2px';
             clockText.style.margin = '4px 0px 0px 0px';
             clockText.style.padding = '0px 10px 0px 0px';
-            clockText.style.color = '#15264C';
+            clockText.style.color = props.bannerColor ? props.bannerColor : '#15264C';
             
             //CREATE CLOCK DIGITS
             var clockDigits = document.createElement('div');
@@ -397,7 +397,7 @@ function countDownBanner(props){
             hours.style.fontSize = '40px';
             hours.style.textAlign = 'center';
             hours.style.letterSpacing = '2px';
-            hours.style.color = '#15264C';
+            hours.style.color = props.bannerColor ? props.bannerColor : '#15264C';
             hours.innerText = '00';
 
             //CREATE CLOCK MINUTES
@@ -410,7 +410,7 @@ function countDownBanner(props){
             minutes.style.fontSize = '40px';
             minutes.style.textAlign = 'center';
             minutes.style.letterSpacing = '2px';
-            minutes.style.color = '#15264C';
+            minutes.style.color = props.bannerColor ? props.bannerColor : '#15264C';
             minutes.innerText = '00';
             
             //CREATE CLOCK SECONDS
@@ -423,7 +423,7 @@ function countDownBanner(props){
             seconds.style.fontSize = '40px';
             seconds.style.textAlign = 'center';
             seconds.style.letterSpacing = '2px';
-            seconds.style.color = '#15264C';
+            seconds.style.color = props.bannerColor ? props.bannerColor : '#15264C';
             seconds.innerText = '00';
 
             //CREATE DIGITAL TIME COLON 
@@ -436,7 +436,7 @@ function countDownBanner(props){
             colon.style.fontSize = '40px';
             colon.style.textAlign = 'center';
             colon.style.letterSpacing = '2px';
-            colon.style.color = '#15264C';
+            colon.style.color = props.bannerColor ? props.bannerColor : '#15264C';
             colon.innerText = ':';
 
             //CLONE COLON ELEMENT 
@@ -477,7 +477,7 @@ function countDownBanner(props){
             last.innerText = data.clock.showDays.last ? data.clock.showDays.last.toUpperCase() : '' ;
             last.style.fontFamily = 'kapra, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif';
             last.style.fontSize = '40px';
-            last.style.color = '#15264C';
+            last.style.color = props.bannerColor ? props.bannerColor : '#15264C';
             last.style.letterSpacing = '2px';
 
             //CREATE DAYS TEXT
@@ -485,7 +485,7 @@ function countDownBanner(props){
             days.innerText = data.clock.showDays.days ? data.clock.showDays.days.toUpperCase() : '' ;
             days.style.fontFamily = 'kapra, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif';
             days.style.fontSize = '40px';
-            days.style.color = '#15264C';
+            days.style.color = props.bannerColor ? props.bannerColor : '#15264C';
             days.style.letterSpacing = '2px';
 
             //CREATE DAYS TEXT
@@ -493,7 +493,7 @@ function countDownBanner(props){
             daysLeftNumber.innerText = numberOfDays;
             daysLeftNumber.style.fontFamily = 'kapra, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif';
             daysLeftNumber.style.fontSize = '40px';
-            daysLeftNumber.style.color = '#15264C';
+            daysLeftNumber.style.color = props.bannerColor ? props.bannerColor : '#15264C';
             daysLeftNumber.style.letterSpacing = '2px';
             daysLeftNumber.style.margin = '0px 10px';
 
@@ -698,11 +698,11 @@ document.addEventListener('DOMContentLoaded', function(){
 
     countDownBanner({
         parent: '.parent',
-        // bannerColor: '#ff0000',
+        bannerColor: '#ff0000',
         timer:{
             text: 'OFERTA TERMINA IN:',
             start: 'Jan 8 2020 11:30:00',
-            end: 'Jan 9 2020 11:41:00',
+            end: 'Jan 31 2020 11:41:00',
             dst: false,
             showDays: {
                 last: 'LAST',
