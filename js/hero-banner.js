@@ -63,6 +63,7 @@ function heroBanner(props){
     header.style.margin = '0px';
     header.style.padding = '0px';
     header.style.textTransform = 'uppercase';
+    header.style.textShadow = props.textShadow ? props.textShadow : '';
 
     var paragraph = document.createElement('p');
     //paragraph.style.background = 'yellow';
@@ -75,6 +76,7 @@ function heroBanner(props){
     paragraph.style.margin = '0px';
     paragraph.style.padding = '0px';
     paragraph.style.textTransform = 'uppercase';
+    paragraph.style.textShadow = props.textShadow ? props.textShadow : '';
 
     var disclaimer = document.createElement('p');
     //disclaimer.style.background = 'pink';
@@ -87,6 +89,7 @@ function heroBanner(props){
     disclaimer.style.margin = '0px';
     disclaimer.style.padding = '0px';
     disclaimer.style.textTransform = 'uppercase';
+    disclaimer.style.textShadow = props.textShadow ? props.textShadow : '';
 
     contentTextWrapper.appendChild(header);
     contentTextWrapper.appendChild(paragraph);
@@ -180,6 +183,7 @@ document.addEventListener('DOMContentLoaded', function(){
             textAlign: 'center',
             textColor: '#fff'
         },
+        textShadow: '4px 4px 2px #0000ff',
         // disclaimer: {
         //     text: 'pickles are great but they are not incuded for free.',
         //     textSize: '12px',
