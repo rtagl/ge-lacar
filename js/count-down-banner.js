@@ -698,66 +698,66 @@ document.addEventListener('DOMContentLoaded', function(){
 
     countDownBanner({
         parent: '.parent',
-        bannerColor: '#ff0000',
+        //bannerColor: '#ff0000',
         timer:{
             text: 'OFERTA TERMINA IN:',
-            start: 'Jan 8 2020 11:30:00',
-            end: 'Jan 31 2020 11:41:00',
+            start: 'Jan 22 2020 00:00:01',
+            end: 'Jan 22 2020 17:11:00',
             dst: false,
             showDays: {
-                last: 'LAST',
+                last: 'last',
                 number: 2,
                 days: 'DAYS'
             },
-            reverseLayout: false,
+            reverseLayout: true,
         },
-        countries: ['lac'],
+        countries: ['gbr'],
         textFields:[
             {
                 text:{
-                    text: 'hello world',
+                    text: 'ademas',
                     textSize: '58px',
                     textAlign: 'center',
                 }
             },
-            {
-                text:{
-                    text: '+',
-                    textSize: '48px',
-                    textAlign: 'center',
-                }
-            },
-            {
-                text:{
-                    text: 'hello world',
-                    textSize: '32px',
-                    textAlign: 'center',
-                },
-                subtext: {
-                    text: 'I\'m subtext',
-                    textSize: '14px',
-                    textAlign: 'center',
-                }
-            },
-            {
-                text:{
-                    text: '+',
-                    textSize: '48px',
-                    textAlign: 'center',
-                }
-            },
-            {
-                text:{
-                    text: 'hello world',
-                    textSize: '32px',
-                    textAlign: 'center',
-                },
-                subtext: {
-                    text: 'I\'m subtext',
-                    textSize: '14px',
-                    textAlign: 'center',
-                }
-            },
+            // {
+            //     text:{
+            //         text: '+',
+            //         textSize: '48px',
+            //         textAlign: 'center',
+            //     }
+            // },
+            // {
+            //     text:{
+            //         text: 'hello world',
+            //         textSize: '32px',
+            //         textAlign: 'center',
+            //     },
+            //     subtext: {
+            //         text: 'I\'m subtext',
+            //         textSize: '14px',
+            //         textAlign: 'center',
+            //     }
+            // },
+            // {
+            //     text:{
+            //         text: '+',
+            //         textSize: '48px',
+            //         textAlign: 'center',
+            //     }
+            // },
+            // {
+            //     text:{
+            //         text: 'hello world',
+            //         textSize: '32px',
+            //         textAlign: 'center',
+            //     },
+            //     subtext: {
+            //         text: 'I\'m subtext',
+            //         textSize: '14px',
+            //         textAlign: 'center',
+            //     }
+            // },
             
         ],
     });
