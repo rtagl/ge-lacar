@@ -556,12 +556,17 @@ function exitPopUp(props){
     }
 
     function validateCriteria(data, criteria){
+
+        if(!criteria){
+            return true;
+        }
+
         var checks = [];
 
         function checkSailDate(){
 
-            if(criteria.sailingDates){
-                return false;
+            if(!criteria.sailingDates){
+                return true;
             }
 
             var checkedDates = [];
@@ -609,6 +614,11 @@ function exitPopUp(props){
     }
 
     function validateExclusions(data, exclusions){
+
+        if(!exclusions){
+            return false;
+        }
+
         var checks = [];
 
         function checkSailDate(){
