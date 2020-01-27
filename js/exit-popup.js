@@ -560,6 +560,10 @@ function exitPopUp(props){
 
         function checkSailDate(){
 
+            if(criteria.sailingDates){
+                return false;
+            }
+
             var checkedDates = [];
             var date = new Date(data.sailDate + ' 00:00:00');
 
@@ -580,18 +584,24 @@ function exitPopUp(props){
         checks.push(checkSailDate());
 
         function checkDestinations(){
-            return criteria.destination.indexOf(data.destinationCode) !== -1 ? true : false ;
+            if(criteria.destination){
+                return criteria.destination.indexOf(data.destinationCode) !== -1 ? true : false ;
+            }
         }
         checks.push(checkDestinations());
 
         function checkNumberOfNights(){
-            return data.numberOfNights >= criteria.numberOfNights.from && 
-            data.numberOfNights <= criteria.numberOfNights.to ? true : false ;
+            if(data.numberOfNights){
+                return data.numberOfNights >= criteria.numberOfNights.from && 
+                data.numberOfNights <= criteria.numberOfNights.to ? true : false ;
+            }
         }
         checks.push(checkNumberOfNights());
 
         function checkShipCodes(){
-            return criteria.shipCodes.indexOf(data.shipCode) !== -1 ? true : false ;
+            if(criteria.shipCodes){
+                return criteria.shipCodes.indexOf(data.shipCode) !== -1 ? true : false ;
+            }
         }
         checks.push(checkShipCodes());
 
@@ -602,6 +612,10 @@ function exitPopUp(props){
         var checks = [];
 
         function checkSailDate(){
+
+            if(!exclusions.sailingDates){
+                return false;
+            }
 
             var checkedDates = [];
             var date = new Date(data.sailDate + ' 00:00:00');
@@ -623,18 +637,24 @@ function exitPopUp(props){
         checks.push(checkSailDate());
 
         function checkDestinations(){
-            return exclusions.destination.indexOf(data.destinationCode) !== -1 ? true : false ;
+            if(exclusions.destination){
+                return exclusions.destination.indexOf(data.destinationCode) !== -1 ? true : false ;
+            }
         }
         checks.push(checkDestinations());
 
         function checkNumberOfNights(){
-            return data.numberOfNights >= exclusions.numberOfNights.from && 
-            data.numberOfNights <= exclusions.numberOfNights.to ? true : false ;
+            if(data.numberOfNights){
+                return data.numberOfNights >= exclusions.numberOfNights.from && 
+                data.numberOfNights <= exclusions.numberOfNights.to ? true : false ;
+            }
         }
         checks.push(checkNumberOfNights());
 
         function checkShipCodes(){
-            return exclusions.shipCodes.indexOf(data.shipCode) !== -1 ? true : false ;
+            if(exclusions.shipCodes){
+                return exclusions.shipCodes.indexOf(data.shipCode) !== -1 ? true : false ;
+            }
         }
         checks.push(checkShipCodes());
 
