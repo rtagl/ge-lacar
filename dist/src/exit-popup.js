@@ -591,7 +591,7 @@ function exitPopUp(props){
         checks.push(checkDestinations());
 
         function checkNumberOfNights(){
-            if(data.numberOfNights){
+            if(criteria.numberOfNights){
                 return data.numberOfNights >= criteria.numberOfNights.from && 
                 data.numberOfNights <= criteria.numberOfNights.to ? true : false ;
             }
@@ -644,7 +644,7 @@ function exitPopUp(props){
         checks.push(checkDestinations());
 
         function checkNumberOfNights(){
-            if(data.numberOfNights){
+            if(exclusions.numberOfNights){
                 return data.numberOfNights >= exclusions.numberOfNights.from && 
                 data.numberOfNights <= exclusions.numberOfNights.to ? true : false ;
             }
