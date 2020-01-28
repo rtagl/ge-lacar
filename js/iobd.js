@@ -29,33 +29,78 @@ window.addEventListener('load', ()=>{
 
 })
 
-//insideOutsideBalconyDeluxe
-
 function iobd(props){
 
-    //var pageURL = window.location.href;
-    var pageURL = 'https://www.royalcaribbean.com/lac/es/booking/superCategory?accessCabin=false&connectedRooms=false&destinationCode=CARIB&packageCode=MJ5CU004&sailDate=2019-12-09&selectedCurrencyCode=USD&shipCode=MJ'
-    var currentPage = digestURL(pageURL).page;
-    var targets = document.querySelectorAll('.promotions-container--wrap');
-
-    console.log(targets);
+    function globals(){
+        return {
+            pageURL: window.location.href,
+            currentPage: digestURL(window.location.href).page,
+            targets: document.querySelectorAll('.promotions-container--wrap')
+        }
+    }
 
     function iobdComponent(details, target){
 
         var iobd = document.createElement('div');
-        iobd.style.background = 'red';
+        //iobd.style.background = 'red';
         iobd.style.width = '100%';
         iobd.style.height = 'auto';
         iobd.style.fontFamily = 'proxima, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif'
         iobd.style.fontSize = '14px';
         iobd.style.fontWeight = '400';
         iobd.style.textAlign = 'center';
-        iobd.style.margin = '0px auto 0px auto';
         iobd.style.padding = '0px';
-        iobd.style.color = details.textColor;
-        iobd.innerText = details.text;
+        iobd.style.margin = '0px auto';
+        iobd.style.listStyle = 'none';
+        iobd.classList.add('ge_iobd-offer');
+        iobd.style.display = 'flex';
+        iobd.style.justifyContent = 'center';
+        iobd.style.alignItems = 'center';
 
+        var i = document.createElement('i');
+        i.style.width = 'auto';
+        i.style.height = 'auto';
+        i.style.marginRight = '5px';
+        i.innerText = 'done';
+        i.style.color = window.innerWidth >= 640 && window.innerWidth <= 1199 ? 'rgb(74, 74 ,74)' : details.textColor ;
+        i.classList.add('material-icons');
+        i.classList.add('done-icon');
+        i.classList.add('small-hdr-6');
+        i.classList.add('ge_iobd-offer-i');
+
+        var p = document.createElement('p');
+        p.style.width = 'auto';
+        p.style.height = 'auto';
+        p.style.textTransform = 'capitalize';
+        p.style.color = window.innerWidth >= 640 && window.innerWidth <= 1199 ? 'rgb(74, 74 ,74)' : details.textColor ;
+        p.innerText = details.text;
+        p.classList.add('ge_iobd-offer-p');
+
+        iobd.appendChild(i);
+        iobd.appendChild(p);
+
+        target.style.display = 'flex';
+        target.style.flexDirection = 'column';
+        target.style.justifyContent = 'center';
         target.appendChild(iobd);
+
+        window.onresize = function(){
+            if(window.innerWidth >= 640 && window.innerWidth <= 1199){
+                document.querySelectorAll('.ge_iobd-offer-p').forEach(function(el){
+                    el.style.color = 'rgb(74, 74 ,74)';
+                });
+                document.querySelectorAll('.ge_iobd-offer-i').forEach(function(el){
+                    el.style.color = 'rgb(74, 74 ,74)';
+                });
+            }else{
+                document.querySelectorAll('.ge_iobd-offer-p').forEach(function(el){
+                    el.style.color = details.textColor;
+                });
+                document.querySelectorAll('.ge_iobd-offer-i').forEach(function(el){
+                    el.style.color = details.textColor;
+                });
+            }   
+        };
 
     }
 
@@ -63,17 +108,17 @@ function iobd(props){
         var page = url.split('?')[0];
         var query = url.split('?')[1];
         var codes = query.split('&');
-        let dataCodes = codes.filter(function(code){
+        var dataCodes = codes.filter(function(code){
             return (code.indexOf('/') === -1 ? code : null);
         });
 
-        let dataCodesSplit = [];
+        var dataCodesSplit = [];
         dataCodes.forEach(function(dataCode){
             dataCodesSplit.push(dataCode.split('=')[0]);
             dataCodesSplit.push(dataCode.split('=')[1]);
         });
 
-        let dataObject = {};
+        var dataObject = {};
         for(var i = 0; i < dataCodesSplit.length; i+=2){
             //Object.assign(dataObject, {[dataCodesSplit[i]]: dataCodesSplit[i+1]});
             dataObject[dataCodesSplit[i]] = dataCodesSplit[i+1];
@@ -221,7 +266,7 @@ function iobd(props){
 
     function validatCriteria(){
         var criteria = [];
-        var data = digestURL(pageURL);
+        var data = digestURL(globals().pageURL);
         criteria.push(checkCriteriaNumberOfNights(getNumberOfNights(data.packageCode), props.numberOfNights));
         criteria.push(checkCriteriaDateRange(data.sailDate, props.dates));
         criteria.push(checkCriteriaShipCode(data.shipCode, props.shipCodes));
@@ -234,14 +279,22 @@ function iobd(props){
         }
     }  
     
-    function renderComponents(criteria, page){
-        if(criteria === true && page.indexOf('superCategory') !== -1){
-            loopAndRender();
-        }
+    function renderComponents(criteria){
+        
+        var interval = setInterval(function(){
+            if(criteria === true && globals().currentPage.indexOf('superCategory') !== -1){
+                clearInterval(interval);
+                loopAndRender();
+            }
+        }, 100)
 
         function loopAndRender(){
 
-            targets.forEach(function(t, i){
+            document.querySelectorAll('.ge_iobd-offer').forEach(function(io){
+                io.remove();
+            })
+
+            globals().targets.forEach(function(t, i){
                 if(i === 0 || i === 1){
                     var propDetails = props.details;
                     propDetails.text = props.details.offerText.B;
@@ -255,12 +308,24 @@ function iobd(props){
                     propDetails.text = props.details.offerText.AA;
                     iobdComponent(propDetails, t);
                 }
-                
-            })
+            });
 
         }
     }
 
-    renderComponents(validatCriteria(), currentPage);
+    function listen(callback){
+        window.onpopstate = function(){
+            callback();
+        }
+        document.onclick = function(e){
+            e.target.id === 'occupancy-continue' ? callback() : null ;
+        }
+    }
+
+    listen(function(){
+        renderComponents(validatCriteria());
+    });
+
+    renderComponents(validatCriteria());
 
 }

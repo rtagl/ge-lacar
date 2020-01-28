@@ -1,151 +1,195 @@
-function heroBanner (parent, header, text, alignment, image, headerDropShadow, subDropShadow){
+function heroBanner(props){
 
-    //GET PARENT ELEMENT FOR HERO BANNER
-    var parentElement = document.querySelector(parent);
-    parentElement.innerHTML = '';
+    var parent = document.querySelector(props.parent);
+    parent.innerHTML = '';
 
-    //CREATE HERO BANNER ELEMENT
-    var banner = document.createElement('div');
-    banner.className = 'ge-hero-banner';
-    banner.style.backgroundImage = 'url('+image[0]+')';
-    banner.style.width = '100%';
-    banner.style.height = '200px';
-    banner.style.backgroundSize = 'cover';
-    banner.style.display = 'flex';
-    banner.style.flexDirection = 'column';
-    banner.style.justifyContent = 'center';
-    banner.style.alignItems = 'center';
-    banner.style.overflow = 'hidden';
-    banner.style.margin = '0px auto 0px auto';
+    var container = document.createElement('div');
+    //container.style.background = 'pink';
+    container.style.width = '1920px';
+    container.style.height = 'auto';
+    container.style.margin = '0px auto';
+    container.style.overflow = 'hidden';
 
-    //CREATE TEXT CONTAINER
+    var heroImage = document.createElement('img');
+    heroImage.style.width = '100%';
+    heroImage.style.height = 'auto';
+    heroImage.style.margin = '0px 0px 0px 0px';
+    heroImage.style.padding = '0px 0px 0px 0px';
+    heroImage.src = props.desktop;
+    heroImage.style.float = 'left';
+
     var textContainer = document.createElement('div');
-    //textContainer.style.background = 'blue'
-    textContainer.style.width = '65%';
-    textContainer.style.height = 'auto';
+    //textContainer.style.background = 'rgba(250, 250, 250, 0.5)';
+    textContainer.style.width = '100%';
+    textContainer.style.position = 'absolute';
+    textContainer.style.display = 'flex';
+    textContainer.style.justifyContent = 'center';
+    textContainer.style.alignItems = 'center';
 
-    //CREATE HEADER TEXT
-    var headerText = document.createElement('h1');
-    headerText.innerText = header.toUpperCase();
-    headerText.style.width = '100%';
-    headerText.style.height = 'auto';
-    headerText.style.textAlign = alignment;
-    headerText.style.color = '#ffffff';
-    headerText.style.fontFamily = 'kapra, Helvetica';
-    headerText.style.fontSize = '96px';
-    headerText.style.fontWeight = '400';
-    headerText.style.letterSpacing = '5px';
-    headerText.style.margin = '0px 0px 0px 0px';
-    headerText.style.padding = '0px 0px 0px 0px';
-   
-    if(headerDropShadow){
-        headerText.style.textShadow = headerDropShadow.hShift +' '+ headerDropShadow.vShift +' '+headerDropShadow.blur +' '+ headerDropShadow.color;
-    }
+    var textWrapper = document.createElement('div');
+    //textWrapper.style.background = 'blue';
+    textWrapper.style.width = '95%';
+    textWrapper.style.display = 'flex';
+    textWrapper.style.justifyContent = props.textFieldAlign ? props.textFieldAlign: 'center';
+    textWrapper.style.alignItems = 'center';
 
-    //CREATE SUB TEXT
-    var subText = document.createElement('p');
-    subText.innerText = text.toUpperCase();
-    subText.style.width = '100%';
-    subText.style.height = 'auto';
-    subText.style.textAlign = alignment;
-    subText.style.color = '#ffffff';
-    subText.style.fontFamily = 'ProximaNova-Light';
-    subText.style.fontSize = '44px';
-    headerText.style.fontWeight = '400';
-    subText.style.margin = '-14px 0px 0px 0px';
-    subText.style.padding = '0px';
-    subText.className = 'hero-subtext';
+    var textFieldsWrapper = document.createElement('div');
+    //textFieldsWrapper.style.background = 'orange';
+    textFieldsWrapper.style.width = 'auto';
+    textFieldsWrapper.style.display = 'flex';
+    textFieldsWrapper.style.flexDirection = 'column';
+    textFieldsWrapper.style.justifyContent = 'center';
+    textFieldsWrapper.style.alignItems = 'center';
 
-    if(subDropShadow){
-        subText.style.textShadow = subDropShadow.hShift +' '+ subDropShadow.vShift +' '+ subDropShadow.blur +' '+ subDropShadow.color;
-    }
+    var contentTextWrapper = document.createElement('div');
+    //contentTextWrapper.style.background = 'red';
+    contentTextWrapper.style.width = 'auto';
+    contentTextWrapper.style.display = 'flex';
+    contentTextWrapper.style.flexDirection = 'column';
+    contentTextWrapper.style.justifyContent = 'center';
+    contentTextWrapper.style.alignItems = 'center';
+    contentTextWrapper.style.margin = '13px 0px 0px 0px';
 
-    //APPEND TEXT CONTAINER TO BANNER ELEMENT
-    banner.appendChild(textContainer);
+    var header = document.createElement('h1');
+    //header.style.background = 'green';
+    header.style.width = 'auto';
+    header.innerText = props.header && props.header.text ? props.header.text : '';
+    header.style.fontSize = props.header && props.header.textSize ? props.header.textSize : '48px';
+    header.style.textAlign = 'center';
+    header.style.color = props.header && props.header.textColor ? props.header.textColor: '#fff';
+    header.style.fontSize = '48px';
+    header.style.fontFamily = 'kapra, Helvetica';
+    header.style.letterSpacing = '5px';
+    header.style.margin = '0px';
+    header.style.padding = '0px';
+    header.style.textTransform = 'uppercase';
+    header.style.textShadow = props.textShadow ? props.textShadow : '';
 
-    //APPEND HEADER TO TEXT CONTAINER ELEMENT
-    textContainer.appendChild(headerText);
+    var paragraph = document.createElement('p');
+    //paragraph.style.background = 'yellow';
+    paragraph.style.width = 'auto';
+    paragraph.innerText = props.paragraph && props.paragraph.text ? props.paragraph.text : '';
+    paragraph.style.fontSize = props.paragraph && props.paragraph.textSize ? props.paragraph.textSize : '24px';
+    paragraph.style.textAlign = 'center';
+    paragraph.style.color = props.paragraph && props.paragraph.textColor ? props.paragraph.textColor: '#fff';
+    paragraph.style.fontFamily = 'ProximaNova-Light';
+    paragraph.style.margin = '0px';
+    paragraph.style.padding = '0px';
+    paragraph.style.textTransform = 'uppercase';
+    paragraph.style.textShadow = props.textShadow ? props.textShadow : '';
 
-    //APPEND TEXT TO BANNER ELEMENT
-    textContainer.appendChild(subText);
+    var disclaimer = document.createElement('p');
+    //disclaimer.style.background = 'pink';
+    disclaimer.style.width = 'auto';
+    disclaimer.innerText = props.disclaimer && props.disclaimer.text ? props.disclaimer.text : '';
+    disclaimer.style.fontSize = props.disclaimer && props.disclaimer.textSize ? props.disclaimer.textSize : '10px';
+    disclaimer.style.textAlign = 'center';
+    disclaimer.style.color = props.disclaimer && props.disclaimer.textColor ? props.disclaimer.textColor: '#fff';
+    disclaimer.style.fontFamily = 'ProximaNova-Light';
+    disclaimer.style.margin = '0px';
+    disclaimer.style.padding = '0px';
+    disclaimer.style.textTransform = 'uppercase';
+    disclaimer.style.textShadow = props.textShadow ? props.textShadow : '';
 
-    //APPEND HERO BANNER TO PARENT ELEMENT
-    parentElement.appendChild(banner);
+    contentTextWrapper.appendChild(header);
+    contentTextWrapper.appendChild(paragraph);
 
-    //RESIZE HERO BANNER DIV WHEN SCREEN IS LESS THAN 750 PIXELS WIDE
-    function resizeBanner(){
-        var banner = document.querySelector('.ge-hero-banner');
-        var screenWidth = window.innerWidth;
-        
-        if(window.matchMedia("(min-width: 1930px)").matches){
-            banner.style.width = '1920px';
-        }else if(window.matchMedia("(min-width: 1920px)").matches){
-            banner.style.width = '100%';
-        }else if(window.matchMedia("(min-width: 1200px)").matches){
-            banner.style.height = '150px';
-            //banner.style.backgroundPositionX = '-70px';
-            headerText.style.fontSize = '76px';
-            subText.style.fontSize = '34px';
-        }else if(window.matchMedia("(min-width: 900px)").matches){
-            banner.style.height = '150px';
-            //banner.style.backgroundPositionX = '-70px';
-            headerText.style.fontSize = '56px';
-            subText.style.fontSize = '24px';
-        }else if(window.matchMedia("(min-width: 750px)").matches){
-            banner.style.height = '150px';
-            //banner.style.backgroundPositionX = '-70px';
-            headerText.style.fontSize = '46px';
-            subText.style.fontSize = '24px';
-        }else if(window.matchMedia("(min-width: 400px)").matches){
-            banner.style.height = '200px';
-            //banner.style.backgroundPositionX = '0px';
-            headerText.style.fontSize = '46px';
-            subText.style.fontSize = '44px';
-        }else if(window.matchMedia("(min-width: 300px)").matches){
-            headerText.style.fontSize = '36px';
-            subText.style.fontSize = '34px';
+    textFieldsWrapper.appendChild(contentTextWrapper);
+    textFieldsWrapper.appendChild(disclaimer);
+
+    textContainer.appendChild(textWrapper);
+    textWrapper.appendChild(textFieldsWrapper);
+
+    container.appendChild(heroImage);
+    container.appendChild(textContainer);
+    parent.appendChild(container);
+
+    function setLayout(){
+
+        //ADJUST CONTAINER WIDTH BASED ON SCREEN WIDTH
+        if(window.innerWidth >= 1920){
+            container.style.width = '1920px';
+        }else if(window.innerWidth <= 1919){
+            container.style.width = '100%';
         }
- 
-        if(image.length === 2){
-            if(screenWidth >= 750){
-                banner.style.backgroundImage = 'url('+image[0]+')';
+
+        //SWAP IMAGES DEPENDING ON SCREEN WIDHT
+        if(window.innerWidth >= 768){
+            heroImage.src = props.desktop;
+        }else{
+            heroImage.src = props.mobile;
+        }
+
+        //RESIZE THE TEXT CONTAINER TO MATCH THE CURRENT IMAGE ON THE PAGE
+        if(window.innerWidth >= 768 && window.innerWidth <= 1920){
+            container.style.height = Math.floor((200 / 1920) * window.innerWidth) - 2 + 'px';
+            textContainer.style.height = Math.floor((200 / 1920) * window.innerWidth) - 2 + 'px';
+            textContainer.style.width = heroImage.offsetWidth + 'px';
+            textFieldsWrapper.style.height = Math.floor((200 / 1920) * window.innerWidth) - 20 + 'px';
+        }else if(window.innerWidth >= 0 && window.innerWidth <= 767){
+            container.style.height = Math.floor((280 / 750) * window.innerWidth) - 6 + 'px';
+            textContainer.style.height = Math.floor((280 / 750) * window.innerWidth) - 6 + 'px';
+            textContainer.style.width = heroImage.offsetWidth + 'px';
+            textFieldsWrapper.style.height = Math.floor((280 / 750) * window.innerWidth) - 20 + 'px';
+        }
+
+        //REPOSITIONS THE TEXT FIELDS IF THERE IS A DISCLAIMER
+        if(props.disclaimer){
+            if(window.innerWidth >= 770 && window.innerWidth <= 900){
+                textFieldsWrapper.style.justifyContent = 'center';
             }else{
-                banner.style.backgroundImage = 'url('+image[1]+')';
+                textFieldsWrapper.style.justifyContent = 'space-between';
             }
         }
+
     }
 
-    //INITIALIZE RESPONSIVE FUNCTIONS
-    resizeBanner();
+    function setFontSizes(){
+        if(window.innerWidth >= 768 && window.innerWidth <= 1920){
+            header.style.fontSize = Math.floor((parseInt(header.style.fontSize) / 2) + (window.innerWidth / 50)) + 'px';
+            paragraph.style.fontSize = Math.floor((parseInt(paragraph.style.fontSize) / 2) + (window.innerWidth / 100)) + 'px';
+            disclaimer.style.fontSize = Math.floor((parseInt(disclaimer.style.fontSize) / 2) + (window.innerWidth / 275)) + 'px';
+        }else if(window.innerWidth >= 0 && window.innerWidth <= 767){
+            header.style.fontSize = Math.floor((parseInt(header.style.fontSize) / 2) + (window.innerWidth / 25)) + 'px';
+            paragraph.style.fontSize = Math.floor((parseInt(paragraph.style.fontSize) / 2) + (window.innerWidth / 50)) + 'px';
+            disclaimer.style.fontSize = Math.floor((parseInt(disclaimer.style.fontSize) / 2) + (window.innerWidth / 100)) + 'px';
+        }
+    }
 
-    //LISTEN TO SCREEN RESIZE EVENT
     window.addEventListener('resize', function(){
-        resizeBanner();
+        setLayout();
+        setFontSizes();
     });
+
+    setLayout(); 
+    setFontSizes();
 
 }
 
-window.addEventListener('load', function(){
-    heroBanner(
-        '.parent',
-        'ninos gratis',
-        'Ahorra hasta 150$ USD', 
-        'center',
-        [
-            'http://sb.monetate.net/img/1/388/2344664.jpg',
-            'http://sb.monetate.net/img/1/388/2344663.jpg'
-        ],
-        {
-            hShift: '4px',
-            vShift: '4px',
-            blur: '5px',
-            color: 'rgba(0, 0, 135, 0.75)',
+document.addEventListener('DOMContentLoaded', function(){
+    heroBanner({
+        parent: '.parent',
+        desktop: 'http://sb.monetate.net/img/1/388/2626401.jpg',
+        mobile: 'http://sb.monetate.net/img/1/388/2626402.jpg',
+        header: {
+            text: 'Hello world',
+            textSize: '48px',
+            textAlign: 'center',
+            textColor: '#fff'
         },
-        {
-            hShift: '4px',
-            vShift: '4px',
-            blur: '5px',
-            color: 'rgba(0, 0, 135, 0.75)',
-        }
-    );
+        paragraph:{
+            text: 'I\'m a pickle morty!!!',
+            textSize: '24px',
+            textAlign: 'center',
+            textColor: '#fff'
+        },
+        textShadow: '4px 4px 2px #0000ff',
+        // disclaimer: {
+        //     text: 'pickles are great but they are not incuded for free.',
+        //     textSize: '12px',
+        //     textAlign: 'center',
+        //     textColor: '#fff'
+        // },
+        // textFieldAlign: 'left'
+    });
 });

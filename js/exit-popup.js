@@ -700,69 +700,71 @@ function exitPopUp(props){
 
 }
 
-exitPopUp({
-    bannerDetails:{
-        backgroundColor: '#ffffff',
-        offerText: 'Hello World + Hello World + Hellow World + Hello World',
-        offerSubText: 'kids sail free',
-        textColor: 'black',
-    },
-    continueBtn:{
-        text: 'continue',
-        textColor: '#000000',
-        backgroundColor: '#febd11',
-    },
-    cancelBtn:{
-        text: 'cancel',
-        textColor: '#000000',
-        backgroundColor: '#ffffff',
-        borderColor: '#000000'
-    },
-    clock:{
-        hours:'HOURS',
-        minutes: 'MINUTES',
-        seconds: 'SECONDS',
-        hoursLeft: 'HOURS LEFT',
-        daysLeft: 'DAYS LEFT',
-    },
-    countDown:{
-        start:'Jan 24 2020 10:57:00',
-        end: 'Jan 26 2020 21:59:00',
-        dst: false,
-        showDays: {
-            last: 'last',
-            number: 2,
-            days: 'days'
+document.addEventListener('DOMContentLoaded', ()=>{
+    exitPopUp({
+        bannerDetails:{
+            backgroundColor: '#ffffff',
+            offerText: 'Hello World + Hello World + Hellow World + Hello World',
+            offerSubText: 'kids sail free',
+            textColor: 'black',
+        },
+        continueBtn:{
+            text: 'continue',
+            textColor: '#000000',
+            backgroundColor: '#febd11',
+        },
+        cancelBtn:{
+            text: 'cancel',
+            textColor: '#000000',
+            backgroundColor: '#ffffff',
+            borderColor: '#000000'
+        },
+        clock:{
+            hours:'HOURS',
+            minutes: 'MINUTES',
+            seconds: 'SECONDS',
+            hoursLeft: 'HOURS LEFT',
+            daysLeft: 'DAYS LEFT',
+        },
+        countDown:{
+            start:'Jan 24 2020 10:57:00',
+            end: 'Jan 26 2020 21:59:00',
+            dst: false,
+            showDays: {
+                last: 'last',
+                number: 2,
+                days: 'days'
+            }
+        },
+        criteria:{
+            sailingDates: [
+                {
+                    start: 'Jan 22 2020',
+                    end: 'Apr 31 2020'
+                },
+                {
+                    start: 'Jul 22 2020',
+                    end: 'Oct 20 2020'
+                }
+            ],
+            shipCodes: ['NV', 'JW'],
+            numberOfNights: {from: 4, to: 7},
+            destination: ['DUBAI', 'CARIB'],
+        },
+        exclusions:{
+            sailingDates: [
+                {
+                    start: 'Feb 25 2020',
+                    end: 'Mar 22 2020'
+                },
+                {
+                    start: 'Aug 22 2020',
+                    end: 'Sep 20 2020'
+                }
+            ],
+            shipCodes: ['NV', 'AD'],
+            numberOfNights: {from: 4, to: 6},
+            destination: ['BAHAM', 'CARIB'],
         }
-    },
-    criteria:{
-        sailingDates: [
-            {
-                start: 'Jan 22 2020',
-                end: 'Apr 31 2020'
-            },
-            {
-                start: 'Jul 22 2020',
-                end: 'Oct 20 2020'
-            }
-        ],
-        shipCodes: ['NV', 'JW'],
-        numberOfNights: {from: 4, to: 7},
-        destination: ['DUBAI', 'CARIB'],
-    },
-    exclusions:{
-        sailingDates: [
-            {
-                start: 'Feb 25 2020',
-                end: 'Mar 22 2020'
-            },
-            {
-                start: 'Aug 22 2020',
-                end: 'Sep 20 2020'
-            }
-        ],
-        shipCodes: ['NV', 'AD'],
-        numberOfNights: {from: 4, to: 6},
-        destination: ['BAHAM', 'CARIB'],
-    }
+    });
 });
