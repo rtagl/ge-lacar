@@ -572,6 +572,13 @@ function countDownBanner(props){
                     timeZone = 'GMT-0600';
                     }
                 break;
+                case 'aus':
+                    if (data.clock.dst === true) {
+                    timeZone = 'GMT+1200';
+                    } else {
+                    timeZone = 'GMT+1100';
+                    }
+                break;
                 case 'sgp':
                     timeZone = 'GMT+0800';
                 break;
