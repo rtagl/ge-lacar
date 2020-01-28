@@ -516,6 +516,12 @@ function exitPopUp(props){
             case 'sgp': 
                 timeZone = 'GMT+0800';
             break;
+            case 'aus':
+                if (dst === true) {
+                    timeZone = 'GMT+1200';
+                } else {
+                    timeZone = 'GMT+1100';
+                }
             default:
                 if(dst === true){
                     timeZone = 'GMT-0400';
