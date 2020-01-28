@@ -522,6 +522,7 @@ function exitPopUp(props){
                 } else {
                     timeZone = 'GMT+1100';
                 }
+            break;
             default:
                 if(dst === true){
                     timeZone = 'GMT-0400';
